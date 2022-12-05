@@ -1,6 +1,6 @@
-Testowanie oprogramowania projekt 2
-Jakub Goliszewski
-Mikołaj Guryn
-Jakub Maciejewski
-Maja Nagarnowicz
-Michał Ziober
+Testowanie oprogramowania projekt 2<br>
+Jakub Goliszewski<br>
+Mikołaj Guryn<br>
+Jakub Maciejewski<br>
+Maja Nagarnowicz<br>
+Michał Ziober<br>
