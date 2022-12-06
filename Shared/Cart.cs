@@ -16,6 +16,7 @@ namespace Shared
         {
             this.ProductList.Remove(p);
         }
+
         public double CalculateCartPrice()
         {
             double cartPrice = 0;
