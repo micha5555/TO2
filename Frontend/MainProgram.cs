@@ -2,12 +2,6 @@ namespace Frontend;
 
 public static class MainProgram
 {
-    public static void Main()
-    {
-        showWelcomeScreen();
-        showLoginScreen();
-    }
-
     public static void showWelcomeScreen()
     {
         HelperMethods.showWelcomeMessage();
