@@ -14,6 +14,73 @@ public static class HelperMethods
             MainProgram.showLoginScreen();
             return;
         }
+        Console.Clear();
+        if (optionChosen == '1')
+        {
+            clientLogin();
+        }
+        else if (optionChosen == '2')
+        {
+            administratorLogin();
+        }
+    }
+
+    private static void administratorLogin()
+    {
+        string login;
+        string password;
+        (login, password) = getCredentials();
+        // Console.WriteLine($"Podane dane {login}, {password}");
+    }
+
+    private static void clientLogin()
+    {
+        string login;
+        string password;
+        (login, password) = getCredentials();
+        // Console.WriteLine($"Podane dane {login}, {password}");
+    }
+
+    public static (string, string) getCredentials()
+    {
+        string login = getLogin();
+        string password = getPassword();
+        return (login, password);
+    }
+
+    private static string getPassword()
+    {
+        Console.Write("Podaj hasło: ");
+        string? password = Console.ReadLine();
+        if (password == null)
+        {
+            showErrorOptionMessage();
+            showAwaitingMessage();
+            waitForUser();
+            password = getPassword();
+        }
+        return password;
+    }
+
+    private static string getLogin()
+    {
+        Console.Write("Podaj login: ");
+        string? login = Console.ReadLine();
+        if (login == null)
+        {
+            showErrorInputMessage();
+            showAwaitingMessage();
+            waitForUser();
+            login = getLogin();
+        }
+        return login;
+    }
+
+    private static void showErrorInputMessage()
+    {
+        string errorMessage = "";
+        errorMessage += "Wprowadzone dane są nieprawidłowe!";
+        Console.WriteLine(errorMessage);
     }
 
     public static void waitForUser()
