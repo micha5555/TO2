@@ -1,21 +1,33 @@
 namespace Frontend;
 
-public static class MainProgram
+public class MainProgram
 {
-    public static void showWelcomeScreen()
+    private HelperMethods helperMethods;
+
+    public MainProgram(HelperMethods helperMethods)
     {
-        HelperMethods.showWelcomeMessage();
-        HelperMethods.showArtPic();
-        HelperMethods.showAwaitingMessage();
-        HelperMethods.waitForUser();
+        this.helperMethods = helperMethods;
     }
 
-    public static void showLoginScreen()
+    public MainProgram()
     {
-        HelperMethods.showLoginMessage();
-        HelperMethods.login();
+        this.helperMethods = new HelperMethods(this);
+    }
+
+    public void handleWelcomeScreen()
+    {
+        helperMethods.showWelcomeMessage();
+        helperMethods.showArtPic();
+        helperMethods.showAwaitingMessage();
+        helperMethods.waitForUser();
+    }
+
+    public LoggedInAs handleLoginScreen()
+    {
+        helperMethods.showLoginMessage();
+        return helperMethods.login();
     }
 
 
-    
+
 }

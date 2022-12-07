@@ -1,54 +1,82 @@
 namespace Frontend;
 
-public static class HelperMethods
+using Services;
+
+public class HelperMethods
 {
-    public static void login()
+    private IAdministratorOperations _administratorOperations = new AdministratorOperations();
+    private IClientOperations _clientOperations = new ClientOperations();
+    private MainProgram _mainProgram;
+
+    public HelperMethods(MainProgram mainProgram)
+    {
+        _mainProgram = mainProgram;
+    }
+
+    public LoggedInAs login()
     {
         Console.Write("Wybrana opcja: ");
         char optionChosen = Console.ReadKey().KeyChar;
-        if (!optionChosen.Equals('1') && !optionChosen.Equals('2'))
+        if (!optionChosen.Equals('1') && !optionChosen.Equals('2') && !optionChosen.Equals('3') && !optionChosen.Equals('0'))
         {
             showErrorOptionMessage();
             showAwaitingMessage();
             waitForUser();
-            MainProgram.showLoginScreen();
-            return;
+            return _mainProgram.handleLoginScreen();
         }
+
         Console.Clear();
-        if (optionChosen == '1')
-        {
-            clientLogin();
+
+        if (optionChosen == '0'){
+            return LoggedInAs.NotLoggedIn;
         }
-        else if (optionChosen == '2')
+
+        (string login, string password) credentials = getCredentials();
+
+        if (optionChosen == '1' && checkClientLogin(credentials.login, credentials.password))
         {
-            administratorLogin();
+            return LoggedInAs.Client;
         }
+        else if (optionChosen == '2' && checkAdministratorLogin(credentials.login, credentials.password))
+        {
+            return LoggedInAs.Administrator;
+        }
+        else if (optionChosen == '3'){
+            createClient(credentials.login, credentials.password);
+            Console.WriteLine("Rejestracja przebiegła pomyślnie!");
+            showAwaitingMessage();
+            waitForUser(); 
+        }
+
+        return _mainProgram.handleLoginScreen();
     }
 
-    private static void administratorLogin()
+    private void createClient(string login, string password){
+        _clientOperations.registerNewClient(login, password);
+    }
+
+    private bool checkAdministratorLogin(string login, string password)
     {
-        string login;
-        string password;
-        (login, password) = getCredentials();
-        // Console.WriteLine($"Podane dane {login}, {password}");
+        //Check if login and password is correct    
+        
+        return _administratorOperations.checkAdministratorCredentials(login, password);
     }
 
-    private static void clientLogin()
+    private bool checkClientLogin(string login, string password)
     {
-        string login;
-        string password;
-        (login, password) = getCredentials();
-        // Console.WriteLine($"Podane dane {login}, {password}");
+        //Check if login and password is correct
+        
+        return _clientOperations.checkClientCredentials(login, password);
     }
 
-    public static (string, string) getCredentials()
+    public (string, string) getCredentials()
     {
         string login = getLogin();
         string password = getPassword();
         return (login, password);
     }
 
-    private static string getPassword()
+    private string getPassword()
     {
         Console.Write("Podaj hasło: ");
         string? password = Console.ReadLine();
@@ -62,7 +90,7 @@ public static class HelperMethods
         return password;
     }
 
-    private static string getLogin()
+    private string getLogin()
     {
         Console.Write("Podaj login: ");
         string? login = Console.ReadLine();
@@ -76,39 +104,39 @@ public static class HelperMethods
         return login;
     }
 
-    private static void showErrorInputMessage()
+    private void showErrorInputMessage()
     {
         string errorMessage = "";
         errorMessage += "Wprowadzone dane są nieprawidłowe!";
         Console.WriteLine(errorMessage);
     }
 
-    public static void waitForUser()
+    public void waitForUser()
     {
         Console.ReadKey();
         Console.Clear();
     }
 
-    public static void showWelcomeMessage()
+    public void showWelcomeMessage()
     {
         Console.WriteLine(getWelcomeMessage());
     }
-    public static void showArtPic()
+    public void showArtPic()
     {
         Console.WriteLine(getArtPic());
     }
 
-    public static void showAwaitingMessage()
+    public void showAwaitingMessage()
     {
         Console.WriteLine(getAwaitingMessage());
     }
 
-    public static void showLoginMessage()
+    public void showLoginMessage()
     {
         Console.WriteLine(getLoginMessage());
     }
 
-    public static string getWelcomeMessage()
+    public string getWelcomeMessage()
     {
         string welcomeMessage = "";
         welcomeMessage += "-----------------------------------------------------\n";
@@ -117,7 +145,7 @@ public static class HelperMethods
         return welcomeMessage;
     }
 
-    public static string getLoginMessage()
+    public string getLoginMessage()
     {
         string loginMessage = "";
         loginMessage += "----------------------------\n";
@@ -125,10 +153,12 @@ public static class HelperMethods
         loginMessage += "----------------------------\n";
         loginMessage += "1. Logowanie Klienta\n";
         loginMessage += "2. Logowanie Administratora\n";
+        loginMessage += "3. Rejestracja Klienta\n";
+        loginMessage += "0. Wyjście ze sklepu\n";
         return loginMessage;
     }
 
-    public static string getArtPic()
+    public string getArtPic()
     {
         string artpic = """
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -165,7 +195,7 @@ public static class HelperMethods
         return artpic;
     }
 
-    public static string getAwaitingMessage()
+    public string getAwaitingMessage()
     {
         string awaitingMessage = "";
         awaitingMessage += "Wciśnij dowolny klawisz, aby kontynuować...";
@@ -173,12 +203,12 @@ public static class HelperMethods
     }
 
 
-    public static void showErrorOptionMessage()
+    public void showErrorOptionMessage()
     {
         Console.WriteLine("\n" + getErrorOptionMessage() + "\n");
     }
 
-    public static string getErrorOptionMessage()
+    public string getErrorOptionMessage()
     {
         string message = "";
         message += "Podana opcja jest nieprawidłowa!";
