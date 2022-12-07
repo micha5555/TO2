@@ -84,6 +84,7 @@ namespace Shared
             Dictionary<Product, int> Dict = new Dictionary<Product, int>();
             foreach (Order o in orders)
             {
+                if (o.OrderProductList == null) continue;
                 if (o.OrderProductList.Contains(product))
                 {
                     foreach(Product p in o.OrderProductList)

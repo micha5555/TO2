@@ -2,7 +2,7 @@ namespace Shared
 {
     public class Order
     {
-        public Guid Id { get; set; } // do każdego ID w serwisie zrobić counter żeby było unikalne dla nowego uruchomienia programu
+        public Guid Id { get; set; }
         public List<Product>? OrderProductList { get; set; }
         public double Price { get; set; }
 

@@ -6,7 +6,11 @@ namespace Shared
         public string? Name { get; set; }
         public double Price { get; set; }
         public Category CategoryClass { get; set; }
-        string Description {get; set;}
+        string Description { get; set; }
+        public Product()
+        {
+            this.Description = "";
+        }
 
         public Product(string Name, double Price, Category CategoryClass, string Description)
         {
@@ -18,12 +22,13 @@ namespace Shared
 
         public override bool Equals(Object obj)
         {
-            if ((obj == null) || ! this.GetType().Equals(obj.GetType()))
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
             {
                 return false;
             }
-            else {
-                Product p = (Product) obj;
+            else
+            {
+                Product p = (Product)obj;
                 return (Name.Equals(p.Name)) && (Price == p.Price) && (CategoryClass.Equals(p.CategoryClass));
             }
         }

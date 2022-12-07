@@ -3,22 +3,35 @@ namespace Shared
 {
     public class Cart : ICartOperations
     {
+        public Guid Id { get; set; }
         private double ActualPrice;
-        private List<Product> ProductList;
+        public List<Product> ProductList;
+
         public Cart()
         {
+            this.Id = System.Guid.NewGuid();
             this.ProductList = new List<Product>();
+            this.ActualPrice = 0;
         }
 
         public Cart(List<Product> products)
         {
+            this.Id = System.Guid.NewGuid();
             this.ProductList = products;
+            this.ActualPrice = 0;
+        }
+
+        public Cart(double price, List<Product> pl){
+            this.Id = Guid.NewGuid();
+            this.ActualPrice = price;
+            this.ProductList = pl;
         }
 
         public void AddToCart(Product p)
         {
             this.ProductList.Add(p);
         }
+        
         public void RemoveFromCart(Product p)
         {
             this.ProductList.Remove(p);
@@ -42,7 +55,8 @@ namespace Shared
             return cartPrice;
         }
 
-        public List<Product> GetProducts(){
+        public List<Product> GetProducts()
+        {
             return this.ProductList;
         }
     }
