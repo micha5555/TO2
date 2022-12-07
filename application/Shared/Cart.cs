@@ -1,23 +1,33 @@
+using Services;
 namespace Shared
 {
-    public class Cart
+    public class Cart : ICartOperations
     {
         private double ActualPrice;
-        private List<Product> ProductList;
+        public List<Product> ProductList;
+
         public Cart()
         {
             this.ProductList = new List<Product>();
+            this.ActualPrice = 0;
         }
 
         public Cart(List<Product> products)
         {
             this.ProductList = products;
+            this.ActualPrice = 0;
+        }
+
+        public Cart(double price, List<Product> pl){
+            this.ActualPrice = price;
+            this.ProductList = pl;
         }
 
         public void AddToCart(Product p)
         {
             this.ProductList.Add(p);
         }
+        
         public void RemoveFromCart(Product p)
         {
             this.ProductList.Remove(p);
@@ -41,7 +51,8 @@ namespace Shared
             return cartPrice;
         }
 
-        public List<Product> GetProducts(){
+        public List<Product> GetProducts()
+        {
             return this.ProductList;
         }
     }

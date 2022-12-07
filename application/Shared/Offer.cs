@@ -1,12 +1,22 @@
+using Services;
+using System.Text.Json.Serialization;
+
 namespace Shared
 {
-    public class Offer
+    public class Offer : IOfferOperations
     {
-        public List<Product> ProductList{get; set;}
+        public Guid Id { get; set; }
+        public List<Product> ProductList { get; set; }
 
-        public Offer()
-        {
+        [JsonConstructor]
+        public Offer(){
             this.ProductList = new List<Product>();
+        }
+
+        public Offer(List<Product> products)
+        {
+            this.Id = Guid.NewGuid();
+            this.ProductList = products;
         }
 
         public void AddToOffer(Product product)
