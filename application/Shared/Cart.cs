@@ -2,48 +2,60 @@ namespace Shared
 {
     public class Cart
     {
-        public Guid Id { get; set; }
         private double ActualPrice;
-        public List<Product> ProductList;
-        public Cart(double price, List<Product> pl)
-        {
-            this.Id = Guid.NewGuid();
-            this.ActualPrice = price;
-            this.ProductList = pl;
-        }
+        public List<CartProduct> CartProductList;
+
         public Cart()
         {
-            this.Id = System.Guid.NewGuid();
-            this.ProductList = new List<Product>();
+            this.CartProductList = new List<CartProduct>();
             this.ActualPrice = 0;
         }
 
         public Cart(List<Product> products)
         {
-            this.Id = System.Guid.NewGuid();
-            this.ProductList = products;
+            this.CartProductList = new List<CartProduct>();
+            foreach (Product p in products)
+            {
+                CartProductList.Add(new CartProduct(p, 1));
+            }
             this.ActualPrice = 0;
         }
 
-        public void AddToCart(Product p)
+        public Cart(List<CartProduct> products)
         {
-            this.ProductList.Add(p);
+            this.CartProductList = products;
+            this.ActualPrice = 0;
         }
-        public void RemoveFromCart(Product p)
+
+        public Cart(double price, List<Product> pl){
+            this.ActualPrice = price;
+            this.CartProductList = new List<CartProduct>();
+            foreach (Product p in pl)
+            {
+                CartProductList.Add(new CartProduct(p, 1));
+            }
+        }
+
+        public void AddToCart(CartProduct p)
         {
-            this.ProductList.Remove(p);
+            this.CartProductList.Add(p);
+        }
+        
+        public void RemoveFromCart(CartProduct p)
+        {
+            this.CartProductList.Remove(p);
         }
 
         public double CalculateCartPrice()
         {
             double cartPrice = 0;
-            if (ProductList.Count <= 0)
+            if (CartProductList.Count <= 0)
             {
                 return -1;
             }
-            foreach (Product p in ProductList)
+            foreach (CartProduct cp in CartProductList)
             {
-                cartPrice += p.Price;
+                cartPrice += cp.Product.Price*cp.Quantity;
             }
             if (cartPrice < 0)
             {
@@ -52,9 +64,9 @@ namespace Shared
             return cartPrice;
         }
 
-        public List<Product> GetProducts()
+        public List<CartProduct> GetCartProducts()
         {
-            return this.ProductList;
+            return this.CartProductList;
         }
     }
 }

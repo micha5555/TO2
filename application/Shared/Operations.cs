@@ -1,27 +1,38 @@
+using Repo;
 namespace Shared
 {
-    public class Operations
+    using Services;
+    public class Operations : IGeneralOperations
     {
-        public static List<Product> ProposeProductsBasedOnCart(Cart cart, List<Order> orders/*, Offer offer*/, int quantity)
+        List<Order> orders = new List<Order>();
+
+        public Operations()
+        {
+            IRepository repository = new Repository();
+            this.orders = repository.GetOrders();
+        }
+
+        public List<Product> ProposeProductsBasedOnCart(Cart cart, int quantity)
         {
             List<Product> basketProducts = new List<Product>();
-            foreach (Product prod in cart.GetProducts())
+            foreach (CartProduct prod in cart.GetCartProducts())
             {
-                if (!basketProducts.Contains(prod))
+                if (!basketProducts.Contains(prod.Product))
                 {
-                    basketProducts.Add(prod);
+                    basketProducts.Add(prod.Product);
                 }
                 
             }
             
-            //List<Product> offerProducts = offer.GetProductList();
-            var sortedDict = PrepareSortedOrders(orders, basketProducts);
+            var sortedDict = PrepareSortedOrders(basketProducts);
             List<Product> proposal = new List<Product>();
             int i = 0;
             foreach (Order order in sortedDict.Keys)
             {
-                foreach (Product product in order.OrderProductList)
+                if (order.OrderProductList == null) continue;
+                foreach (CartProduct p in order.OrderProductList)
                 {
+                    Product product = p.Product;
                     if (!proposal.Contains(product) && !basketProducts.Contains(product))
                     {
                         proposal.Add(product);
@@ -33,7 +44,7 @@ namespace Shared
             return proposal;
         }
 
-        private static Dictionary<Order, int> PrepareSortedOrders(List<Order> orders, List<Product> basketProducts)
+        private Dictionary<Order, int> PrepareSortedOrders(List<Product> basketProducts)
         {
             var ordersWithCount = new Dictionary<Order, int>();
             foreach (Order order in orders)
@@ -45,7 +56,13 @@ namespace Shared
             {
                 foreach (Order order in ordersWithCount.Keys)
                 {
-                    if (order.OrderProductList.Contains(product))
+                    List<Product> prodList = new List<Product>();
+                    foreach (CartProduct cp in order.OrderProductList)
+                    {
+                        prodList.Add(cp.Product);
+                    }
+                    if (prodList == null) continue;
+                    if (prodList.Contains(product))
                     {
                         ordersWithCount[order]++;
                     }
@@ -57,6 +74,53 @@ namespace Shared
             {
                 sortedDict.Add(entry.Key, entry.Value);
             }
+            return sortedDict;
+        }
+
+        public List<Product> ProposeProductsBasedOnProduct(Product product, int quantity)
+        
+        {    
+            Dictionary<Product, int> sortedDict = PrepareSortedProducts(product);
+
+            List<Product> proposal = new List<Product>();
+            int i = 0;
+            foreach (Product p in sortedDict.Keys)
+            {
+                proposal.Add(p);
+                i++;
+                if (i == quantity) return proposal;          
+            }
+            return proposal;
+        }
+
+        private Dictionary<Product, int> PrepareSortedProducts(Product product)
+        {
+            Dictionary<Product, int> Dict = new Dictionary<Product, int>();
+            foreach (Order o in orders)
+            {
+                List<Product> prodList = new List<Product>();
+                foreach (CartProduct cp in o.OrderProductList)
+                {
+                    prodList.Add(cp.Product);
+                }
+                if (prodList == null) continue;
+                if (prodList.Contains(product))
+                {
+                    foreach(Product p in prodList)
+                    {
+                        if( Dict.ContainsKey(p))
+                        {
+                            Dict[p]++;
+                        }
+                        else
+                        {
+                            Dict.Add(p, 1);
+                        }
+                    }
+                }
+            }
+            Dict.Remove(product);
+            var sortedDict = Dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             return sortedDict;
         }
     }

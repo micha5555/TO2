@@ -3,7 +3,7 @@ namespace Frontend;
 public class MainProgram
 {
     private HelperMethods _helperMethods;
-    private LoggedInAs _loggedInAs;
+    private UserStatus _userStatus;
 
     public MainProgram(HelperMethods helperMethods)
     {
@@ -17,36 +17,47 @@ public class MainProgram
 
     public void handleWelcomeScreen()
     {
-        _helperMethods.showWelcomeMessage();
-        _helperMethods.showArtPic();
-        _helperMethods.showAwaitingMessage();
+        MessagesPresenter.showWelcomeMessage();
+        MessagesPresenter.showArtPic();
+        MessagesPresenter.showAwaitingMessage();
         _helperMethods.waitForUser();
+        _userStatus = UserStatus.NotLoggedIn;
     }
 
     public void handleLoginScreen()
     {
-        _loggedInAs =  _helperMethods.handleLoginMenu();
-        // Console.WriteLine($"Logged in as: {_loggedInAs}");
+        _userStatus = _helperMethods.processLoginMenu();
     }
 
     public void handleUser()
     {
-        if(_loggedInAs == LoggedInAs.NotLoggedIn){
-            //Show Goodbye message
-            _helperMethods.showGoodbyeMessage();
-            _helperMethods.showArtPic();
-            _helperMethods.showAwaitingMessage();
-            _helperMethods.waitForUser();
+        while (true)
+        {
+            if (_userStatus == UserStatus.Exiting)
+            {
+                //Show Goodbye message
+                MessagesPresenter.showGoodbyeMessage();
+                MessagesPresenter.showArtPic();
+                MessagesPresenter.showAwaitingMessage();
+                _helperMethods.waitForUser();
 
-            //Exit Program
-            Environment.Exit(0);
+                //Exit Program
+                Environment.Exit(0);
+            }
+            else if (_userStatus == UserStatus.Client)
+            {
+                _userStatus = _helperMethods.processLoggedClient();
+            }
+            else if (_userStatus == UserStatus.Administrator)
+            {
+                _userStatus = _helperMethods.processLoggedAdministrator();
+            }
+            else if (_userStatus == UserStatus.NotLoggedIn)
+            {
+                handleLoginScreen();
+            }
         }
-        else if(_loggedInAs == LoggedInAs.Client){
-            _helperMethods.handleLoggedClient();
-        }
-        else if(_loggedInAs == LoggedInAs.Administrator){
 
-        }
     }
 
 

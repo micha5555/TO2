@@ -1,5 +1,6 @@
 namespace Frontend;
 
+using System;
 using Services;
 
 public class HelperMethods
@@ -13,58 +14,196 @@ public class HelperMethods
         _mainProgram = mainProgram;
     }
 
-    public LoggedInAs handleLoginMenu()
+    public UserStatus processLoginMenu()
     {
-        showLoginMessage();
-        Console.Write("Wybrana opcja: ");
-        char optionChosen = Console.ReadKey().KeyChar;
+        MessagesPresenter.showLoginMessage();
+        char optionChosen = getUserOptionInput();
         if (!optionChosen.Equals('1') && !optionChosen.Equals('2') && !optionChosen.Equals('3') && !optionChosen.Equals('0'))
         {
-            showErrorOptionMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
-            return handleLoginMenu();
+            return processLoginMenu();
         }
 
         Console.Clear();
 
         if (optionChosen == '0')
         {
-            return LoggedInAs.NotLoggedIn;
+            return UserStatus.NotLoggedIn;
         }
         if (optionChosen == '1' || optionChosen == '2' || optionChosen == '3')
         {
             (string login, string password) credentials = getCredentials();
             if (optionChosen == '1' && checkClientLogin(credentials.login, credentials.password))
             {
-                return LoggedInAs.Client;
+                return UserStatus.Client;
             }
             else if (optionChosen == '2' && checkAdministratorLogin(credentials.login, credentials.password))
             {
-                return LoggedInAs.Administrator;
+                return UserStatus.Administrator;
             }
             else if (optionChosen == '3')
             {
                 createClient(credentials.login, credentials.password);
                 Console.WriteLine("Rejestracja przebiegła pomyślnie!");
-                showAwaitingMessage();
+                MessagesPresenter.showAwaitingMessage();
                 waitForUser();
             }
         }
         else
         {
-            showErrorOptionMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
-            return handleLoginMenu();
+            return processLoginMenu();
         }
 
-        return handleLoginMenu();
+        return processLoginMenu();
     }
 
-    public void handleLoggedClient()
+    private static char getUserOptionInput()
     {
-        //TODO
+        Console.Write("Wybrana opcja: ");
+        return Console.ReadKey().KeyChar;
+    }
+
+    public UserStatus processLoggedClient()
+    {
+        UserStatus userStatus = UserStatus.Client;
+        while (userStatus == UserStatus.Client)
+        {
+            //TODO
+            //Show menu with available options
+            MessagesPresenter.showClientMenuMessage();
+
+            //User choose option
+            char chosenOption = getUserOptionInput();
+
+            //Process choosen option
+            userStatus = processClientMenuChosenOption(chosenOption);
+        }
+
+        return userStatus;
+    }
+
+    private UserStatus processClientMenuChosenOption(char chosenOption)
+    {
+         List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+
+        if (!isOptionValid(validOptions, chosenOption))
+        {
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            return UserStatus.Client;
+        }
+
+        if (chosenOption == '0')
+        {
+            MessagesPresenter.showGoodbyeMessage();
+            MessagesPresenter.showArtPic();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            Environment.Exit(0);
+        }
+        if (chosenOption == '9')
+        {
+            // Show logout message 
+            return UserStatus.NotLoggedIn;
+        }
+        if (chosenOption == '1')
+        {
+            //TODO Show products in offer
+        }
+        else if (chosenOption == '2')
+        {
+            //TODO Show products by name
+        }
+        else if (chosenOption == '3')
+        {
+            //TODO Show cart
+        }
+        else if (chosenOption == '4')
+        {
+            //TODO Set Delivery address
+        }
+        else if (chosenOption == '5')
+        {
+            //TODO Show all client orders
+        }
+
+        return UserStatus.Client;
+    }
+
+    public UserStatus processLoggedAdministrator()
+    {
+        UserStatus userStatus = UserStatus.Administrator;
+        while (userStatus == UserStatus.Administrator)
+        {
+            MessagesPresenter.showAdministratorMenuMessage();
+
+            //User choose option
+            char choosenOption = getUserOptionInput();
+
+            //Process choosen option
+            userStatus = processAdministratorMenuChoosenOption(choosenOption);
+        }
+        return userStatus;
+    }
+
+    private UserStatus processAdministratorMenuChoosenOption(char option)
+    {
+        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+
+        if (!isOptionValid(validOptions, option))
+        {
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            return UserStatus.Administrator;
+        }
+
+        if (option == '0')
+        {
+            MessagesPresenter.showGoodbyeMessage();
+            MessagesPresenter.showArtPic();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            Environment.Exit(0);
+        }
+        if (option == '9')
+        {
+            // Show logout message 
+            return UserStatus.NotLoggedIn;
+        }
+        if (option == '1')
+        {
+            //TODO Register new administrator
+        }
+        else if (option == '2')
+        {
+            //TODO Add new product
+        }
+        else if (option == '3')
+        {
+            //TODO Show all products
+        }
+        else if (option == '4')
+        {
+            //TODO Show all products with name that contains given fraze
+        }
+        else if (option == '5')
+        {
+            //TODO Set shop payment details
+        }
+
+        return UserStatus.Administrator;
+    }
+
+    private bool isOptionValid(List<char> validOptions, char option)
+    {
+        return validOptions.Contains(option);
     }
 
     private void createClient(string login, string password)
@@ -95,8 +234,8 @@ public class HelperMethods
         string? password = Console.ReadLine();
         if (password == null)
         {
-            showErrorOptionMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
             password = getPassword();
         }
@@ -109,24 +248,15 @@ public class HelperMethods
         string? login = Console.ReadLine();
         if (login == null)
         {
-            showErrorInputMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorInputMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
             login = getLogin();
         }
         return login;
     }
 
-    public void showGoodbyeMessage()
-    {
-        Console.WriteLine(Messages.getGoodbyeMessage());
-    }
 
-
-    private void showErrorInputMessage()
-    {
-        Console.WriteLine(Messages.getErrorInputMessage());
-    }
 
     public void waitForUser()
     {
@@ -134,28 +264,6 @@ public class HelperMethods
         Console.Clear();
     }
 
-    public void showWelcomeMessage()
-    {
-        Console.WriteLine(Messages.getWelcomeMessage());
-    }
-    public void showArtPic()
-    {
-        Console.WriteLine(Messages.getArtPicMessage());
-    }
 
-    public void showAwaitingMessage()
-    {
-        Console.WriteLine(Messages.getAwaitingMessage());
-    }
 
-    public void showLoginMessage()
-    {
-        Console.WriteLine(Messages.getLoginMessage());
-    }
-    public void showErrorOptionMessage()
-    {
-        Console.WriteLine("\n" + Messages.getErrorOptionMessage() + "\n");
-    }
-
-    
 }

@@ -9,6 +9,7 @@ namespace Shared
         public string? PostalCode { get; set; }
         public string? Login { get; set; }
         public string? Password { get; set; }
+        public Cart Cart = new Cart();
 
         public Client(string Name, string Surname, string? Address, string? PostalCode)
         {
