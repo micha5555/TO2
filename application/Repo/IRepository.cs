@@ -15,6 +15,9 @@ namespace Repo
         public List<Order> GetOrders();
         public bool UpdateClient(Client clientData);
         public bool UpdateOrder(Order order);
+        public bool AddProductToOffer(Product product);
+        public bool AddProductsToOffer(List<Product> plist);
+        public bool RemoveProductFromOffer(Product product);
     }
 
 }

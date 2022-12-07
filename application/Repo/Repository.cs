@@ -115,7 +115,7 @@ namespace Repo
             }
             return filteredList;
         }
-    
+
         public List<Product> SearchForProductsByName(string name)
         {
             var offerList = GetAllOfferProducts();
@@ -128,6 +128,24 @@ namespace Repo
                 }
             }
             return filteredList;
+        }
+
+        public bool AddProductToOffer(Product product)
+        {
+            dataAccess.OfferList[0].AddToOffer(product);
+            return true;
+        }
+
+        public bool AddProductsToOffer(List<Product> plist)
+        {
+            dataAccess.OfferList[0].AddToOffer(plist);
+            return true;
+        }
+
+        public bool RemoveProductFromOffer(Product product)
+        {
+            dataAccess.OfferList[0].RemoveFromOffer(product);
+            return true;
         }
     }
 
