@@ -147,6 +147,16 @@ namespace Repo
             dataAccess.OfferList[0].RemoveFromOffer(product);
             return true;
         }
+
+        public void ReadDataOnLaunch()
+        {
+            dataAccess.DeserializeAll();
+        }
+
+        public void SaveDataOnExit()
+        {
+            dataAccess.SerializeAll();
+        }
     }
 
 }
