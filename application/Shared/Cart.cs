@@ -1,16 +1,12 @@
+using Services;
 namespace Shared
 {
-    public class Cart
+    public class Cart : ICartOperations
     {
         public Guid Id { get; set; }
         private double ActualPrice;
         public List<Product> ProductList;
-        public Cart(double price, List<Product> pl)
-        {
-            this.Id = Guid.NewGuid();
-            this.ActualPrice = price;
-            this.ProductList = pl;
-        }
+
         public Cart()
         {
             this.Id = System.Guid.NewGuid();
@@ -25,10 +21,17 @@ namespace Shared
             this.ActualPrice = 0;
         }
 
+        public Cart(double price, List<Product> pl){
+            this.Id = Guid.NewGuid();
+            this.ActualPrice = price;
+            this.ProductList = pl;
+        }
+
         public void AddToCart(Product p)
         {
             this.ProductList.Add(p);
         }
+        
         public void RemoveFromCart(Product p)
         {
             this.ProductList.Remove(p);
