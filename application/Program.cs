@@ -1,9 +1,9 @@
 ﻿using Frontend;
 
-LoggedInAs loggedInAs;
 MainProgram mainProgram = new MainProgram();
 
 mainProgram.handleWelcomeScreen();
-loggedInAs = mainProgram.handleLoginScreen();
+mainProgram.handleLoginScreen();
+mainProgram.handleUser();
 
-Console.WriteLine($"Logged in as: {loggedInAs}");
+

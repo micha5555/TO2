@@ -13,8 +13,9 @@ public class HelperMethods
         _mainProgram = mainProgram;
     }
 
-    public LoggedInAs login()
+    public LoggedInAs handleLoginMenu()
     {
+        showLoginMessage();
         Console.Write("Wybrana opcja: ");
         char optionChosen = Console.ReadKey().KeyChar;
         if (!optionChosen.Equals('1') && !optionChosen.Equals('2') && !optionChosen.Equals('3') && !optionChosen.Equals('0'))
@@ -22,7 +23,7 @@ public class HelperMethods
             showErrorOptionMessage();
             showAwaitingMessage();
             waitForUser();
-            return _mainProgram.handleLoginScreen();
+            return handleLoginMenu();
         }
 
         Console.Clear();
@@ -48,7 +49,7 @@ public class HelperMethods
             waitForUser(); 
         }
 
-        return _mainProgram.handleLoginScreen();
+        return handleLoginMenu();
     }
 
     private void createClient(string login, string password){

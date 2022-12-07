@@ -2,32 +2,38 @@ namespace Frontend;
 
 public class MainProgram
 {
-    private HelperMethods helperMethods;
+    private HelperMethods _helperMethods;
+    private LoggedInAs _loggedInAs;
 
     public MainProgram(HelperMethods helperMethods)
     {
-        this.helperMethods = helperMethods;
+        this._helperMethods = helperMethods;
     }
 
     public MainProgram()
     {
-        this.helperMethods = new HelperMethods(this);
+        this._helperMethods = new HelperMethods(this);
     }
 
     public void handleWelcomeScreen()
     {
-        helperMethods.showWelcomeMessage();
-        helperMethods.showArtPic();
-        helperMethods.showAwaitingMessage();
-        helperMethods.waitForUser();
+        _helperMethods.showWelcomeMessage();
+        _helperMethods.showArtPic();
+        _helperMethods.showAwaitingMessage();
+        _helperMethods.waitForUser();
     }
 
-    public LoggedInAs handleLoginScreen()
+    public void handleLoginScreen()
     {
-        helperMethods.showLoginMessage();
-        return helperMethods.login();
+        // _helperMethods.showLoginMessage();
+        _loggedInAs =  _helperMethods.handleLoginMenu();
+        Console.WriteLine($"Logged in as: {_loggedInAs}");
     }
 
+    public void handleUser()
+    {
+
+    }
 
 
 }
