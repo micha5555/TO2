@@ -37,7 +37,7 @@ public class RepoTest
         da.ClientList = new List<Client>();
         da.OfferList = new List<Offer>();
         da.OrderList = new List<Order>();
-       
+
         da.DeserializeAll();
         //check admin
         string adminNameActual = da.AdminList[0].Name;
