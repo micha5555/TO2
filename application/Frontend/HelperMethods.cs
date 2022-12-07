@@ -71,14 +71,69 @@ public class HelperMethods
     public UserStatus processLoggedClient()
     {
         UserStatus userStatus = UserStatus.Client;
-        //TODO
-        //Show menu with available options
+        while (userStatus == UserStatus.Client)
+        {
+            //TODO
+            //Show menu with available options
+            MessagesPresenter.showClientMenuMessage();
 
-        //User choose option
+            //User choose option
+            char chosenOption = getUserOptionInput();
 
-        //Process choosen option
+            //Process choosen option
+            userStatus = processClientMenuChosenOption(chosenOption);
+        }
 
         return userStatus;
+    }
+
+    private UserStatus processClientMenuChosenOption(char chosenOption)
+    {
+         List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+
+        if (!isOptionValid(validOptions, chosenOption))
+        {
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            return UserStatus.Client;
+        }
+
+        if (chosenOption == '0')
+        {
+            MessagesPresenter.showGoodbyeMessage();
+            MessagesPresenter.showArtPic();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            Environment.Exit(0);
+        }
+        if (chosenOption == '9')
+        {
+            // Show logout message 
+            return UserStatus.NotLoggedIn;
+        }
+        if (chosenOption == '1')
+        {
+            //TODO Show products in offer
+        }
+        else if (chosenOption == '2')
+        {
+            //TODO Show products by name
+        }
+        else if (chosenOption == '3')
+        {
+            //TODO Show cart
+        }
+        else if (chosenOption == '4')
+        {
+            //TODO Set Delivery address
+        }
+        else if (chosenOption == '5')
+        {
+            //TODO Show all client orders
+        }
+
+        return UserStatus.Client;
     }
 
     public UserStatus processLoggedAdministrator()
@@ -86,7 +141,6 @@ public class HelperMethods
         UserStatus userStatus = UserStatus.Administrator;
         while (userStatus == UserStatus.Administrator)
         {
-            Console.Clear();
             MessagesPresenter.showAdministratorMenuMessage();
 
             //User choose option

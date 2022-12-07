@@ -108,4 +108,20 @@ public static class Messages{
         return message;
     }
 
+    public static string getClientMenuMessage(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                           Menu Klienta                           \n";
+        message += "------------------------------------------------------------------\n";
+        message += "1. Przeglądanie produktów w ofercie\n";
+        message += "2. Wyszukiwanie produktów po nazwie\n";
+        message += "3. Wyświetlenie koszyka\n";
+        message += "4. Ustawienie danych wysyłki\n";
+        message += "5. Przeglądanie zamówień\n";
+        message += "9. Wylogowanie\n";
+        message += "0. Wyjście z programu\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
 }

@@ -43,4 +43,10 @@ public static class MessagesPresenter{
         Console.WriteLine(Messages.getAdministratorMenuMessage());
     }
 
+    public static void showClientMenuMessage()
+    {
+        Console.Clear();
+        Console.WriteLine(Messages.getClientMenuMessage());
+    }
+
 }
