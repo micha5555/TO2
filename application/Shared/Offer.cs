@@ -1,12 +1,21 @@
+using System.Text.Json.Serialization;
+
 namespace Shared
 {
     public class Offer
     {
-        public List<Product> ProductList{get; set;}
-
-        public Offer()
+        public Guid Id { get; set; }
+        public List<Product> ProductList { get; set; }
+        [JsonConstructor]
+        public Offer(){}
+        public Offer(Guid id, List<Product> produtcs){
+            this.Id = id;
+            this.ProductList = produtcs;
+        }
+        public Offer(List<Product> products)
         {
-            this.ProductList = new List<Product>();
+            this.Id = Guid.NewGuid();
+            this.ProductList = products;
         }
 
         public void AddToOffer(Product product)
