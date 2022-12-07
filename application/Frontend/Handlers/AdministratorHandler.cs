@@ -1,10 +1,12 @@
 namespace Frontend;
 
+using System;
 using Services;
-public class AdministratorHandler{
+public class AdministratorHandler
+{
     private IAdministratorOperations _administratorOperations = new AdministratorOperations();
 
-     public UserStatus processLoggedAdministrator()
+    public UserStatus processLoggedAdministrator()
     {
         UserStatus userStatus = UserStatus.Administrator;
         while (userStatus == UserStatus.Administrator)
@@ -37,6 +39,7 @@ public class AdministratorHandler{
         if (chosenOption == '1')
         {
             //TODO Register new administrator
+            registerNewAdministrator();
         }
         else if (chosenOption == '2')
         {
@@ -58,7 +61,28 @@ public class AdministratorHandler{
         return UserStatus.Administrator;
     }
 
-    private bool validateChosenOption(char chosenOption){
+    private void registerNewAdministrator()
+    {
+        MessagesPresenter.showAdministratorRegistrationMessage();
+
+        (string login, string password) = CommonMethods.getCredentials();
+        RegistrationStatus status = _administratorOperations.registerNewAdministrator(login, password);
+
+        if (status == RegistrationStatus.Registered)
+        {
+            MessagesPresenter.showAdministratorSuccesfulRegistrationMessage();
+        }
+        else if (status == RegistrationStatus.NotRegistered)
+        {
+            MessagesPresenter.showAdministratorUnsuccesfulRegistrationMessage();
+        }
+
+        MessagesPresenter.showAwaitingMessage();
+        CommonMethods.waitForUser();
+    }
+
+    private bool validateChosenOption(char chosenOption)
+    {
         List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
 
         if (!CommonMethods.isOptionValid(validOptions, chosenOption))

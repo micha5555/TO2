@@ -124,4 +124,27 @@ public static class Messages{
         return message;
     }
 
+    public static string getAdministratorRegistrationMessage(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                    Rejestracja Administratora                    \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getAdministratorSuccesfulRegistrationMessage(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                 Rejestracja przebiegła pomyślnie                 \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getAdministratorUnsuccesfulRegistrationMessage(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "               Rejestracja nie przebiegła pomyślnie               \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
 }

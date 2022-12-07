@@ -27,7 +27,7 @@ public class MainProgram
         {
             if (_userStatus == UserStatus.Exiting)
             {
-                //Show Goodbye message
+                //Show Goodbye message - TODO Group up to one cast
                 MessagesPresenter.showGoodbyeMessage();
                 MessagesPresenter.showArtPic();
                 MessagesPresenter.showAwaitingMessage();

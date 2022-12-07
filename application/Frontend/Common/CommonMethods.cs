@@ -65,14 +65,14 @@ public class CommonMethods
         return validOptions.Contains(option);
     }
 
-    public (string, string) getCredentials()
+    public static (string, string) getCredentials()
     {
         string login = getLogin();
         string password = getPassword();
         return (login, password);
     }
 
-    private string getPassword()
+    private static string getPassword()
     {
         Console.Write("Podaj hasło: ");
         string? password = Console.ReadLine();
@@ -86,7 +86,7 @@ public class CommonMethods
         return password;
     }
 
-    private string getLogin()
+    private static string getLogin()
     {
         Console.Write("Podaj login: ");
         string? login = Console.ReadLine();

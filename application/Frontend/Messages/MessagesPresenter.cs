@@ -1,6 +1,7 @@
 namespace Frontend;
 
-public static class MessagesPresenter{
+public static class MessagesPresenter
+{
     public static void showWelcomeMessage()
     {
         Console.Clear();
@@ -49,4 +50,19 @@ public static class MessagesPresenter{
         Console.WriteLine(Messages.getClientMenuMessage());
     }
 
+    public static void showAdministratorRegistrationMessage()
+    {
+        Console.Clear();
+        Console.WriteLine(Messages.getAdministratorRegistrationMessage());
+    }
+
+    public static void showAdministratorSuccesfulRegistrationMessage()
+    {
+        Console.WriteLine("\n" + Messages.getAdministratorSuccesfulRegistrationMessage());
+    }
+
+    public static void showAdministratorUnsuccesfulRegistrationMessage()
+    {
+        Console.WriteLine("\n" + Messages.getAdministratorUnsuccesfulRegistrationMessage());
+    }
 }

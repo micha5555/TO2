@@ -1,3 +1,5 @@
+using Frontend;
+
 namespace Services;
 
 public class AdministratorOperations : IAdministratorOperations
@@ -8,9 +10,9 @@ public class AdministratorOperations : IAdministratorOperations
         //TODO To Implement!
     }
 
-    public void createNewAdministrator(string login, string password)
+    public RegistrationStatus registerNewAdministrator(string login, string password)
     {
-        return;
+        return RegistrationStatus.Registered;
         //TODO To Implement!@
     }
 }
