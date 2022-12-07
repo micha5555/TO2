@@ -1,6 +1,7 @@
+using Services;
 namespace Shared
 {
-    public class Cart
+    public class Cart : ICartOperations
     {
         private double ActualPrice;
         private List<Product> ProductList;

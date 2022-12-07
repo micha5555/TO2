@@ -1,6 +1,7 @@
+using Services;
 namespace Shared
 {
-    public class Offer
+    public class Offer : IOfferOperations
     {
         public List<Product> ProductList{get; set;}
 

@@ -1,8 +1,10 @@
 namespace Shared
 {
-    public class Operations
+    using Services;
+    public class Operations : IGeneralOperations
     {
-        public static List<Product> ProposeProductsBasedOnCart(Cart cart, List<Order> orders/*, Offer offer*/, int quantity)
+
+        public List<Product> ProposeProductsBasedOnCart(Cart cart, List<Order> orders, int quantity)
         {
             List<Product> basketProducts = new List<Product>();
             foreach (Product prod in cart.GetProducts())
@@ -14,7 +16,6 @@ namespace Shared
                 
             }
             
-            //List<Product> offerProducts = offer.GetProductList();
             var sortedDict = PrepareSortedOrders(orders, basketProducts);
             List<Product> proposal = new List<Product>();
             int i = 0;

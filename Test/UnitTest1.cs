@@ -1,5 +1,6 @@
 namespace Test;
 using Shared;
+using Services;
 
 public class Tests
 {
@@ -37,12 +38,13 @@ public class Tests
         orders.Add(new Order(new List<Product> { p9, p10, p11, p12, p13}));
         orders.Add(new Order(new List<Product> { p1, p9, p10, p11, p12}));
         
+        IGeneralOperations ge = new Operations();
         //powinno zaproponować p4, p5
-        List<Product> prop1 = Operations.ProposeProductsBasedOnCart(cart, orders, 2);
+        List<Product> prop1 = ge.ProposeProductsBasedOnCart(cart, orders, 2);
         //powinno zaproponować p4, p5, p7, p8
-        List<Product> prop2 = Operations.ProposeProductsBasedOnCart(cart, orders, 4);
+        List<Product> prop2 = ge.ProposeProductsBasedOnCart(cart, orders, 4);
         //powinno zaproponować p4, p5, p7, p8, p9, p10, p11, p12
-        List<Product> prop3 = Operations.ProposeProductsBasedOnCart(cart, orders, 8);
+        List<Product> prop3 = ge.ProposeProductsBasedOnCart(cart, orders, 8);
 
         Console.WriteLine("Proposal 1");
         foreach (Product p in prop1)
