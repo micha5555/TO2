@@ -4,7 +4,7 @@ namespace Shared
     {
         private double ActualPrice;
         public List<CartProduct> CartProductList;
-
+        
         public Cart()
         {
             this.CartProductList = new List<CartProduct>();

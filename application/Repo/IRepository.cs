@@ -4,15 +4,17 @@ namespace Repo
 
     public interface IRepository
     {
-        public void AddAdministrator(Shared.Administrator admin);
+        public int AddAdministrator(Administrator admin);
         public bool CheckCredentialsAdmin(string login, string password);
         public bool CheckCredentialsClient(string login, string password);
-        public List<Shared.Product> GetAllOfferProducts();
-        public List<Shared.Product> FilterProducts(string name, double price, Shared.Category category);
-        public Shared.Cart GetCart(Guid clientID);
-        public List<Shared.Order> GetOrders(Guid clientID);
-        public bool UpdateClient(Shared.Client clientData);
-        public bool UpdateOrder(Shared.Order order);
+        public List<Product> GetAllOfferProducts();
+        public List<Product> FilterProductsByCategory(Category category);
+        public List<Product> SearchForProductsByName(string name);
+        public List<Order> GetClientOrders(Guid clientID);
+        public void AddClientOrder(Order order);
+        public List<Order> GetOrders();
+        public bool UpdateClient(Client clientData);
+        public bool UpdateOrder(Order order);
     }
 
 }
