@@ -1,4 +1,4 @@
-namespace Repo.DataAccess
+namespace Repo.DataAccessClass
 {
 
     public interface IDataAccess

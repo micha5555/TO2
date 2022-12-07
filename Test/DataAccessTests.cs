@@ -1,8 +1,8 @@
 namespace Test;
 using Shared;
-using Repo.DataAccess;
+using Repo.DataAccessClass;
 
-public class RepoTest
+public class DataAccessTests
 {
     private DataAccess da;
     [SetUp]
