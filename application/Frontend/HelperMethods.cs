@@ -1,5 +1,6 @@
 namespace Frontend;
 
+using System;
 using Services;
 
 public class HelperMethods
@@ -13,17 +14,16 @@ public class HelperMethods
         _mainProgram = mainProgram;
     }
 
-    public LoggedInAs handleLoginMenu()
+    public LoggedInAs processLoginMenu()
     {
-        showLoginMessage();
-        Console.Write("Wybrana opcja: ");
-        char optionChosen = Console.ReadKey().KeyChar;
+        MessagesPresenter.showLoginMessage();
+        char optionChosen = getUserOptionInput();
         if (!optionChosen.Equals('1') && !optionChosen.Equals('2') && !optionChosen.Equals('3') && !optionChosen.Equals('0'))
         {
-            showErrorOptionMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
-            return handleLoginMenu();
+            return processLoginMenu();
         }
 
         Console.Clear();
@@ -47,24 +47,73 @@ public class HelperMethods
             {
                 createClient(credentials.login, credentials.password);
                 Console.WriteLine("Rejestracja przebiegła pomyślnie!");
-                showAwaitingMessage();
+                MessagesPresenter.showAwaitingMessage();
                 waitForUser();
             }
         }
         else
         {
-            showErrorOptionMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
-            return handleLoginMenu();
+            return processLoginMenu();
         }
 
-        return handleLoginMenu();
+        return processLoginMenu();
     }
 
-    public void handleLoggedClient()
+    private static char getUserOptionInput()
+    {
+        Console.Write("Wybrana opcja: ");
+        return Console.ReadKey().KeyChar;
+    }
+
+    public void processLoggedClient()
     {
         //TODO
+        //Show menu with available options
+
+        //User choose option
+
+        //Process choosen option
+
+
+    }
+
+    public void processLoggedAdministrator()
+    {
+        bool isLogged = true;
+        while (isLogged)
+        {
+            Console.Clear();
+            MessagesPresenter.showAdministratorMenuMessage();
+
+            //User choose option
+            char choosenOption = getUserOptionInput();
+
+            //Process choosen option
+            isLogged = processAdministratorMenuChoosenOption(choosenOption);
+        }
+    }
+
+    private bool processAdministratorMenuChoosenOption(char option)
+    {
+        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+
+        if (!isOptionValid(validOptions, option))
+        {
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            return true;
+        }
+        
+        return false;
+    }
+
+    private bool isOptionValid(List<char> validOptions, char option)
+    {
+        return validOptions.Contains(option);
     }
 
     private void createClient(string login, string password)
@@ -95,8 +144,8 @@ public class HelperMethods
         string? password = Console.ReadLine();
         if (password == null)
         {
-            showErrorOptionMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
             password = getPassword();
         }
@@ -109,24 +158,15 @@ public class HelperMethods
         string? login = Console.ReadLine();
         if (login == null)
         {
-            showErrorInputMessage();
-            showAwaitingMessage();
+            MessagesPresenter.showErrorInputMessage();
+            MessagesPresenter.showAwaitingMessage();
             waitForUser();
             login = getLogin();
         }
         return login;
     }
 
-    public void showGoodbyeMessage()
-    {
-        Console.WriteLine(Messages.getGoodbyeMessage());
-    }
 
-
-    private void showErrorInputMessage()
-    {
-        Console.WriteLine(Messages.getErrorInputMessage());
-    }
 
     public void waitForUser()
     {
@@ -134,28 +174,6 @@ public class HelperMethods
         Console.Clear();
     }
 
-    public void showWelcomeMessage()
-    {
-        Console.WriteLine(Messages.getWelcomeMessage());
-    }
-    public void showArtPic()
-    {
-        Console.WriteLine(Messages.getArtPicMessage());
-    }
 
-    public void showAwaitingMessage()
-    {
-        Console.WriteLine(Messages.getAwaitingMessage());
-    }
 
-    public void showLoginMessage()
-    {
-        Console.WriteLine(Messages.getLoginMessage());
-    }
-    public void showErrorOptionMessage()
-    {
-        Console.WriteLine("\n" + Messages.getErrorOptionMessage() + "\n");
-    }
-
-    
 }

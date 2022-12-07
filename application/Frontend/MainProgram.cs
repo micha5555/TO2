@@ -17,35 +17,34 @@ public class MainProgram
 
     public void handleWelcomeScreen()
     {
-        _helperMethods.showWelcomeMessage();
-        _helperMethods.showArtPic();
-        _helperMethods.showAwaitingMessage();
+        MessagesPresenter.showWelcomeMessage();
+        MessagesPresenter.showArtPic();
+        MessagesPresenter.showAwaitingMessage();
         _helperMethods.waitForUser();
     }
 
     public void handleLoginScreen()
     {
-        _loggedInAs =  _helperMethods.handleLoginMenu();
-        // Console.WriteLine($"Logged in as: {_loggedInAs}");
+        _loggedInAs =  _helperMethods.processLoginMenu();
     }
 
     public void handleUser()
     {
         if(_loggedInAs == LoggedInAs.NotLoggedIn){
             //Show Goodbye message
-            _helperMethods.showGoodbyeMessage();
-            _helperMethods.showArtPic();
-            _helperMethods.showAwaitingMessage();
+            MessagesPresenter.showGoodbyeMessage();
+            MessagesPresenter.showArtPic();
+            MessagesPresenter.showAwaitingMessage();
             _helperMethods.waitForUser();
 
             //Exit Program
             Environment.Exit(0);
         }
         else if(_loggedInAs == LoggedInAs.Client){
-            _helperMethods.handleLoggedClient();
+            _helperMethods.processLoggedClient();
         }
         else if(_loggedInAs == LoggedInAs.Administrator){
-
+            _helperMethods.processLoggedAdministrator(); 
         }
     }
 
