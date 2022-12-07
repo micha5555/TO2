@@ -26,7 +26,7 @@ public class MainProgram
     public void handleLoginScreen()
     {
         _loggedInAs =  _helperMethods.handleLoginMenu();
-        Console.WriteLine($"Logged in as: {_loggedInAs}");
+        // Console.WriteLine($"Logged in as: {_loggedInAs}");
     }
 
     public void handleUser()
@@ -37,7 +37,7 @@ public class MainProgram
             _helperMethods.showArtPic();
             _helperMethods.showAwaitingMessage();
             _helperMethods.waitForUser();
-            
+
             //Exit Program
             Environment.Exit(0);
         }
