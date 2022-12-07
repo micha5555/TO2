@@ -147,4 +147,12 @@ public static class Messages{
         message += "------------------------------------------------------------------\n";
         return message;
     }
+
+    public static string getProductCategorySelectHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                    Wybierz kategorię produktu                    \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
 }

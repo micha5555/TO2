@@ -3,10 +3,10 @@ namespace Frontend;
 using System;
 
 
-public class CommonMethods
+public static class CommonMethods
 {
     //TODO do przerobienia - nie podoba mi się
-    public UserStatus processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
+    public static UserStatus processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
     {
         MessagesPresenter.showLoginMessage();
         char optionChosen = getUserOptionInput();
@@ -104,5 +104,69 @@ public class CommonMethods
     {
         Console.ReadKey();
         Console.Clear();
+    }
+
+    public static List<List<T>> divideListIntoMulitipleLists<T>(List<T> list, int size) where T : class
+    {
+        var partitions = new List<List<T>>();
+        for (int i = 0; i < list.Count; i += size)
+        {
+            partitions.Add(list.GetRange(i, Math.Min(size, list.Count - i)));
+        }
+        return partitions;
+    }
+
+    public static T choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
+    {
+        List<List<T>> partitions = divideListIntoMulitipleLists<T>(list, 9);
+
+        T? chosen = null;
+
+        foreach (List<T> partition in partitions)
+        {
+            bool isValid = false;
+            char option = 'i';
+            while (!isValid)
+            {
+                Console.Clear();
+                Console.Write(headMessage);
+
+                showPagedList<T>(list);
+
+                option = getUserOptionInput();
+                isValid = isOptionValid(validPagingOptions<T>(partition), option);
+            }
+
+            chosen = partition.ElementAt(option + 1 - '0');
+        }
+
+        if (chosen == null)
+        {
+            throw new Exception();
+        }
+
+        return chosen;
+    }
+    public static void showPagedList<T>(List<T> list) where T : class
+    {
+        string message = "";
+        for (int i = 0; i < list.Count; i++)
+        {
+            message += $"{i + 1}. {list.ElementAt(i)}\n";
+        }
+        message += "0. Następna strona\n";
+        message += "------------------------------------------------------------------\n";
+    }
+
+    public static List<char> validPagingOptions<T>(List<T> list) where T : class
+    {
+        List<char> validOptions = new List<char>();
+        validOptions.Add('0');
+        int quantintyOfItemsInList = list.Count;
+        for (int i = 1; i < quantintyOfItemsInList + 1; i++)
+        {
+            validOptions.Add((char)(i + '0'));
+        }
+        return validOptions;
     }
 }

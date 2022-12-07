@@ -4,7 +4,6 @@ public class MainProgram
 {
     private AdministratorHandler _administratorHandler = new AdministratorHandler();
     private ClientHandler _clientHandler = new ClientHandler();
-    private CommonMethods _commonMethods = new CommonMethods();
     private UserStatus _userStatus;
 
     public void handleWelcomeScreen()
@@ -18,7 +17,7 @@ public class MainProgram
 
     public void handleLoginScreen()
     {
-        _userStatus = _commonMethods.processLoginMenu(_administratorHandler, _clientHandler);
+        _userStatus = CommonMethods.processLoginMenu(_administratorHandler, _clientHandler);
     }
 
     public void handleUser()

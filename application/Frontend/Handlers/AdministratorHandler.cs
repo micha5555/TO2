@@ -38,12 +38,12 @@ public class AdministratorHandler
         }
         if (chosenOption == '1')
         {
-            //TODO Register new administrator
             registerNewAdministrator();
         }
         else if (chosenOption == '2')
         {
             //TODO Add new product
+            addNewProduct();
         }
         else if (chosenOption == '3')
         {
@@ -59,6 +59,13 @@ public class AdministratorHandler
         }
 
         return UserStatus.Administrator;
+    }
+
+    private void addNewProduct()
+    {
+        // Show Adding New Product Message
+
+        
     }
 
     private void registerNewAdministrator()
