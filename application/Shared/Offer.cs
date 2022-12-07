@@ -8,10 +8,6 @@ namespace Shared
         public List<Product> ProductList { get; set; }
         [JsonConstructor]
         public Offer(){}
-        public Offer(Guid id, List<Product> produtcs){
-            this.Id = id;
-            this.ProductList = produtcs;
-        }
         public Offer(List<Product> products)
         {
             this.Id = Guid.NewGuid();
@@ -33,7 +29,7 @@ namespace Shared
             this.ProductList.Remove(product);
         }
 
-        public List<Product> GetProductList()
+        public List<Product> GetProducts()
         {
             return this.ProductList;
         }

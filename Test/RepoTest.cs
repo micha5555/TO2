@@ -20,6 +20,7 @@ public class RepoTest
         da.CartList.Add(new Cart(productList));
         da.CartList.Add(new Cart(productList));
         da.OfferList.Add(new Offer(productList));
+        da.OrderList.Add(new Order(productList));
         for (int i = 0; i <= 9; i++)
         {
             da.ClientList.Add(new Client("Michalek" + i, "Marciski" + i, "PrzyBazantarnii" + i, "07-990" + i));
@@ -35,6 +36,7 @@ public class RepoTest
         da.CartList = new List<Cart>();
         da.ClientList = new List<Client>();
         da.OfferList = new List<Offer>();
+        da.OrderList = new List<Order>();
        
         da.DeserializeAll();
         //check admin
@@ -44,15 +46,19 @@ public class RepoTest
         string clientNameActual = da.ClientList[0].Name;
         string clientNameExpected = "Michalek0";
         //check offer
-        int offerCountActual = da.OfferList[0].GetProductList().Count;
+        int offerCountActual = da.OfferList[0].GetProducts().Count;
         int offerCountExpected = 6;
         //check cart
         int cartCountActual = da.CartList[0].GetProducts().Count;
         int cartCountExpected = 6;
+        //check order
+        int orderCountActual = da.OrderList[0].GetProducts().Count;
+        int orderCountExpected = 6;
 
         Assert.AreEqual(adminNameExpected, adminNameActual);
         Assert.AreEqual(clientNameExpected, clientNameActual);
         Assert.AreEqual(cartCountExpected, cartCountActual);
         Assert.AreEqual(offerCountExpected, offerCountActual);
+        Assert.AreEqual(orderCountExpected, orderCountActual);
     }
 }

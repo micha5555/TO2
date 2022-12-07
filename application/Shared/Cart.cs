@@ -5,8 +5,9 @@ namespace Shared
         public Guid Id { get; set; }
         private double ActualPrice;
         public List<Product> ProductList;
-        public Cart(Guid id, double price, List<Product> pl){
-            this.Id = id;
+        public Cart(double price, List<Product> pl)
+        {
+            this.Id = Guid.NewGuid();
             this.ActualPrice = price;
             this.ProductList = pl;
         }
