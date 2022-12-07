@@ -61,10 +61,10 @@ namespace Shared
             return sortedDict;
         }
 
-        public static List<Product> ProposeProductsBasedOnProduct(Product product, List<Order> orders, int quantity) //, Offer offer
+        public List<Product> ProposeProductsBasedOnProduct(Product product, List<Order> orders, int quantity)
+        
         {    
             Dictionary<Product, int> sortedDict = PrepareSortedProducts(orders, product);
-            //sortedDict.Select(i => $"{i.Key.Name}: {i.Value}").ToList().ForEach(Console.WriteLine); //dict print
 
             List<Product> proposal = new List<Product>();
             int i = 0;

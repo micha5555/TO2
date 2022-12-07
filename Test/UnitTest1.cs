@@ -92,12 +92,13 @@ public class Tests
         orders.Add(new Order(new List<Product> {p1,     p3,     p5, p6,     p8, p9, p10, p11, p12, p13, p14}));
         orders.Add(new Order(new List<Product> {    p2,     p4,     p6,     p8, p9, p10,      p12, p13,    }));
         
+        IGeneralOperations ge = new Operations();
         //powinno zaproponować p5 p9 p11 p14
-        List<Product> prop1 = Operations.ProposeProductsBasedOnProduct(p1, orders, 4);
+        List<Product> prop1 = ge.ProposeProductsBasedOnProduct(p1, orders, 4);
         //powinno zaproponować p4 p9
-        List<Product> prop2 = Operations.ProposeProductsBasedOnProduct(p2, orders, 2);
+        List<Product> prop2 = ge.ProposeProductsBasedOnProduct(p2, orders, 2);
         //powinno zaproponować p1 p5 p8 p9 p10 p11 p13 p14 p2 p4
-        List<Product> prop3 = Operations.ProposeProductsBasedOnProduct(p3, orders, 10);
+        List<Product> prop3 = ge.ProposeProductsBasedOnProduct(p3, orders, 10);
 
         Console.WriteLine("Proposal 1");
         foreach (Product p in prop1)
