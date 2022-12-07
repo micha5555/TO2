@@ -7,7 +7,8 @@ namespace Repo
     {
         private DataAccess dataAccess;
         private static Repository instance = null;
-        private Repository() { 
+        private Repository()
+        {
             this.dataAccess = DataAccess.Instance;
         }
         public static Repository Instance
@@ -21,53 +22,112 @@ namespace Repo
                 return instance;
             }
         }
-        public void AddAdministrator(Administrator admin)
+        public int AddAdministrator(Administrator admin)
         {
-            throw new NotImplementedException();
+            if (dataAccess.AdminList.Contains(admin))
+            {
+                return -1;
+            }
+            dataAccess.AdminList.Add(admin);
+            return 0;
         }
 
         public bool CheckCredentialsAdmin(string login, string password)
         {
-            throw new NotImplementedException();
+            var item = dataAccess.AdminList.FirstOrDefault(x => (x.Login.Equals(login) && x.Password.Equals(password)));
+            if (item is null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public bool CheckCredentialsClient(string login, string password)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Product> FilterProducts(string name, double price, Category category)
-        {
-            throw new NotImplementedException();
+            var item = dataAccess.ClientList.FirstOrDefault(x => (x.Login.Equals(login) && x.Password.Equals(password)));
+            if (item is null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public List<Product> GetAllOfferProducts()
         {
-            throw new NotImplementedException();
+            return dataAccess.OfferList[0].GetProductList();
         }
 
-        public Cart GetCart(Guid clientID)
+        public List<Order> GetClientOrders(Guid clientID)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Order> GetOrders(Guid clientID)
-        {
-            return dataAccess.OrderList.Select(o => {
-                return new { success = o.Id.Equals(clientID), value = o};
+            return dataAccess.OrderList.Select(o =>
+            {
+                return new { success = o.ClientId.Equals(clientID), value = o };
             })
             .Where(o => o.success)
             .Select(v => (Order)v.value).ToList();
         }
-
+        public List<Order> GetOrders()
+        {
+            return dataAccess.OrderList;
+        }
+        public void AddClientOrder(Order order)
+        {
+            dataAccess.OrderList.Add(order);
+        }
         public bool UpdateClient(Client clientData)
         {
-            throw new NotImplementedException();
+            int index = dataAccess.ClientList.FindIndex(x => x.Id == clientData.Id);
+            if (index == -1)
+            {
+                return false;
+            }
+            dataAccess.ClientList[index] = clientData;
+            return true;
         }
 
         public bool UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            int index = dataAccess.OrderList.FindIndex(x => x.Id == order.Id);
+            if (index == -1)
+            {
+                return false;
+            }
+            dataAccess.OrderList[index] = order;
+            return true;
+        }
+
+        public List<Product> FilterProductsByCategory(Category category)
+        {
+            var offerList = GetAllOfferProducts();
+            var filteredList = new List<Product>();
+            foreach (Product p in offerList)
+            {
+                if (p.CategoryClass == category)
+                {
+                    filteredList.Add(p);
+                }
+            }
+            return filteredList;
+        }
+    
+        public List<Product> SearchForProductsByName(string name)
+        {
+            var offerList = GetAllOfferProducts();
+            var filteredList = new List<Product>();
+            foreach (Product p in offerList)
+            {
+                if (p.Name.Contains(name))
+                {
+                    filteredList.Add(p);
+                }
+            }
+            return filteredList;
         }
     }
 
