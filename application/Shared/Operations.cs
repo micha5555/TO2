@@ -8,7 +8,7 @@ namespace Shared
 
         public Operations()
         {
-            IRepository repository = new Repository();
+            IRepository repository = Repository.Instance;
             this.orders = repository.GetOrders();
         }
 

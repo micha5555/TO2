@@ -2,7 +2,7 @@ using Shared;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Repo.DataAccess
+namespace Repo.DataAccessClass
 {
 
     public class DataAccess : IDataAccess

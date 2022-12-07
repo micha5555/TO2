@@ -4,10 +4,17 @@ namespace Repo
 
     public interface IRepository
     {
-        List<Order> GetOrders();
-        public void DoSomething1();
-        public void DoSomething2();
-        public void DoSomething3();
+        public int AddAdministrator(Administrator admin);
+        public bool CheckCredentialsAdmin(string login, string password);
+        public bool CheckCredentialsClient(string login, string password);
+        public List<Product> GetAllOfferProducts();
+        public List<Product> FilterProductsByCategory(Category category);
+        public List<Product> SearchForProductsByName(string name);
+        public List<Order> GetClientOrders(Guid clientID);
+        public void AddClientOrder(Order order);
+        public List<Order> GetOrders();
+        public bool UpdateClient(Client clientData);
+        public bool UpdateOrder(Order order);
     }
 
 }
