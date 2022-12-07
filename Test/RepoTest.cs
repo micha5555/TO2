@@ -44,15 +44,15 @@ public class RepoTest
         string clientNameActual = da.ClientList[0].Name;
         string clientNameExpected = "Michalek0";
         //check offer
-        // int offerCountActual = da.OfferList[0].GetProductList().Count;
-        // int offerCountExpected = 6;
+        int offerCountActual = da.OfferList[0].GetProductList().Count;
+        int offerCountExpected = 6;
         //check cart
-        //int cartCountActual = da.CartList[0].GetProducts().Count;
-        //int cartCountExpected = 6;
+        int cartCountActual = da.CartList[0].GetProducts().Count;
+        int cartCountExpected = 6;
 
         Assert.AreEqual(adminNameExpected, adminNameActual);
         Assert.AreEqual(clientNameExpected, clientNameActual);
-        //Assert.AreEqual(cartCountExpected, cartCountActual);
-        //Assert.AreEqual(offerCountExpected, offerCountActual);
+        Assert.AreEqual(cartCountExpected, cartCountActual);
+        Assert.AreEqual(offerCountExpected, offerCountActual);
     }
 }
