@@ -18,6 +18,8 @@ namespace Repo
         public bool AddProductToOffer(Product product);
         public bool AddProductsToOffer(List<Product> plist);
         public bool RemoveProductFromOffer(Product product);
+        public void ReadDataOnLaunch();
+        public void SaveDataOnExit();
     }
 
 }
