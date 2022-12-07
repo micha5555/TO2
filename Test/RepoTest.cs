@@ -20,7 +20,12 @@ public class RepoTest
         da.CartList.Add(new Cart(productList));
         da.CartList.Add(new Cart(productList));
         da.OfferList.Add(new Offer(productList));
-        da.OrderList.Add(new Order(productList));
+        List<CartProduct> cartProdList = new List<CartProduct>();
+        foreach(Product p in productList)
+        {
+            cartProdList.Add(new CartProduct(p, 1));
+        }
+        da.OrderList.Add(new Order(cartProdList));
         for (int i = 0; i <= 9; i++)
         {
             da.ClientList.Add(new Client("Michalek" + i, "Marciski" + i, "PrzyBazantarnii" + i, "07-990" + i));
@@ -49,7 +54,7 @@ public class RepoTest
         int offerCountActual = da.OfferList[0].GetProductList().Count;
         int offerCountExpected = 6;
         //check cart
-        int cartCountActual = da.CartList[0].GetProducts().Count;
+        int cartCountActual = da.CartList[0].GetCartProducts().Count;
         int cartCountExpected = 6;
         //check order
         int orderCountActual = da.OrderList[0].GetProducts().Count;

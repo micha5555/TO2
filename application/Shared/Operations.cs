@@ -15,11 +15,11 @@ namespace Shared
         public List<Product> ProposeProductsBasedOnCart(Cart cart, int quantity)
         {
             List<Product> basketProducts = new List<Product>();
-            foreach (Product prod in cart.GetProducts())
+            foreach (CartProduct prod in cart.GetCartProducts())
             {
-                if (!basketProducts.Contains(prod))
+                if (!basketProducts.Contains(prod.Product))
                 {
-                    basketProducts.Add(prod);
+                    basketProducts.Add(prod.Product);
                 }
                 
             }
@@ -30,8 +30,9 @@ namespace Shared
             foreach (Order order in sortedDict.Keys)
             {
                 if (order.OrderProductList == null) continue;
-                foreach (Product product in order.OrderProductList)
+                foreach (CartProduct p in order.OrderProductList)
                 {
+                    Product product = p.Product;
                     if (!proposal.Contains(product) && !basketProducts.Contains(product))
                     {
                         proposal.Add(product);
@@ -55,8 +56,13 @@ namespace Shared
             {
                 foreach (Order order in ordersWithCount.Keys)
                 {
-                    if (order.OrderProductList == null) continue;
-                    if (order.OrderProductList.Contains(product))
+                    List<Product> prodList = new List<Product>();
+                    foreach (CartProduct cp in order.OrderProductList)
+                    {
+                        prodList.Add(cp.Product);
+                    }
+                    if (prodList == null) continue;
+                    if (prodList.Contains(product))
                     {
                         ordersWithCount[order]++;
                     }
@@ -74,7 +80,7 @@ namespace Shared
         public List<Product> ProposeProductsBasedOnProduct(Product product, int quantity)
         
         {    
-            Dictionary<Product, int> sortedDict = PrepareSortedProducts(orders, product);
+            Dictionary<Product, int> sortedDict = PrepareSortedProducts(product);
 
             List<Product> proposal = new List<Product>();
             int i = 0;
@@ -87,15 +93,20 @@ namespace Shared
             return proposal;
         }
 
-        private static Dictionary<Product, int> PrepareSortedProducts(List<Order> orders, Product product)
+        private Dictionary<Product, int> PrepareSortedProducts(Product product)
         {
             Dictionary<Product, int> Dict = new Dictionary<Product, int>();
             foreach (Order o in orders)
             {
-                if (o.OrderProductList == null) continue;
-                if (o.OrderProductList.Contains(product))
+                List<Product> prodList = new List<Product>();
+                foreach (CartProduct cp in o.OrderProductList)
                 {
-                    foreach(Product p in o.OrderProductList)
+                    prodList.Add(cp.Product);
+                }
+                if (prodList == null) continue;
+                if (prodList.Contains(product))
+                {
+                    foreach(Product p in prodList)
                     {
                         if( Dict.ContainsKey(p))
                         {
