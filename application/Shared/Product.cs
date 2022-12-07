@@ -27,5 +27,10 @@ namespace Shared
                 return (Name.Equals(p.Name)) && (Price == p.Price) && (CategoryClass.Equals(p.CategoryClass));
             }
         }
+
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode()*17 + this.Price.GetHashCode()*17 + this.CategoryClass.GetHashCode()*17;
+        }
     }
 }

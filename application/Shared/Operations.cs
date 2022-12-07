@@ -21,6 +21,7 @@ namespace Shared
             int i = 0;
             foreach (Order order in sortedDict.Keys)
             {
+                if (order.OrderProductList == null) continue;
                 foreach (Product product in order.OrderProductList)
                 {
                     if (!proposal.Contains(product) && !basketProducts.Contains(product))
@@ -46,6 +47,7 @@ namespace Shared
             {
                 foreach (Order order in ordersWithCount.Keys)
                 {
+                    if (order.OrderProductList == null) continue;
                     if (order.OrderProductList.Contains(product))
                     {
                         ordersWithCount[order]++;
