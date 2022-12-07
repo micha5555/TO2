@@ -28,45 +28,61 @@ public class HelperMethods
 
         Console.Clear();
 
-        if (optionChosen == '0'){
+        if (optionChosen == '0')
+        {
             return LoggedInAs.NotLoggedIn;
         }
-
-        (string login, string password) credentials = getCredentials();
-
-        if (optionChosen == '1' && checkClientLogin(credentials.login, credentials.password))
+        if (optionChosen == '1' || optionChosen == '2' || optionChosen == '3')
         {
-            return LoggedInAs.Client;
+            (string login, string password) credentials = getCredentials();
+            if (optionChosen == '1' && checkClientLogin(credentials.login, credentials.password))
+            {
+                return LoggedInAs.Client;
+            }
+            else if (optionChosen == '2' && checkAdministratorLogin(credentials.login, credentials.password))
+            {
+                return LoggedInAs.Administrator;
+            }
+            else if (optionChosen == '3')
+            {
+                createClient(credentials.login, credentials.password);
+                Console.WriteLine("Rejestracja przebiegła pomyślnie!");
+                showAwaitingMessage();
+                waitForUser();
+            }
         }
-        else if (optionChosen == '2' && checkAdministratorLogin(credentials.login, credentials.password))
+        else
         {
-            return LoggedInAs.Administrator;
-        }
-        else if (optionChosen == '3'){
-            createClient(credentials.login, credentials.password);
-            Console.WriteLine("Rejestracja przebiegła pomyślnie!");
+            showErrorOptionMessage();
             showAwaitingMessage();
-            waitForUser(); 
+            waitForUser();
+            return handleLoginMenu();
         }
 
         return handleLoginMenu();
     }
 
-    private void createClient(string login, string password){
+    public void handleLoggedClient()
+    {
+
+    }
+
+    private void createClient(string login, string password)
+    {
         _clientOperations.registerNewClient(login, password);
     }
 
     private bool checkAdministratorLogin(string login, string password)
     {
         //Check if login and password is correct    
-        
+
         return _administratorOperations.checkAdministratorCredentials(login, password);
     }
 
     private bool checkClientLogin(string login, string password)
     {
         //Check if login and password is correct
-        
+
         return _clientOperations.checkClientCredentials(login, password);
     }
 
@@ -103,6 +119,22 @@ public class HelperMethods
             login = getLogin();
         }
         return login;
+    }
+
+    public void showGoodbyeMessage()
+    {
+        Console.WriteLine(getGoodbyeMessage());
+    }
+
+    public string getGoodbyeMessage()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "          Dziękujemy za skorzystanie ze sklepu PikaPika!          \n";
+        message += "\n";
+        message += "                       Zapraszamy ponownie!                       \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
     }
 
     private void showErrorInputMessage()

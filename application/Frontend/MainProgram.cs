@@ -25,14 +25,28 @@ public class MainProgram
 
     public void handleLoginScreen()
     {
-        // _helperMethods.showLoginMessage();
         _loggedInAs =  _helperMethods.handleLoginMenu();
         Console.WriteLine($"Logged in as: {_loggedInAs}");
     }
 
     public void handleUser()
     {
+        if(_loggedInAs == LoggedInAs.NotLoggedIn){
+            //Show Goodbye message
+            _helperMethods.showGoodbyeMessage();
+            _helperMethods.showArtPic();
+            _helperMethods.showAwaitingMessage();
+            _helperMethods.waitForUser();
+            
+            //Exit Program
+            Environment.Exit(0);
+        }
+        else if(_loggedInAs == LoggedInAs.Client){
+            _helperMethods.handleLoggedClient();
+        }
+        else if(_loggedInAs == LoggedInAs.Administrator){
 
+        }
     }
 
 
