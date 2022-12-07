@@ -2,7 +2,7 @@ namespace Shared
 {
     public class Operations
     {
-        public List<Product> ProposeProductsBasedOnCart(Cart cart, List<Order> orders, Offer offer, int quantity)
+        public static List<Product> ProposeProductsBasedOnCart(Cart cart, List<Order> orders/*, Offer offer*/, int quantity)
         {
             List<Product> basketProducts = new List<Product>();
             foreach (Product prod in cart.GetProducts())
@@ -13,7 +13,28 @@ namespace Shared
                 }
                 
             }
-            List<Product> offerProducts = offer.GetProductList();
+            
+            //List<Product> offerProducts = offer.GetProductList();
+            var sortedDict = PrepareSortedOrders(orders, basketProducts);
+            List<Product> proposal = new List<Product>();
+            int i = 0;
+            foreach (Order order in sortedDict.Keys)
+            {
+                foreach (Product product in order.OrderProductList)
+                {
+                    if (!proposal.Contains(product) && !basketProducts.Contains(product))
+                    {
+                        proposal.Add(product);
+                        i++;
+                        if (i == quantity) return proposal;
+                    }
+                }
+            }
+            return proposal;
+        }
+
+        private static Dictionary<Order, int> PrepareSortedOrders(List<Order> orders, List<Product> basketProducts)
+        {
             var ordersWithCount = new Dictionary<Order, int>();
             foreach (Order order in orders)
             {
@@ -30,23 +51,13 @@ namespace Shared
                     }
                 }
             }
-            var sortedDict = (Dictionary<Order, int>)from entry in ordersWithCount orderby entry.Value descending select entry;
-            //TODO: posortować listę, wybrać proponowane produkty(po kolei brać te któych nei ma w baskecie a są najpopularniejsze w orderach? jakieś losowanie może?)
-            List<Product> proposal = new List<Product>();
-            int i = 0;
-            foreach (Order order in sortedDict.Keys)
+            var sorted = from entry in ordersWithCount orderby entry.Value descending select entry;
+            var sortedDict = new Dictionary<Order, int>();
+            foreach (var entry in sorted)
             {
-                foreach (Product product in order.OrderProductList)
-                {
-                    if (!proposal.Contains(product) && !basketProducts.Contains(product))
-                    {
-                        proposal.Add(product);
-                        i++;
-                        if (i == quantity) return proposal;
-                    }
-                }
+                sortedDict.Add(entry.Key, entry.Value);
             }
-            return proposal;
+            return sortedDict;
         }
     }
 }

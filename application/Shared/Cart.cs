@@ -8,6 +8,12 @@ namespace Shared
         {
             this.ProductList = new List<Product>();
         }
+
+        public Cart(List<Product> products)
+        {
+            this.ProductList = products;
+        }
+
         public void AddToCart(Product p)
         {
             this.ProductList.Add(p);
