@@ -11,5 +11,13 @@ namespace Shared
             this.OrderProductList = cart.GetProducts();
             this.Price = cart.CalculateCartPrice();
         }
+
+        public Order(List<Product> products)
+        {
+            this.Id = Guid.NewGuid();
+            this.OrderProductList = products;
+            Cart c = new Cart(products);
+            this.Price = c.CalculateCartPrice();
+        }
     }
 }
