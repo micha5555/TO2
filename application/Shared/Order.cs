@@ -17,6 +17,7 @@ namespace Shared
             this.Price = client.Cart.CalculateCartPrice();
         }
 
+//Bedzie do wywalenia potem
         public Order(List<Product> products)
         {
             this.Id = Guid.NewGuid();
