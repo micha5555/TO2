@@ -11,10 +11,12 @@ namespace Repo.DataAccess
         public List<Offer> OfferList { get; set; }
         public List<Client> ClientList { get; set; }
         public List<Administrator> AdminList { get; set; }
+        public List<Order> OrderList { get; set; }
         private string cartPath = "carts.json";
         private string offerPath = "offers.json";
         private string clientPath = "clients.json";
         private string adminPath = "admins.json";
+        private string orderPath = "orders.json";
         private JsonSerializerOptions options = new JsonSerializerOptions() { IncludeFields = true };
 
 
@@ -25,6 +27,7 @@ namespace Repo.DataAccess
             this.OfferList = new List<Offer>();
             this.ClientList = new List<Client>();
             this.AdminList = new List<Administrator>();
+            this.OrderList = new List<Order>();
         }
 
         public static DataAccess Instance
@@ -65,6 +68,7 @@ namespace Repo.DataAccess
             SerializeObject(this.OfferList, offerPath);
             SerializeObject(this.ClientList, clientPath);
             SerializeObject(this.AdminList, adminPath);
+            SerializeObject(this.OrderList, orderPath);
         }
         public void DeserializeAll()
         {
@@ -72,7 +76,9 @@ namespace Repo.DataAccess
             this.OfferList = DeserializeOffers(offerPath);
             this.ClientList = DeserializeClients(clientPath);
             this.AdminList = DeserializeAdmins(adminPath);
+            this.OrderList = DeserializeOrders(orderPath);
         }
+
         private bool SerializeObject<T>(List<T> list, string path)
         {
             using (FileStream fs = File.Create(path)) ;
@@ -136,6 +142,20 @@ namespace Repo.DataAccess
                 File.Delete(path);
             }
             return offers;
+        }
+        private List<Order> DeserializeOrders(string path)
+        {
+            string json = File.ReadAllText(path);
+            List<Order>? orders = JsonSerializer.Deserialize<List<Order>>(json, options);
+            if (orders is null)
+            {
+                throw new Exception("Deserialized list is not valid.");
+            }
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            return orders;
         }
         private List<Cart> DeserializeCarts(string path)
         {

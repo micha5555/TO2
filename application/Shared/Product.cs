@@ -7,6 +7,7 @@ namespace Shared
         public double Price { get; set; }
         public Category CategoryClass { get; set; }
         string Description { get; set; }
+        
         public Product()
         {
             this.Description = "";
