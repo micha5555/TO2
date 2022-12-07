@@ -62,5 +62,46 @@ namespace Shared
             }
             return sortedDict;
         }
+
+        public List<Product> ProposeProductsBasedOnProduct(Product product, List<Order> orders, int quantity)
+        
+        {    
+            Dictionary<Product, int> sortedDict = PrepareSortedProducts(orders, product);
+
+            List<Product> proposal = new List<Product>();
+            int i = 0;
+            foreach (Product p in sortedDict.Keys)
+            {
+                proposal.Add(p);
+                i++;
+                if (i == quantity) return proposal;          
+            }
+            return proposal;
+        }
+
+        private static Dictionary<Product, int> PrepareSortedProducts(List<Order> orders, Product product)
+        {
+            Dictionary<Product, int> Dict = new Dictionary<Product, int>();
+            foreach (Order o in orders)
+            {
+                if (o.OrderProductList.Contains(product))
+                {
+                    foreach(Product p in o.OrderProductList)
+                    {
+                        if( Dict.ContainsKey(p))
+                        {
+                            Dict[p]++;
+                        }
+                        else
+                        {
+                            Dict.Add(p, 1);
+                        }
+                    }
+                }
+            }
+            Dict.Remove(product);
+            var sortedDict = Dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            return sortedDict;
+        }
     }
 }
