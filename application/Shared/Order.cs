@@ -5,14 +5,19 @@ namespace Shared
         public Guid Id { get; set; } 
         public List<Product>? OrderProductList { get; set; }
         public double Price { get; set; }
+
+        public Guid ClientId {get;set;}
+
         public Order() { }
-        public Order(Cart cart)
+        public Order(Client client)
         {
             this.Id = Guid.NewGuid();
-            this.OrderProductList = cart.GetProducts();
-            this.Price = cart.CalculateCartPrice();
+            ClientId = client.Id;
+            this.OrderProductList = client.Cart.GetProducts();
+            this.Price = client.Cart.CalculateCartPrice();
         }
 
+//Bedzie do wywalenia potem
         public Order(List<Product> products)
         {
             this.Id = Guid.NewGuid();

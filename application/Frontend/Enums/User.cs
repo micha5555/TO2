@@ -1,7 +1,8 @@
 namespace Frontend;
 
-public enum LoggedInAs{
+public enum UserStatus{
     Client,
     Administrator,
-    NotLoggedIn
+    NotLoggedIn,
+    Exiting
 }
