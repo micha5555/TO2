@@ -14,7 +14,7 @@ public class HelperMethods
         _mainProgram = mainProgram;
     }
 
-    public LoggedInAs processLoginMenu()
+    public UserStatus processLoginMenu()
     {
         MessagesPresenter.showLoginMessage();
         char optionChosen = getUserOptionInput();
@@ -30,18 +30,18 @@ public class HelperMethods
 
         if (optionChosen == '0')
         {
-            return LoggedInAs.NotLoggedIn;
+            return UserStatus.NotLoggedIn;
         }
         if (optionChosen == '1' || optionChosen == '2' || optionChosen == '3')
         {
             (string login, string password) credentials = getCredentials();
             if (optionChosen == '1' && checkClientLogin(credentials.login, credentials.password))
             {
-                return LoggedInAs.Client;
+                return UserStatus.Client;
             }
             else if (optionChosen == '2' && checkAdministratorLogin(credentials.login, credentials.password))
             {
-                return LoggedInAs.Administrator;
+                return UserStatus.Administrator;
             }
             else if (optionChosen == '3')
             {
@@ -68,8 +68,9 @@ public class HelperMethods
         return Console.ReadKey().KeyChar;
     }
 
-    public void processLoggedClient()
+    public UserStatus processLoggedClient()
     {
+        UserStatus userStatus = UserStatus.Client;
         //TODO
         //Show menu with available options
 
@@ -77,13 +78,13 @@ public class HelperMethods
 
         //Process choosen option
 
-
+        return userStatus;
     }
 
-    public void processLoggedAdministrator()
+    public UserStatus processLoggedAdministrator()
     {
-        bool isLogged = true;
-        while (isLogged)
+        UserStatus userStatus = UserStatus.Administrator;
+        while (userStatus == UserStatus.Administrator)
         {
             Console.Clear();
             MessagesPresenter.showAdministratorMenuMessage();
@@ -92,11 +93,12 @@ public class HelperMethods
             char choosenOption = getUserOptionInput();
 
             //Process choosen option
-            isLogged = processAdministratorMenuChoosenOption(choosenOption);
+            userStatus = processAdministratorMenuChoosenOption(choosenOption);
         }
+        return userStatus;
     }
 
-    private bool processAdministratorMenuChoosenOption(char option)
+    private UserStatus processAdministratorMenuChoosenOption(char option)
     {
         List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
 
@@ -105,10 +107,44 @@ public class HelperMethods
             MessagesPresenter.showErrorOptionMessage();
             MessagesPresenter.showAwaitingMessage();
             waitForUser();
-            return true;
+            return UserStatus.Administrator;
         }
-        
-        return false;
+
+        if (option == '0')
+        {
+            MessagesPresenter.showGoodbyeMessage();
+            MessagesPresenter.showArtPic();
+            MessagesPresenter.showAwaitingMessage();
+            waitForUser();
+            Environment.Exit(0);
+        }
+        if (option == '9')
+        {
+            // Show logout message 
+            return UserStatus.NotLoggedIn;
+        }
+        if (option == '1')
+        {
+            //TODO Register new administrator
+        }
+        else if (option == '2')
+        {
+            //TODO Add new product
+        }
+        else if (option == '3')
+        {
+            //TODO Show all products
+        }
+        else if (option == '4')
+        {
+            //TODO Show all products with name that contains given fraze
+        }
+        else if (option == '5')
+        {
+            //TODO Set shop payment details
+        }
+
+        return UserStatus.Administrator;
     }
 
     private bool isOptionValid(List<char> validOptions, char option)

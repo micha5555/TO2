@@ -3,7 +3,7 @@ namespace Frontend;
 public class MainProgram
 {
     private HelperMethods _helperMethods;
-    private LoggedInAs _loggedInAs;
+    private UserStatus _userStatus;
 
     public MainProgram(HelperMethods helperMethods)
     {
@@ -21,31 +21,43 @@ public class MainProgram
         MessagesPresenter.showArtPic();
         MessagesPresenter.showAwaitingMessage();
         _helperMethods.waitForUser();
+        _userStatus = UserStatus.NotLoggedIn;
     }
 
     public void handleLoginScreen()
     {
-        _loggedInAs =  _helperMethods.processLoginMenu();
+        _userStatus = _helperMethods.processLoginMenu();
     }
 
     public void handleUser()
     {
-        if(_loggedInAs == LoggedInAs.NotLoggedIn){
-            //Show Goodbye message
-            MessagesPresenter.showGoodbyeMessage();
-            MessagesPresenter.showArtPic();
-            MessagesPresenter.showAwaitingMessage();
-            _helperMethods.waitForUser();
+        while (true)
+        {
+            if (_userStatus == UserStatus.Exiting)
+            {
+                //Show Goodbye message
+                MessagesPresenter.showGoodbyeMessage();
+                MessagesPresenter.showArtPic();
+                MessagesPresenter.showAwaitingMessage();
+                _helperMethods.waitForUser();
 
-            //Exit Program
-            Environment.Exit(0);
+                //Exit Program
+                Environment.Exit(0);
+            }
+            else if (_userStatus == UserStatus.Client)
+            {
+                _userStatus = _helperMethods.processLoggedClient();
+            }
+            else if (_userStatus == UserStatus.Administrator)
+            {
+                _userStatus = _helperMethods.processLoggedAdministrator();
+            }
+            else if (_userStatus == UserStatus.NotLoggedIn)
+            {
+                handleLoginScreen();
+            }
         }
-        else if(_loggedInAs == LoggedInAs.Client){
-            _helperMethods.processLoggedClient();
-        }
-        else if(_loggedInAs == LoggedInAs.Administrator){
-            _helperMethods.processLoggedAdministrator(); 
-        }
+
     }
 
 

@@ -3,7 +3,7 @@
 MainProgram mainProgram = new MainProgram();
 
 mainProgram.handleWelcomeScreen();
-mainProgram.handleLoginScreen();
+// mainProgram.handleLoginScreen();
 mainProgram.handleUser();
 
 
