@@ -1,48 +1,61 @@
-using Services;
 namespace Shared
 {
-    public class Cart : ICartOperations
+    public class Cart
     {
         private double ActualPrice;
-        public List<Product> ProductList;
+        public List<CartProduct> CartProductList;
 
         public Cart()
         {
-            this.ProductList = new List<Product>();
+            this.CartProductList = new List<CartProduct>();
             this.ActualPrice = 0;
         }
 
         public Cart(List<Product> products)
         {
-            this.ProductList = products;
+            this.CartProductList = new List<CartProduct>();
+            foreach (Product p in products)
+            {
+                CartProductList.Add(new CartProduct(p, 1));
+            }
+            this.ActualPrice = 0;
+        }
+
+        public Cart(List<CartProduct> products)
+        {
+            this.CartProductList = products;
             this.ActualPrice = 0;
         }
 
         public Cart(double price, List<Product> pl){
             this.ActualPrice = price;
-            this.ProductList = pl;
+            this.CartProductList = new List<CartProduct>();
+            foreach (Product p in pl)
+            {
+                CartProductList.Add(new CartProduct(p, 1));
+            }
         }
 
-        public void AddToCart(Product p)
+        public void AddToCart(CartProduct p)
         {
-            this.ProductList.Add(p);
+            this.CartProductList.Add(p);
         }
         
-        public void RemoveFromCart(Product p)
+        public void RemoveFromCart(CartProduct p)
         {
-            this.ProductList.Remove(p);
+            this.CartProductList.Remove(p);
         }
 
         public double CalculateCartPrice()
         {
             double cartPrice = 0;
-            if (ProductList.Count <= 0)
+            if (CartProductList.Count <= 0)
             {
                 return -1;
             }
-            foreach (Product p in ProductList)
+            foreach (CartProduct cp in CartProductList)
             {
-                cartPrice += p.Price;
+                cartPrice += cp.Product.Price*cp.Quantity;
             }
             if (cartPrice < 0)
             {
@@ -51,9 +64,9 @@ namespace Shared
             return cartPrice;
         }
 
-        public List<Product> GetProducts()
+        public List<CartProduct> GetCartProducts()
         {
-            return this.ProductList;
+            return this.CartProductList;
         }
     }
 }

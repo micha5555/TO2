@@ -1,9 +1,10 @@
+using Shared;
 namespace Repo
 {
 
     public class Repository : IRepository
     {
-        void IRepository.DoSomething()
+        List<Order> IRepository.GetOrders()
         {
             throw new NotImplementedException();
         }
