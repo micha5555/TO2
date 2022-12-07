@@ -26,15 +26,9 @@ public class ClientHandler
 
     private UserStatus processClientMenuChosenOption(char chosenOption)
     {
-        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
-
-        if (!CommonMethods.isOptionValid(validOptions, chosenOption))
-        {
-            MessagesPresenter.showErrorOptionMessage();
-            MessagesPresenter.showAwaitingMessage();
-            CommonMethods.waitForUser();
+        if (!validateChosenOption(chosenOption))
             return UserStatus.Client;
-        }
+
 
         if (chosenOption == '0')
         {
@@ -71,6 +65,20 @@ public class ClientHandler
         }
 
         return UserStatus.Client;
+    }
+
+    public bool validateChosenOption(char chosenOption)
+    {
+        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+
+        if (!CommonMethods.isOptionValid(validOptions, chosenOption))
+        {
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
+            CommonMethods.waitForUser();
+            return false;
+        }
+        return true;
     }
 
     public bool checkClientLogin(string login, string password)

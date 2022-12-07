@@ -20,53 +20,55 @@ public class AdministratorHandler{
         return userStatus;
     }
 
-    private UserStatus processAdministratorMenuChoosenOption(char option)
+    private UserStatus processAdministratorMenuChoosenOption(char chosenOption)
     {
-        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
-
-        if (!CommonMethods.isOptionValid(validOptions, option))
-        {
-            MessagesPresenter.showErrorOptionMessage();
-            MessagesPresenter.showAwaitingMessage();
-            CommonMethods.waitForUser();
+        if (!validateChosenOption(chosenOption))
             return UserStatus.Administrator;
-        }
 
-        if (option == '0')
+        if (chosenOption == '0')
         {
-            MessagesPresenter.showGoodbyeMessage();
-            MessagesPresenter.showArtPic();
-            MessagesPresenter.showAwaitingMessage();
-            CommonMethods.waitForUser();
-            Environment.Exit(0);
+            return UserStatus.Exiting;
         }
-        if (option == '9')
+        if (chosenOption == '9')
         {
             // Show logout message 
             return UserStatus.NotLoggedIn;
         }
-        if (option == '1')
+        if (chosenOption == '1')
         {
             //TODO Register new administrator
         }
-        else if (option == '2')
+        else if (chosenOption == '2')
         {
             //TODO Add new product
         }
-        else if (option == '3')
+        else if (chosenOption == '3')
         {
             //TODO Show all products
         }
-        else if (option == '4')
+        else if (chosenOption == '4')
         {
             //TODO Show all products with name that contains given fraze
         }
-        else if (option == '5')
+        else if (chosenOption == '5')
         {
             //TODO Set shop payment details
         }
 
         return UserStatus.Administrator;
+    }
+
+    private bool validateChosenOption(char chosenOption){
+        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+
+        if (!CommonMethods.isOptionValid(validOptions, chosenOption))
+        {
+            MessagesPresenter.showErrorOptionMessage();
+            MessagesPresenter.showAwaitingMessage();
+            CommonMethods.waitForUser();
+            return false;
+        }
+        return true;
     }
 
     public bool checkAdministratorLogin(string login, string password)
