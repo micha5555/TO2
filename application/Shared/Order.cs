@@ -2,17 +2,22 @@ namespace Shared
 {
     public class Order
     {
-        public Guid Id { get; set; } 
+        public Guid Id { get; set; }
         public List<CartProduct>? OrderProductList { get; set; }
         public double Price { get; set; }
+
+        public Guid ClientId { get; set; }
+
         public Order() { }
-        public Order(Cart cart)
+        public Order(Client client)
         {
             this.Id = Guid.NewGuid();
-            this.OrderProductList = cart.GetCartProducts();
-            this.Price = cart.CalculateCartPrice();
+            ClientId = client.Id;
+            this.OrderProductList = client.Cart.GetCartProducts();
+            this.Price = client.Cart.CalculateCartPrice();
         }
 
+        //Bedzie do wywalenia potem
         public Order(List<CartProduct> products)
         {
             this.Id = Guid.NewGuid();
@@ -20,7 +25,8 @@ namespace Shared
             Cart c = new Cart(products);
             this.Price = c.CalculateCartPrice();
         }
-        public List<CartProduct> GetProducts(){
+        public List<CartProduct> GetProducts()
+        {
             return this.OrderProductList;
         }
     }

@@ -2,20 +2,17 @@ namespace Shared
 {
     public class Cart
     {
-        public Guid Id { get; set; }
         private double ActualPrice;
         public List<CartProduct> CartProductList;
 
         public Cart()
         {
-            this.Id = System.Guid.NewGuid();
             this.CartProductList = new List<CartProduct>();
             this.ActualPrice = 0;
         }
 
         public Cart(List<Product> products)
         {
-            this.Id = System.Guid.NewGuid();
             this.CartProductList = new List<CartProduct>();
             foreach (Product p in products)
             {
@@ -26,13 +23,11 @@ namespace Shared
 
         public Cart(List<CartProduct> products)
         {
-            this.Id = System.Guid.NewGuid();
             this.CartProductList = products;
             this.ActualPrice = 0;
         }
 
         public Cart(double price, List<Product> pl){
-            this.Id = Guid.NewGuid();
             this.ActualPrice = price;
             this.CartProductList = new List<CartProduct>();
             foreach (Product p in pl)
