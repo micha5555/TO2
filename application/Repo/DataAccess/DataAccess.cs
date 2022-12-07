@@ -41,27 +41,6 @@ namespace Repo.DataAccessClass
                 return instance;
             }
         }
-
-        object IDataAccess.DeleteRecord(int id, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        object IDataAccess.GetRecord(int id, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IDataAccess.SaveRecord(object o)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IDataAccess.UpdateRecord(object o)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SerializeAll()
         {
             SerializeObject(this.CartList, cartPath);
@@ -72,11 +51,26 @@ namespace Repo.DataAccessClass
         }
         public void DeserializeAll()
         {
-            this.CartList = DeserializeCarts(cartPath);
-            this.OfferList = DeserializeOffers(offerPath);
-            this.ClientList = DeserializeClients(clientPath);
-            this.AdminList = DeserializeAdmins(adminPath);
-            this.OrderList = DeserializeOrders(orderPath);
+            if (File.Exists(cartPath))
+            {
+                this.CartList = DeserializeCarts(cartPath);
+            }
+            if (File.Exists(offerPath))
+            {
+                this.OfferList = DeserializeOffers(offerPath);
+            }
+            if (File.Exists(clientPath))
+            {
+                this.ClientList = DeserializeClients(clientPath);
+            }
+            if (File.Exists(adminPath))
+            {
+                this.AdminList = DeserializeAdmins(adminPath);
+            }
+            if (File.Exists(orderPath))
+            {
+                this.OrderList = DeserializeOrders(orderPath);
+            }
         }
 
         private bool SerializeObject<T>(List<T> list, string path)

@@ -8,10 +8,8 @@ namespace Repo.DataAccessClass
         List<Shared.Client> ClientList { get; set; }
         List<Shared.Administrator> AdminList { get; set; }
         List<Shared.Order> OrderList { get; set; }
-        public int SaveRecord(object o);
-        public object DeleteRecord(int id, string name);
-        public object GetRecord(int id, string name);
-        public int UpdateRecord(object o);
+        public void SerializeAll();
+        public void DeserializeAll();
     }
 
 }
