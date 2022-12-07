@@ -40,11 +40,11 @@ public class Tests
         
         IGeneralOperations ge = new Operations();
         //powinno zaproponować p4, p5
-        List<Product> prop1 = ge.ProposeProductsBasedOnCart(cart, orders, 2);
+        List<Product> prop1 = ge.ProposeProductsBasedOnCart(cart, 2);
         //powinno zaproponować p4, p5, p7, p8
-        List<Product> prop2 = ge.ProposeProductsBasedOnCart(cart, orders, 4);
+        List<Product> prop2 = ge.ProposeProductsBasedOnCart(cart, 4);
         //powinno zaproponować p4, p5, p7, p8, p9, p10, p11, p12
-        List<Product> prop3 = ge.ProposeProductsBasedOnCart(cart, orders, 8);
+        List<Product> prop3 = ge.ProposeProductsBasedOnCart(cart, 8);
 
         Console.WriteLine("Proposal 1");
         foreach (Product p in prop1)
@@ -94,11 +94,11 @@ public class Tests
         
         IGeneralOperations ge = new Operations();
         //powinno zaproponować p5 p9 p11 p14
-        List<Product> prop1 = ge.ProposeProductsBasedOnProduct(p1, orders, 4);
+        List<Product> prop1 = ge.ProposeProductsBasedOnProduct(p1, 4);
         //powinno zaproponować p4 p9
-        List<Product> prop2 = ge.ProposeProductsBasedOnProduct(p2, orders, 2);
+        List<Product> prop2 = ge.ProposeProductsBasedOnProduct(p2,  2);
         //powinno zaproponować p1 p5 p8 p9 p10 p11 p13 p14 p2 p4
-        List<Product> prop3 = ge.ProposeProductsBasedOnProduct(p3, orders, 10);
+        List<Product> prop3 = ge.ProposeProductsBasedOnProduct(p3, 10);
 
         Console.WriteLine("Proposal 1");
         foreach (Product p in prop1)
