@@ -1,12 +1,10 @@
-namespace Services
+namespace Services;
+
+public interface IClientOperations
 {
-
-    public interface IClientOperations
-    {
-        public void DoSomething();
-        public void DoSomething1();
-        public void DoSomething2();
-        public void DoSomething3();
-    }
-
+    public bool checkClientCredentials(string login, string password);
+    public void registerNewClient(string login, string password);
+    public void DoSomething2();
+    public void DoSomething3();
 }
+

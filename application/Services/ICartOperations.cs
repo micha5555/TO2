@@ -1,9 +1,7 @@
-namespace Services
+namespace Services;
+
+public interface ICartOperations
 {
 
-    public interface ICartOperations
-    {
-
-    }
-
 }
+

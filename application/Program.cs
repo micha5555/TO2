@@ -1,3 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Shared;
-Console.WriteLine("Hello, World!");
+﻿using Frontend;
+
+MainProgram mainProgram = new MainProgram();
+
+mainProgram.handleWelcomeScreen();
+mainProgram.handleLoginScreen();
+mainProgram.handleUser();
+
+
