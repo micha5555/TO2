@@ -59,6 +59,10 @@ namespace Repo.DataAccessClass
             {
                 this.OfferList = DeserializeOffers(offerPath);
             }
+            else
+            {
+                this.OfferList = new List<Offer> {new Offer()};
+            }
             if (File.Exists(clientPath))
             {
                 this.ClientList = DeserializeClients(clientPath);
