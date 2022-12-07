@@ -1,10 +1,18 @@
+using Repo;
 namespace Shared
 {
     using Services;
     public class Operations : IGeneralOperations
     {
+        List<Order> orders = new List<Order>();
 
-        public List<Product> ProposeProductsBasedOnCart(Cart cart, List<Order> orders, int quantity)
+        public Operations()
+        {
+            IRepository repository = new Repository();
+            this.orders = repository.GetOrders();
+        }
+
+        public List<Product> ProposeProductsBasedOnCart(Cart cart, int quantity)
         {
             List<Product> basketProducts = new List<Product>();
             foreach (Product prod in cart.GetProducts())
@@ -16,7 +24,7 @@ namespace Shared
                 
             }
             
-            var sortedDict = PrepareSortedOrders(orders, basketProducts);
+            var sortedDict = PrepareSortedOrders(basketProducts);
             List<Product> proposal = new List<Product>();
             int i = 0;
             foreach (Order order in sortedDict.Keys)
@@ -35,7 +43,7 @@ namespace Shared
             return proposal;
         }
 
-        private static Dictionary<Order, int> PrepareSortedOrders(List<Order> orders, List<Product> basketProducts)
+        private Dictionary<Order, int> PrepareSortedOrders(List<Product> basketProducts)
         {
             var ordersWithCount = new Dictionary<Order, int>();
             foreach (Order order in orders)
@@ -63,7 +71,7 @@ namespace Shared
             return sortedDict;
         }
 
-        public List<Product> ProposeProductsBasedOnProduct(Product product, List<Order> orders, int quantity)
+        public List<Product> ProposeProductsBasedOnProduct(Product product, int quantity)
         
         {    
             Dictionary<Product, int> sortedDict = PrepareSortedProducts(orders, product);

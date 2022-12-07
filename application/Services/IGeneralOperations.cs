@@ -3,7 +3,7 @@ using Shared;
 
 public interface IGeneralOperations
 {
-    public List<Product> ProposeProductsBasedOnCart(Cart cart, List<Order> orders, int quantity);
+    public List<Product> ProposeProductsBasedOnCart(Cart cart, int quantity);
 
-    public List<Product> ProposeProductsBasedOnProduct(Product product, List<Order> orders, int quantity);
+    public List<Product> ProposeProductsBasedOnProduct(Product product, int quantity);
 }
