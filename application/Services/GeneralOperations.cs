@@ -22,4 +22,11 @@ public class GeneralOperations : IGeneralOperations
     {
         return o.ProposeProductsBasedOnProduct(product, quantity);
     }
+
+    public void ReadDataOnLaunch(){
+        repository.ReadDataOnLaunch();
+    }
+    public void SaveDataOnExit(){
+        repository.SaveDataOnExit();
+    }
 }
