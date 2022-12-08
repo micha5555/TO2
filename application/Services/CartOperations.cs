@@ -4,10 +4,13 @@ using Repo;
 using Shared;
 public class CartOperations : ICartOperations
 {
-    Cart cart;
+    public Cart cart;
+    IRepository repository;
     public CartOperations(Guid clientID)
     {
+        repository = Repository.Instance;
         cart = new Cart();
+        //cart = repository.GetClient(clientID).Cart;
     }
    
     public void AddToCart(CartProduct p)

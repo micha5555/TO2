@@ -15,26 +15,18 @@ public class ClientOperations : IClientOperations
         return repository.CheckCredentialsClient(login, password);
     }
 
-    public void registerNewClient(string login, string password)
-    {
-        Client client = new Client("name", "surname", "address", "postalCode", login, password);
-    }
-    /*
     public void registerNewClient(string name, string surname, string address, string postalCode, string login, string password)
     {
         Client client = new Client(name, surname, address, postalCode, login, password);
-    }*/
-
-    public bool updateClient(Client client)
-    {
-        return repository.UpdateClient(client);
+        //repository.AddClient(client);
     }
-    /*
-    public bool updateClient(string name, string surname, string address, string postalCode, string login, string password)
+    public void updateClientAddress(Guid clientID, string address, string postalCode)
     {
-        Client client = new Client(name, surname, address, postalCode, login, password);
-        return repository.UpdateClient(client);
-    }*/
+        /*Client client = repository.GetClient(clientID);
+        client.Address = address;
+        client.PostalCode = postalCode;
+        repository.UpdateClient(client)*/
+    }
 
     public void AddClientOrder(Order order)
     {

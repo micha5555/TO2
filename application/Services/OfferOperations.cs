@@ -6,25 +6,37 @@ using Shared;
 public class OfferOperations : IOfferOperations
 {
     IRepository repository;
-   
+
     public OfferOperations()
     {
         repository = Repository.Instance;
     }
 
-    public void AddToOffer(Product product)
+    public bool AddToOffer(Product product)
     {
+        if (repository.GetAllOfferProducts().Contains(product))
+        {
+            return false;
+        }
         repository.AddProductToOffer(product);
+        return true;
     }
 
-    public void AddToOffer(List<Product> pList)
+    public bool AddToOffer(List<Product> pList)
     {
+        // todo
         repository.AddProductsToOffer(pList);
+        return true;
     }
 
-    public void RemoveFromOffer(Product product)
+    public bool RemoveFromOffer(Product product)
     {
-        repository.RemoveProductFromOffer(product);
+        if (repository.GetAllOfferProducts().Contains(product))
+        {
+            repository.RemoveProductFromOffer(product);
+            return true;
+        }
+        return false;
     }
 
     public List<Product> GetProductList()
@@ -32,11 +44,13 @@ public class OfferOperations : IOfferOperations
         return repository.GetAllOfferProducts();
     }
 
-    public List<Product> FilterProductsByCategory(Category category){
+    public List<Product> FilterProductsByCategory(Category category)
+    {
         return repository.FilterProductsByCategory(category);
     }
-    
-    public List<Product> SearchForProductsByName(string name){
+
+    public List<Product> SearchForProductsByName(string name)
+    {
         return repository.SearchForProductsByName(name);
     }
 

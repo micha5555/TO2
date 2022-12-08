@@ -15,8 +15,9 @@ public class AdministratorOperations : IAdministratorOperations
         return repository.CheckCredentialsAdmin(login, password);
     }
 
-    public void createNewAdministrator(string name, string surname, string login, string password)
+    public void createNewAdministrator(string login, string password)
     {
-        Administrator admin = new Administrator(name, surname, login, password);
+        Administrator admin = new Administrator(login, password);
+        repository.AddAdministrator(admin);
     }
 }
