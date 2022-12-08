@@ -242,4 +242,13 @@ public static class Messages
         return message;
     }
 
+    public static string getNameForFilteringProductsHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                      Wyszukiwanie po nazwie                      \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
 }

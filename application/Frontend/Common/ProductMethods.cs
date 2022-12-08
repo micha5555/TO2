@@ -2,15 +2,18 @@ using Shared;
 
 namespace Frontend;
 
-public static class ProductMethods{
+public static class ProductMethods
+{
     //Need to get Name, Price, CategoryClass, And Description
-    
+
     // Prepratations for Category enum
-    public static List<string> getCategoryEnumsList(){
+    public static List<string> getCategoryEnumsList()
+    {
         return Enum.GetNames(typeof(Category)).ToList();
     }
 
-    public static (string?, string?, string?, Category) getProductParametersFromUser(){
+    public static (string?, string?, string?, Category) getProductParametersFromUser()
+    {
         string? name;
         string? price;
         string? description;
@@ -29,14 +32,14 @@ public static class ProductMethods{
 
         return (name, price, description, category);
     }
-     
-     public static bool validateProductParameters((string? name, string? price, string? descrition, Category category) parameters)
+
+    public static bool validateProductParameters((string? name, string? price, string? descrition, Category category) parameters)
     {
         if (parameters.name is null || parameters.name.Equals(""))
         {
             return false;
         }
-        if (parameters.price is null || parameters.price.Equals("")|| !CommonMethods.canConvert(parameters.price, typeof(double)))
+        if (parameters.price is null || parameters.price.Equals("") || !CommonMethods.canConvert(parameters.price, typeof(double)))
         {
             return false;
         }
@@ -46,5 +49,31 @@ public static class ProductMethods{
         }
 
         return true;
+    }
+
+    public static string getNameForFilteringProducts()
+    {
+        while (true)
+        {
+            MessagesPresenter.showNameForFilteringProductsHeader();
+            String? answer = getNameProduct();
+            if(validateProductName(answer)){
+                return answer;
+            }
+        }
+    }
+
+    private static bool validateProductName(string? answer)
+    {
+        if(answer is null){
+            return false;
+        }
+        return true;
+    }
+
+    private static string? getNameProduct()
+    {
+        Console.Write("\nPodaj nazwę produktu: ");
+        return Console.ReadLine();
     }
 }
