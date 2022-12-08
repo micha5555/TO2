@@ -1,3 +1,5 @@
+using Shared;
+
 namespace Frontend;
 
 public static class Messages{
@@ -155,4 +157,34 @@ public static class Messages{
         message += "------------------------------------------------------------------\n";
         return message;
     }
+
+    public static string getAddingNewProductHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                     Dodawanie nowego produktu                    \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getProductParametersAreNotValid(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                 Podane parametry są nieprawidłowe                \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getProductSummaryMessage((string? name, string? price, string? descrition, Category category) parameters){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                        Parametry Produktu                        \n";
+        message += "------------------------------------------------------------------\n";
+        message += $"    Nazwa: {parameters.name}\n";
+        message += $"    Cena: {parameters.price}\n";
+        message += $"    Opis: {parameters.descrition}\n";
+        message += $"    Categoria: {parameters.category}\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
 }

@@ -1,3 +1,5 @@
+using Shared;
+
 namespace Frontend;
 
 public static class MessagesPresenter
@@ -64,5 +66,23 @@ public static class MessagesPresenter
     public static void showAdministratorUnsuccesfulRegistrationMessage()
     {
         Console.WriteLine("\n" + Messages.getAdministratorUnsuccesfulRegistrationMessage());
+    }
+
+    public static void showAddNewProduct(){
+        Console.Clear();
+        Console.WriteLine(Messages.getAddingNewProductHeader());
+    }
+
+    public static void showGivenProductParametersAreNotValid(){
+        Console.WriteLine("\n" + Messages.getProductParametersAreNotValid());
+        Console.WriteLine(Messages.getAwaitingMessage());
+        CommonMethods.waitForUser();
+    }
+
+    public static void showProductParametersSummary((string? name, string? price, string? descrition, Category category) parameters){
+        Console.Clear();
+        Console.WriteLine(Messages.getProductSummaryMessage(parameters));
+        Console.WriteLine(Messages.getAwaitingMessage());
+        CommonMethods.waitForUser();
     }
 }

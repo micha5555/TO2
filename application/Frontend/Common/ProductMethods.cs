@@ -30,4 +30,21 @@ public static class ProductMethods{
         return (name, price, description, category);
     }
      
+     public static bool validateProductParameters((string? name, string? price, string? descrition, Category category) parameters)
+    {
+        if (parameters.name is null || parameters.name.Equals(""))
+        {
+            return false;
+        }
+        if (parameters.price is null || parameters.price.Equals("")|| CommonMethods.canConvert(parameters.price, typeof(double)))
+        {
+            return false;
+        }
+        if (parameters.descrition is null || parameters.descrition.Equals(""))
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

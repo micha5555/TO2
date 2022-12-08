@@ -1,7 +1,10 @@
+using System.ComponentModel;
 namespace Frontend;
 
 using System;
 using Services;
+using Shared;
+
 public class AdministratorHandler
 {
     private IAdministratorOperations _administratorOperations = new AdministratorOperations();
@@ -63,10 +66,45 @@ public class AdministratorHandler
 
     private void addNewProduct()
     {
-        // Show Adding New Product Message
+        bool isValid;
+        (string? name, string? price, string? descrition, Category category) parameters;
 
-        
+        MessagesPresenter.showAddNewProduct();
+        parameters = ProductMethods.getProductParametersFromUser();
+        isValid = ProductMethods.validateProductParameters(parameters);
+        if (!isValid)
+        {
+            MessagesPresenter.showGivenProductParametersAreNotValid();
+        }
+
+        while (!isValid)
+        {
+            MessagesPresenter.showAddNewProduct();
+            parameters = ProductMethods.getProductParametersFromUser();
+            isValid = ProductMethods.validateProductParameters(parameters);
+            if (!isValid)
+            {
+                MessagesPresenter.showGivenProductParametersAreNotValid();
+            }
+        }
+
+        MessagesPresenter.showProductParametersSummary(parameters);
+
+        //STOP - na tym etapie do testowania -> jakieś błędy przy stronicowaniu
+
+
+        // Ask if sure to add this Product
+
+        // Add product service
+
+        // Message if added corectly
+
+        // Message if not added
     }
+
+
+
+
 
     private void registerNewAdministrator()
     {

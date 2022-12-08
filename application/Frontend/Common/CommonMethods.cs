@@ -1,7 +1,7 @@
 namespace Frontend;
 
 using System;
-
+using System.ComponentModel;
 
 public static class CommonMethods
 {
@@ -116,9 +116,16 @@ public static class CommonMethods
         return partitions;
     }
 
+    public static Boolean canConvert(String value, Type type)
+    {
+        TypeConverter converter = TypeDescriptor.GetConverter(type);
+        return converter.IsValid(value);
+    }
+
     public static T choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
     {
-        List<List<T>> partitions = divideListIntoMulitipleLists<T>(list, 9);
+        int maxListQuantity = 9;
+        List<List<T>> partitions = divideListIntoMulitipleLists<T>(list, maxListQuantity);
 
         T? chosen = null;
 
@@ -131,13 +138,13 @@ public static class CommonMethods
                 Console.Clear();
                 Console.Write(headMessage);
 
-                showPagedList<T>(list);
+                showPagedList<T>(list, maxListQuantity);
 
                 option = getUserOptionInput();
-                isValid = isOptionValid(validPagingOptions<T>(partition), option);
+                isValid = isOptionValid(validPagingOptions<T>(partition, maxListQuantity), option);
             }
 
-            chosen = partition.ElementAt(option + 1 - '0');
+            chosen = partition.ElementAt(option - '0' - 1);
         }
 
         if (chosen == null)
@@ -147,21 +154,28 @@ public static class CommonMethods
 
         return chosen;
     }
-    public static void showPagedList<T>(List<T> list) where T : class
+    public static void showPagedList<T>(List<T> list,int maxListQuantity) where T : class
     {
         string message = "";
         for (int i = 0; i < list.Count; i++)
         {
             message += $"{i + 1}. {list.ElementAt(i)}\n";
         }
-        message += "0. Następna strona\n";
+        if (list.Count == maxListQuantity)
+        {
+            message += "0. Następna strona\n";
+        }
         message += "------------------------------------------------------------------\n";
+        Console.WriteLine(message);
     }
 
-    public static List<char> validPagingOptions<T>(List<T> list) where T : class
+    public static List<char> validPagingOptions<T>(List<T> list, int maxListQuantity) where T : class
     {
         List<char> validOptions = new List<char>();
-        validOptions.Add('0');
+        if (list.Count == maxListQuantity)
+        {
+            validOptions.Add('0');
+        }
         int quantintyOfItemsInList = list.Count;
         for (int i = 1; i < quantintyOfItemsInList + 1; i++)
         {
