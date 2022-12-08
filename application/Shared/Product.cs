@@ -8,7 +8,7 @@ namespace Shared
         public Category CategoryClass { get; set; }
         string Description { get; set; }
 
-        bool isActive {get; set; }
+        public bool isActive {get; set; }
         
         public Product()
         {

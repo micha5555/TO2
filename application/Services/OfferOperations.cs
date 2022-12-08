@@ -14,12 +14,8 @@ public class OfferOperations : IOfferOperations
 
     public bool AddToOffer(Product product)
     {
-        if (repository.GetAllOfferProducts().Contains(product))
-        {
-            return false;
-        }
-        repository.AddProductToOffer(product);
-        return true;
+        return repository.AddProductToOffer(product);
+        
     }
 
     public bool AddToOffer(List<Product> pList)
@@ -39,8 +35,15 @@ public class OfferOperations : IOfferOperations
         return false;
     }
 
-    public List<Product> GetProductList()
+    public List<Product> GetAllProductList()
     {
+        return repository.GetAllOfferProducts();
+    }
+
+    public List<Product> GetActiveProductList()
+    {
+        List<Product> activeProducts = repository.GetAllOfferProducts(); 
+        activeProducts = activeProducts.Where(p => p.isActive == true).ToList();
         return repository.GetAllOfferProducts();
     }
 
@@ -49,9 +52,16 @@ public class OfferOperations : IOfferOperations
         return repository.FilterProductsByCategory(category);
     }
 
-    public List<Product> SearchForProductsByName(string name)
+    public List<Product> SearchForAllProductsByName(string name)
     {
         return repository.SearchForProductsByName(name);
+    }
+
+    public List<Product> SearchForActiveProductsByName(string name)
+    {
+        List<Product> activeProducts = repository.SearchForProductsByName(name); 
+        activeProducts = activeProducts.Where(p => p.isActive == true).ToList();
+        return repository.GetAllOfferProducts();
     }
 
 }
