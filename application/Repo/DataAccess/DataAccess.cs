@@ -96,6 +96,10 @@ namespace Repo.DataAccessClass
 
         private bool SerializeObject<T>(List<T> list, string path)
         {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
             using (FileStream fs = File.Create(path)) ;
             string json = JsonSerializer.Serialize(list, options);
             File.WriteAllText(path, json);
@@ -123,10 +127,6 @@ namespace Repo.DataAccessClass
             {
                 throw new Exception("Deserialized list is not valid.");
             }
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
             return admins;
         }
         private List<Client> DeserializeClients(string path)
@@ -138,10 +138,6 @@ namespace Repo.DataAccessClass
             {
                 throw new Exception("Deserialized list is not valid.");
             }
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
             return clients;
         }
         private List<Offer> DeserializeOffers(string path)
@@ -151,10 +147,6 @@ namespace Repo.DataAccessClass
             if (offers is null)
             {
                 throw new Exception("Deserialized list is not valid.");
-            }
-            if (File.Exists(path))
-            {
-                File.Delete(path);
             }
             return offers;
         }
@@ -166,10 +158,6 @@ namespace Repo.DataAccessClass
             {
                 throw new Exception("Deserialized list is not valid.");
             }
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
             return orders;
         }
         private List<Cart> DeserializeCarts(string path)
@@ -180,10 +168,6 @@ namespace Repo.DataAccessClass
             if (carts is null)
             {
                 throw new Exception("Deserialized list is not valid.");
-            }
-            if (File.Exists(path))
-            {
-                File.Delete(path);
             }
             return carts;
         }
