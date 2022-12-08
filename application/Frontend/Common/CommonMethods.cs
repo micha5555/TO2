@@ -65,6 +65,17 @@ public static class CommonMethods
         return validOptions.Contains(option);
     }
 
+    public static char getValidUserOptionInput(List<char> validOptions){
+        while(true){
+            char option = getUserOptionInput();
+            Console.WriteLine();
+            if (isOptionValid(validOptions, option)){
+                return option;
+            }
+        }
+
+    }
+
     public static (string, string) getCredentials()
     {
         string login = getLogin();
@@ -182,5 +193,12 @@ public static class CommonMethods
             validOptions.Add((char)(i + '0'));
         }
         return validOptions;
+    }
+
+    public static List<char> validConfirmationOptions(){
+        List<char> list = new List<char>{
+            '1','2'
+        };
+        return list;
     }
 }

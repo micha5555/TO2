@@ -88,23 +88,35 @@ public class AdministratorHandler
             }
         }
 
-        MessagesPresenter.showProductParametersSummary(parameters);
-
-        //STOP - na tym etapie do testowania -> jakieś błędy przy stronicowaniu
+        Confirmation confirmation = MessagesPresenter.showProductParametersSummary(parameters);
 
 
-        // Ask if sure to add this Product
+        if (confirmation == Confirmation.Rejected)
+        {
+            return;
+        }
 
-        // Add product service
+        if (confirmation == Confirmation.Confirmed)
+        {
+            //TODO
+            // Add product service
+            bool added = true;
 
-        // Message if added corectly
+            // Message if added corectly
+            if (added)
+            {
+                MessagesPresenter.showProductAddedCorrectly();
+            }
+            else
+            {
 
-        // Message if not added
+                MessagesPresenter.showProductNotAdded();
+            }
+
+            // Message if not added
+        }
+
     }
-
-
-
-
 
     private void registerNewAdministrator()
     {
