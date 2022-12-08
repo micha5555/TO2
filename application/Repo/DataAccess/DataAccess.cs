@@ -55,25 +55,41 @@ namespace Repo.DataAccessClass
             {
                 this.CartList = DeserializeCarts(cartPath);
             }
+            else
+            {
+                this.CartList = new List<Cart>();
+            }
             if (File.Exists(offerPath))
             {
                 this.OfferList = DeserializeOffers(offerPath);
             }
             else
             {
-                this.OfferList = new List<Offer> {new Offer()};
+                this.OfferList = new List<Offer> { new Offer() };
             }
             if (File.Exists(clientPath))
             {
                 this.ClientList = DeserializeClients(clientPath);
             }
+            else
+            {
+                this.ClientList = new List<Client>();
+            }
             if (File.Exists(adminPath))
             {
                 this.AdminList = DeserializeAdmins(adminPath);
             }
+            else
+            {
+                this.AdminList = new List<Administrator>();
+            }
             if (File.Exists(orderPath))
             {
                 this.OrderList = DeserializeOrders(orderPath);
+            }
+            else
+            {
+                this.OrderList = new List<Order>();
             }
         }
 
