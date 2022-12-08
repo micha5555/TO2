@@ -69,6 +69,9 @@ public class AdministratorHandler
     {
         List<Product> list = _offerOperations.GetAllProductList();
         Product? chosenProduct = CommonMethods.choseOptionFromPagedList<Product>(list, Messages.getAllProductsMessage()); //TODO Create header message
+        if (chosenProduct == null){
+            return;
+        }
     }
 
     private void getAllProducts()
@@ -76,6 +79,9 @@ public class AdministratorHandler
         // get list of all products
         List<Product> list = _offerOperations.GetAllProductList();
         Product? chosenProduct = CommonMethods.choseOptionFromPagedList<Product>(list, Messages.getAllProductsMessage()); //TODO Create header message
+        if (chosenProduct == null){
+            return;
+        }
     }
 
     private void addNewProduct()
