@@ -25,10 +25,10 @@ namespace Shared
             this.Price = Price;
         }
 
-        public void Active(){
+        public void Activate(){
             this.isActive = true;
         }
-        public void Deactive(){
+        public void Deactivate(){
             this.isActive = false;
         }
         public override bool Equals(Object obj)
