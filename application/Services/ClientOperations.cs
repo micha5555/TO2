@@ -8,7 +8,7 @@ public class ClientOperations : IClientOperations
     IRepository repository;
     public ClientOperations()
     {
-        IRepository repository = Repository.Instance;
+        repository = Repository.Instance;
     }
     public bool checkClientCredentials(string login, string password)
     {
