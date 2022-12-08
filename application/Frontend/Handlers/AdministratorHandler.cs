@@ -8,6 +8,7 @@ using Shared;
 public class AdministratorHandler
 {
     private IAdministratorOperations _administratorOperations = new AdministratorOperations();
+    private IOfferOperations _offerOperations = new OfferOperations();
 
     public UserStatus processLoggedAdministrator()
     {
@@ -45,12 +46,11 @@ public class AdministratorHandler
         }
         else if (chosenOption == '2')
         {
-            //TODO Add new product
             addNewProduct();
         }
         else if (chosenOption == '3')
         {
-            //TODO Show all products
+            getAllProducts();
         }
         else if (chosenOption == '4')
         {
@@ -62,6 +62,13 @@ public class AdministratorHandler
         }
 
         return UserStatus.Administrator;
+    }
+
+    private void getAllProducts()
+    {
+        // get list of all products
+        List<Product> list = _offerOperations.GetAllProductList();
+        Product? chosenProduct = CommonMethods.choseOptionFromPagedList<Product>(list, Messages.getAllProductsMessage()); //TODO Create header message
     }
 
     private void addNewProduct()
@@ -98,22 +105,16 @@ public class AdministratorHandler
 
         if (confirmation == Confirmation.Confirmed)
         {
-            //TODO
-            // Add product service
-            bool added = true;
+            bool added = _offerOperations.AddToOffer(parameters.name,Double.Parse(parameters.price, System.Globalization.NumberStyles.AllowDecimalPoint), parameters.category, parameters.descrition ); //TODO replece true wiht service call
 
-            // Message if added corectly
             if (added)
             {
                 MessagesPresenter.showProductAddedCorrectly();
             }
             else
             {
-
                 MessagesPresenter.showProductNotAdded();
             }
-
-            // Message if not added
         }
 
     }

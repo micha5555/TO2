@@ -31,6 +31,13 @@ namespace Shared
         public void Deactivate(){
             this.isActive = false;
         }
+        public override string ToString()
+        {
+            string message = "";
+            message += $"{Name}\t\t{CategoryClass}\t\t{Price}";
+            return message;
+        }
+
         public override bool Equals(Object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))

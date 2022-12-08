@@ -70,9 +70,9 @@ public class OfferOperations : IOfferOperations
     }
 
     public void ActivateProduct(Product product){
-        product.Active();
+        product.Activate();
     }
     public void DeactivateProduct(Product product){
-        product.Deactive();
+        product.Deactivate();
     }
 }

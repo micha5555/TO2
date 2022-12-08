@@ -227,4 +227,19 @@ public static class Messages
         return message;
     }
 
+    public static string getAllProductsMessage()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                    Lista wszystkich produktów                    \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getListIsEmptyMessage(){
+        string message = "";
+        message += "\nLista jest pusta!\n";
+        return message;
+    }
+
 }

@@ -2,7 +2,7 @@ using Repo;
 namespace Shared
 {
     using Services;
-    public class Operations : IGeneralOperations
+    public class Operations
     {
         List<Order> orders = new List<Order>();
 

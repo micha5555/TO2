@@ -10,6 +10,8 @@ namespace Repo
         private Repository()
         {
             this.dataAccess = DataAccess.Instance;
+            // Administrator admin = new Administrator("test", "test");
+            // dataAccess.AdminList.Add(admin);
         }
         public static Repository Instance
         {

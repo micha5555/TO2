@@ -114,4 +114,10 @@ public static class MessagesPresenter
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
     }
+
+    public static void showEmptyListMessage(){
+        Console.WriteLine(Messages.getListIsEmptyMessage());
+        showAwaitingMessage();
+        CommonMethods.waitForUser();
+    }
 }
