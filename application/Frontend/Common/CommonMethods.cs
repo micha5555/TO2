@@ -137,6 +137,7 @@ public static class CommonMethods
         return converter.IsValid(value);
     }
 
+
     public static T? choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
     {
         if (list.Count == 0){
