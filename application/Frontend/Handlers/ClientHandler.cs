@@ -1,10 +1,12 @@
 namespace Frontend;
 
+using Shared;
 using Services;
 public class ClientHandler
 {
     private IClientOperations _clientOperations = new ClientOperations();
 
+    private IOfferOperations _offerOperations = new OfferOperations();
     public UserStatus processLoggedClient()
     {
         UserStatus userStatus = UserStatus.Client;
@@ -41,7 +43,8 @@ public class ClientHandler
         }
         if (chosenOption == '1')
         {
-            //TODO Show products in offer
+            //Show products in offer
+            showAllProducts();
         }
         else if (chosenOption == '2')
         {
@@ -85,6 +88,12 @@ public class ClientHandler
     public void createClient(string login, string password)
     {
         _clientOperations.registerNewClient("", "", "", "", login, password);
+    }
+
+    private void showAllProducts()
+    {
+        List<Product> list = _offerOperations.GetAllProductList();
+        if (CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage()) == null) return;
     }
 
 }
