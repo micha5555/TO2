@@ -157,6 +157,24 @@ namespace Repo
         {
             dataAccess.SerializeAll();
         }
+
+        public bool AddClient(Client client)
+        {
+            dataAccess.ClientList.Add(client);
+            return true;
+        }
+
+        public Client GetClientById(Guid id)
+        {
+            foreach (Client c in dataAccess.ClientList)
+            {
+                if (c.Id.Equals(id))
+                {
+                    return c;
+                }
+            }
+            return null;
+        }
     }
 
 }
