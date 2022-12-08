@@ -2,6 +2,7 @@ namespace Frontend;
 
 using System;
 using System.ComponentModel;
+using Shared;
 
 public static class CommonMethods
 {
@@ -174,6 +175,10 @@ public static class CommonMethods
             }
             else if(option != '0'){
                 chosen = partition.ElementAt(option - '0' - 1);
+                
+                Product chosenProduct = (Product)Convert.ChangeType(chosen, typeof(Product));
+                handleProductPage(chosenProduct);
+
             }
             
         }
@@ -197,6 +202,7 @@ public static class CommonMethods
         {
             message += "0. Następna strona\n";
         }
+        message += "1-9. Pokaż stronę produktu\n";
         message += "q. Wyjście z listy\n";
         message += "------------------------------------------------------------------\n";
         Console.WriteLine(message);
@@ -224,5 +230,40 @@ public static class CommonMethods
             '1','2'
         };
         return list;
+    }
+
+    public static void handleProductPage(Product prod)
+    {
+        bool exit = false;
+        while (!exit)
+        {
+            MessagesPresenter.showProductForClient(prod);
+            char chosen = getUserOptionInput();
+            if (chosen == '1')
+            {
+                //ask abount quantity
+            }
+            else if (chosen == 'q')
+            {
+                exit = true;
+            }
+        }
+
+    }
+
+    public static void askAbountQuantity()
+    {
+        while (true)
+        {
+            MessagesPresenter.showAskQuantity();
+            string quantity = Console.ReadLine();
+            try
+            {
+                int parsed = int.Parse(quantity);
+            }
+            catch
+            {}
+        }
+
     }
 }

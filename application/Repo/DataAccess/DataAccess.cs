@@ -100,7 +100,8 @@ namespace Repo.DataAccessClass
             {
                 File.Delete(path);
             }
-            using (FileStream fs = File.Create(path)) ;
+            using (FileStream fs = File.Create(path));
+            Console.WriteLine("list");
             string json = JsonSerializer.Serialize(list, options);
             File.WriteAllText(path, json);
             return true;

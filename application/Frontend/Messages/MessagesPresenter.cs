@@ -1,3 +1,4 @@
+using System.Globalization;
 using Shared;
 
 namespace Frontend;
@@ -101,23 +102,39 @@ public static class MessagesPresenter
         return Confirmation.Rejected;
     }
 
-    public static void showProductNotAdded(){
+    public static void showProductNotAdded()
+    {
         Console.Clear();
         Console.WriteLine(Messages.getNewProductNotAdded());
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
     }
 
-    public static void showProductAddedCorrectly(){
+    public static void showProductAddedCorrectly()
+    {
         Console.Clear();
         Console.WriteLine(Messages.getNewProductAddedCorrectly());
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
     }
 
-    public static void showEmptyListMessage(){
+    public static void showEmptyListMessage()
+    {
         Console.WriteLine(Messages.getListIsEmptyMessage());
         showAwaitingMessage();
         CommonMethods.waitForUser();
+    }
+
+    public static void showProductForClient(Product product)
+    {
+        (string, string, string, Category) prod = (product.Name, product.Price.ToString("G", CultureInfo.InvariantCulture), 
+                                                product.Description, product.CategoryClass);
+        Console.WriteLine(Messages.getProductSummaryMessage(prod));
+        Console.WriteLine("1. Dodaj produkt do koszyka\nq. Wróc do listy");
+    }
+
+    public static void showAskQuantity()
+    {
+        Console.WriteLine(Messages.getAskAboutQuantityHeader());
     }
 }

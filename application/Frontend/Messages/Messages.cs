@@ -192,7 +192,7 @@ public static class Messages
         message += $"    Nazwa: {parameters.name}\n";
         message += $"    Cena: {parameters.price}\n";
         message += $"    Opis: {parameters.descrition}\n";
-        message += $"    Categoria: {parameters.category}\n";
+        message += $"    Kategoria: {parameters.category}\n";
         message += "------------------------------------------------------------------\n";
         return message;
     }
@@ -242,4 +242,12 @@ public static class Messages
         return message;
     }
 
+    public static string getAskAboutQuantityHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                Ile sztuk chcesz dodać do koszyka?                \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
 }
