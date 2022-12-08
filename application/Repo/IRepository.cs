@@ -20,6 +20,8 @@ namespace Repo
         public bool RemoveProductFromOffer(Product product);
         public void ReadDataOnLaunch();
         public void SaveDataOnExit();
+        public Client GetClientById(Guid id);
+        public bool AddClient(Client client);
     }
 
 }
