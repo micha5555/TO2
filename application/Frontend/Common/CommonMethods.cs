@@ -137,6 +137,7 @@ public static class CommonMethods
         return converter.IsValid(value);
     }
 
+
     public static T? choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
     {
         if (list.Count == 0){
@@ -161,13 +162,20 @@ public static class CommonMethods
                 Console.Clear();
                 Console.Write(headMessage);
 
-                showPagedList<T>(list, maxListQuantity);
+                showPagedList<T>(partition, maxListQuantity);
 
                 option = getUserOptionInput();
                 isValid = isOptionValid(validPagingOptions<T>(partition, maxListQuantity), option);
             }
-
-            chosen = partition.ElementAt(option - '0' - 1);
+            //Process given option
+            if(option == 'q')
+            {   
+                return null;
+            }
+            else if(option != '0'){
+                chosen = partition.ElementAt(option - '0' - 1);
+            }
+            
         }
 
         if (chosen == null)
@@ -184,13 +192,16 @@ public static class CommonMethods
         {
             message += $"{i + 1}. {list.ElementAt(i)}\n";
         }
+        message += "------------------------------------------------------------------\n";
         if (list.Count == maxListQuantity)
         {
             message += "0. Następna strona\n";
         }
+        message += "q. Wyjście z listy\n";
         message += "------------------------------------------------------------------\n";
         Console.WriteLine(message);
     }
+
 
     public static List<char> validPagingOptions<T>(List<T> list, int maxListQuantity) where T : class
     {
@@ -199,6 +210,7 @@ public static class CommonMethods
         {
             validOptions.Add('0');
         }
+        validOptions.Add('q');
         int quantintyOfItemsInList = list.Count;
         for (int i = 1; i < quantintyOfItemsInList + 1; i++)
         {
