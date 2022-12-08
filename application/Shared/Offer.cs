@@ -3,13 +3,14 @@ using System.Text.Json.Serialization;
 
 namespace Shared
 {
-    public class Offer : IOfferOperations
+    public class Offer
     {
         public Guid Id { get; set; }
         public List<Product> ProductList { get; set; }
 
         [JsonConstructor]
-        public Offer(){
+        public Offer()
+        {
             this.ProductList = new List<Product>();
         }
 
@@ -19,9 +20,26 @@ namespace Shared
             this.ProductList = products;
         }
 
-        public void AddToOffer(Product product)
+        public bool AddToOffer(Product product)
         {
-            this.ProductList.Add(product);
+            bool isHere = false;
+            foreach (Product p in this.ProductList)
+            {
+                if (p.Equals(product))
+                {
+                    isHere = true;
+                }
+            }
+            if (isHere)
+            {
+                return false;
+            }
+            else
+            {
+                this.ProductList.Add(product);
+                return true;
+            }
+
         }
 
         public void AddToOffer(List<Product> pList)
@@ -29,9 +47,9 @@ namespace Shared
             ProductList.AddRange(pList);
         }
 
-        public void RemoveFromOffer(Product product)
+        public bool RemoveFromOffer(Product product)
         {
-            this.ProductList.Remove(product);
+            return this.ProductList.Remove(product);
         }
 
         public List<Product> GetProductList()

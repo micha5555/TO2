@@ -22,6 +22,7 @@ namespace Shared
             this.CategoryClass = CategoryClass;
             this.Description = Description;
             this.isActive = true;
+            this.Price = Price;
         }
 
         public override bool Equals(Object obj)

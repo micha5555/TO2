@@ -28,8 +28,8 @@ public class DataAccessTests
         da.OrderList.Add(new Order(cartProdList));
         for (int i = 0; i <= 9; i++)
         {
-            da.ClientList.Add(new Client("Michalek" + i, "Marciski" + i, "PrzyBazantarnii" + i, "07-990" + i));
-            da.AdminList.Add(new Administrator("Marcin" + i, "Niewiadomski" + i, "niepodam" + i, "tajemnica123" + i));
+            da.ClientList.Add(new Client("Michalek" + i, "Marciski" + i, "PrzyBazantarnii" + i, "07-990" + i, "login", "password"));
+            da.AdminList.Add(new Administrator("login", "password"));
         }
     }
 

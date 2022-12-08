@@ -23,8 +23,8 @@ public class RepoTests
             new Product("p1", 1, Category.AGD, "desc jakis"),
             new Product("p2", 2, Category.Narzędzia, "desc jakis")
         };
-        listaJanuszy = new List<Client>{ new Client("Marcin", "Marcinoski", "Niepowiem", "13-37"),
-                                         new Client("BratMarcina", "RowniezMarcinoski", "TezNiepowiem", "21-37")};
+        listaJanuszy = new List<Client>{ new Client("Marcin", "Marcinoski", "Niepowiem", "13-37", "login", "password"),
+                                         new Client("BratMarcina", "RowniezMarcinoski", "TezNiepowiem", "21-37", "login", "password")};
         listaJanuszy[0].Cart = new Cart(productList);
         listaJanuszy[1].Cart = new Cart(productList2);
         orderyJanuszy = new List<Order>{ new Order(listaJanuszy[0]),

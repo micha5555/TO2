@@ -84,7 +84,7 @@ public class ClientHandler
 
     public void createClient(string login, string password)
     {
-        _clientOperations.registerNewClient(login, password);
+        _clientOperations.registerNewClient("", "", "", "", login, password);
     }
 
 }
