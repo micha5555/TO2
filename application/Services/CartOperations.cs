@@ -9,8 +9,7 @@ public class CartOperations : ICartOperations
     public CartOperations(Guid clientID)
     {
         repository = Repository.Instance;
-        cart = new Cart();
-        //cart = repository.GetClient(clientID).Cart;
+        cart = repository.GetClientById(clientID).Cart;
     }
    
     public void AddToCart(CartProduct p)
