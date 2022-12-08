@@ -133,7 +133,7 @@ public class Tests
         List<Product> newProducts = new List<Product>{p1, p2, p3, p4, p5};
         IOfferOperations oo = new OfferOperations();
         oo.AddToOffer(newProducts);
-        List<Product> products = oo.GetProductList();
+        List<Product> products = oo.GetAllProductList();
         foreach (Product p in products)
         {
             Console.Write(p.Name + " ");

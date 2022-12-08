@@ -1,3 +1,5 @@
+using Services;
+
 namespace Frontend;
 
 public class MainProgram
@@ -5,6 +7,7 @@ public class MainProgram
     private AdministratorHandler _administratorHandler = new AdministratorHandler();
     private ClientHandler _clientHandler = new ClientHandler();
     private UserStatus _userStatus;
+    private IGeneralOperations _generalOperations = new GeneralOperations();
 
     public void handleWelcomeScreen()
     {
@@ -13,6 +16,7 @@ public class MainProgram
         MessagesPresenter.showAwaitingMessage();
         CommonMethods.waitForUser();
         _userStatus = UserStatus.NotLoggedIn;
+        _generalOperations.ReadDataOnLaunch();
     }
 
     public void handleLoginScreen()
@@ -31,6 +35,8 @@ public class MainProgram
                 MessagesPresenter.showArtPic();
                 MessagesPresenter.showAwaitingMessage();
                 CommonMethods.waitForUser();
+
+                _generalOperations.SaveDataOnExit();
 
                 //Exit Program
                 Environment.Exit(0);
