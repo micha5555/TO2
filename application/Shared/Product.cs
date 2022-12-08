@@ -25,6 +25,12 @@ namespace Shared
             this.Price = Price;
         }
 
+        public void Activate(){
+            this.isActive = true;
+        }
+        public void Deactivate(){
+            this.isActive = false;
+        }
         public override bool Equals(Object obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType()))
@@ -42,5 +48,7 @@ namespace Shared
         {
             return this.Name.GetHashCode()*17 + this.Price.GetHashCode()*17 + this.CategoryClass.GetHashCode()*17;
         }
+
+
     }
 }
