@@ -38,7 +38,7 @@ public class Tests
         orders.Add(new Order(new List<CartProduct> { p9, p10, p11, p12, p13}));
         orders.Add(new Order(new List<CartProduct> { p1, p9, p10, p11, p12}));
         
-        IGeneralOperations ge = new Operations();
+        Operations ge = new Operations();
         //powinno zaproponować p4, p5
         List<Product> prop1 = ge.ProposeProductsBasedOnCart(cart, 2);
         //powinno zaproponować p4, p5, p7, p8
@@ -92,7 +92,7 @@ public class Tests
         orders.Add(new Order(new List<CartProduct> {p1,     p3,     p5, p6,     p8, p9, p10, p11, p12, p13, p14}));
         orders.Add(new Order(new List<CartProduct> {    p2,     p4,     p6,     p8, p9, p10,      p12, p13,    }));
         
-        IGeneralOperations ge = new Operations();
+        Operations ge = new Operations();
         //powinno zaproponować p5 p9 p11 p14
         List<Product> prop1 = ge.ProposeProductsBasedOnProduct(new Product("p1", 1, Category.AGD, "desc jakis"), 4);
         //powinno zaproponować p4 p9

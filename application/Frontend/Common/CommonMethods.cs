@@ -193,6 +193,7 @@ public static class CommonMethods
         Console.WriteLine(message);
     }
 
+
     public static List<char> validPagingOptions<T>(List<T> list, int maxListQuantity) where T : class
     {
         List<char> validOptions = new List<char>();

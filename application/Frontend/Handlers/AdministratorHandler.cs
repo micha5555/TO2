@@ -55,6 +55,7 @@ public class AdministratorHandler
         else if (chosenOption == '4')
         {
             //TODO Show all products with name that contains given fraze
+            getAllProductsWithGivenName();
         }
         else if (chosenOption == '5')
         {
@@ -62,6 +63,12 @@ public class AdministratorHandler
         }
 
         return UserStatus.Administrator;
+    }
+
+    private void getAllProductsWithGivenName()
+    {
+        List<Product> list = _offerOperations.GetAllProductList();
+        Product? chosenProduct = CommonMethods.choseOptionFromPagedList<Product>(list, Messages.getAllProductsMessage()); //TODO Create header message
     }
 
     private void getAllProducts()
@@ -105,7 +112,7 @@ public class AdministratorHandler
 
         if (confirmation == Confirmation.Confirmed)
         {
-            bool added = _offerOperations.AddToOffer(parameters.name,Double.Parse(parameters.price, System.Globalization.NumberStyles.AllowDecimalPoint), parameters.category, parameters.descrition ); //TODO replece true wiht service call
+            bool added = _offerOperations.AddToOffer(parameters.name, Double.Parse(parameters.price, System.Globalization.NumberStyles.AllowDecimalPoint), parameters.category, parameters.descrition); //TODO replece true wiht service call
 
             if (added)
             {
