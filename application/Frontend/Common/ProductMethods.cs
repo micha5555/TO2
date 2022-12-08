@@ -36,7 +36,7 @@ public static class ProductMethods{
         {
             return false;
         }
-        if (parameters.price is null || parameters.price.Equals("")|| CommonMethods.canConvert(parameters.price, typeof(double)))
+        if (parameters.price is null || parameters.price.Equals("")|| !CommonMethods.canConvert(parameters.price, typeof(double)))
         {
             return false;
         }

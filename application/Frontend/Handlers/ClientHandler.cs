@@ -32,11 +32,7 @@ public class ClientHandler
 
         if (chosenOption == '0')
         {
-            MessagesPresenter.showGoodbyeMessage();
-            MessagesPresenter.showArtPic();
-            MessagesPresenter.showAwaitingMessage();
-            CommonMethods.waitForUser();
-            Environment.Exit(0);
+            return UserStatus.Exiting;
         }
         if (chosenOption == '9')
         {

@@ -65,6 +65,17 @@ public static class CommonMethods
         return validOptions.Contains(option);
     }
 
+    public static char getValidUserOptionInput(List<char> validOptions){
+        while(true){
+            char option = getUserOptionInput();
+            Console.WriteLine();
+            if (isOptionValid(validOptions, option)){
+                return option;
+            }
+        }
+
+    }
+
     public static (string, string) getCredentials()
     {
         string login = getLogin();
@@ -118,12 +129,24 @@ public static class CommonMethods
 
     public static Boolean canConvert(String value, Type type)
     {
+        if (type == typeof(double)){
+            double temp;
+            return Double.TryParse(value, System.Globalization.NumberStyles.AllowDecimalPoint, null, out temp);
+        }
         TypeConverter converter = TypeDescriptor.GetConverter(type);
         return converter.IsValid(value);
     }
 
-    public static T choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
+    public static T? choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
     {
+        if (list.Count == 0){
+            Console.Clear();
+            Console.WriteLine(headMessage);
+            MessagesPresenter.showEmptyListMessage();
+            return null;
+        }
+
+
         int maxListQuantity = 9;
         List<List<T>> partitions = divideListIntoMulitipleLists<T>(list, maxListQuantity);
 
@@ -182,5 +205,12 @@ public static class CommonMethods
             validOptions.Add((char)(i + '0'));
         }
         return validOptions;
+    }
+
+    public static List<char> validConfirmationOptions(){
+        List<char> list = new List<char>{
+            '1','2'
+        };
+        return list;
     }
 }
