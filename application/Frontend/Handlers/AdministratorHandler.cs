@@ -67,7 +67,8 @@ public class AdministratorHandler
 
     private void getAllProductsWithGivenName()
     {
-        List<Product> list = _offerOperations.GetAllProductList();
+        String name = ProductMethods.getNameForFilteringProducts();
+        List<Product> list = _offerOperations.SearchForAllProductsByName(name);
         Product? chosenProduct = CommonMethods.choseOptionFromPagedList<Product>(list, Messages.getAllProductsMessage()); //TODO Create header message
         if (chosenProduct == null){
             return;

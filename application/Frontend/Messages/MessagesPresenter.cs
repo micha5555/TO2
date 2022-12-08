@@ -120,4 +120,9 @@ public static class MessagesPresenter
         showAwaitingMessage();
         CommonMethods.waitForUser();
     }
+
+    public static void showNameForFilteringProductsHeader(){
+        Console.Clear();
+        Console.WriteLine(Messages.getNameForFilteringProductsHeader());
+    }
 }
