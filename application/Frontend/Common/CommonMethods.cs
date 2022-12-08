@@ -185,11 +185,6 @@ public static class CommonMethods
 
         }
 
-        if (chosen == null)
-        {
-            throw new Exception();
-        }
-
         return chosen;
     }
     public static void showPagedList<T>(List<T> list, int maxListQuantity) where T : class
