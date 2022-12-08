@@ -54,12 +54,11 @@ public class AdministratorHandler
         }
         else if (chosenOption == '4')
         {
-            //TODO Show all products with name that contains given fraze
             getAllProductsWithGivenName();
         }
         else if (chosenOption == '5')
         {
-            //TODO Set shop payment details
+            //TODO Przegladanie zamowien klientow
         }
 
         return UserStatus.Administrator;
