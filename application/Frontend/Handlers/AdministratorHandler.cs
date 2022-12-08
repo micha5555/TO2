@@ -9,6 +9,7 @@ public class AdministratorHandler
 {
     private IAdministratorOperations _administratorOperations = new AdministratorOperations();
     private IOfferOperations _offerOperations = new OfferOperations();
+    private IOrderOperations _orderOperations = new OrderOperations();
 
     public UserStatus processLoggedAdministrator()
     {
@@ -58,10 +59,20 @@ public class AdministratorHandler
         }
         else if (chosenOption == '5')
         {
-            //TODO Przegladanie zamowien klientow
+            checkClientsOrders();
         }
 
         return UserStatus.Administrator;
+    }
+
+    private void checkClientsOrders()
+    {
+        List<Order> list = _orderOperations.GetOrders();
+        Order? chosenOrder = CommonMethods.choseOptionFromPagedList<Order>(list, Messages.getAllOrdersHeader());
+  
+        if (chosenOrder == null){
+            return;
+        }
     }
 
     private void getAllProductsWithGivenName()
@@ -72,6 +83,7 @@ public class AdministratorHandler
         if (chosenProduct == null){
             return;
         }
+        productManagingAdministrator(chosenProduct);
     }
 
     private void getAllProducts()
@@ -82,6 +94,11 @@ public class AdministratorHandler
         if (chosenProduct == null){
             return;
         }
+        productManagingAdministrator(chosenProduct);
+    }
+
+    private void productManagingAdministrator(Product product){
+        MessagesPresenter.showProductParametersAdministratorManagingMessage(ProductMethods.getProductParametersFromProduct(product));
     }
 
     private void addNewProduct()

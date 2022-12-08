@@ -83,12 +83,23 @@ public static class MessagesPresenter
 
     public static Confirmation showProductParametersSummary((string? name, string? price, string? descrition, Category category) parameters)
     {
-        Console.Clear();
-        Console.WriteLine(Messages.getProductSummaryMessage(parameters));
+        showProductParameters(parameters);
         Confirmation answer = showConfirmationMessage();
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
         return answer;
+    }
+
+    public static void showProductParameters((string? name, string? price, string? descrition, Category category) parameters){
+        Console.Clear();
+        Console.WriteLine(Messages.getProductSummaryMessage(parameters));
+    }
+
+    public static void showProductParametersAdministratorManagingMessage((string? name, string? price, string? descrition, Category category) parameters){
+        showProductParameters(parameters);
+        //options
+        showAwaitingMessage();
+        CommonMethods.waitForUser();
     }
 
     public static Confirmation showConfirmationMessage()

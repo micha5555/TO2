@@ -181,10 +181,10 @@ public static class CommonMethods
             else if (option != '0')
             {
                 chosen = partition.ElementAt(option - '0' - 1);
+                return chosen;
             }
 
         }
-
         return chosen;
     }
     public static void showPagedList<T>(List<T> list, int maxListQuantity) where T : class

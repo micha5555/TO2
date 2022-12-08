@@ -12,6 +12,11 @@ public static class ProductMethods
         return Enum.GetNames(typeof(Category)).ToList();
     }
 
+    public static (string, string, string, Category) getProductParametersFromProduct(Product product)
+    {
+        return (product.Name, product.Price.ToString(), product.Description, product.CategoryClass);
+    }
+
     public static (string?, string?, string?, Category) getProductParametersFromUser()
     {
         string? name;
@@ -57,7 +62,8 @@ public static class ProductMethods
         {
             MessagesPresenter.showNameForFilteringProductsHeader();
             String? answer = getNameProduct();
-            if(validateProductName(answer)){
+            if (validateProductName(answer))
+            {
                 return answer;
             }
         }
@@ -65,7 +71,8 @@ public static class ProductMethods
 
     private static bool validateProductName(string? answer)
     {
-        if(answer is null){
+        if (answer is null)
+        {
             return false;
         }
         return true;

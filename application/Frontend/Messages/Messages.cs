@@ -220,4 +220,13 @@ public static class Messages
         return message;
     }
 
+    public static string getAllOrdersHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                    Lista wszystkich zamówień                     \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
 }
