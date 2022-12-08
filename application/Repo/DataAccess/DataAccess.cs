@@ -82,6 +82,7 @@ namespace Repo.DataAccessClass
             else
             {
                 this.AdminList = new List<Administrator>();
+                this.AdminList.Add(new Administrator("test", "test"));
             }
             if (File.Exists(orderPath))
             {
