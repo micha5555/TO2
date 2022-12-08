@@ -177,13 +177,21 @@ namespace Repo
             }
             return null;
         }
-        public Client GetClientByLogin(string login) {
-            foreach (Client c in dataAccess.ClientList) {
-                if (c.Login.Equals(login)) {
+        public Client GetClientByLogin(string login) 
+        {
+            foreach (Client c in dataAccess.ClientList) 
+            {
+                if (c.Login.Equals(login)) 
+                {
                     return c;
                 }
             }
             return null;
+        }
+        public bool UpdateProduct(Guid id, Product product) 
+        {
+            dataAccess.OfferList[0].UpdateProductInOffer(id, product);
+            return true;
         }
     }
 
