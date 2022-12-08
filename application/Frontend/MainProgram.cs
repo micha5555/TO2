@@ -2,31 +2,22 @@ namespace Frontend;
 
 public class MainProgram
 {
-    private HelperMethods _helperMethods;
+    private AdministratorHandler _administratorHandler = new AdministratorHandler();
+    private ClientHandler _clientHandler = new ClientHandler();
     private UserStatus _userStatus;
-
-    public MainProgram(HelperMethods helperMethods)
-    {
-        this._helperMethods = helperMethods;
-    }
-
-    public MainProgram()
-    {
-        this._helperMethods = new HelperMethods(this);
-    }
 
     public void handleWelcomeScreen()
     {
         MessagesPresenter.showWelcomeMessage();
         MessagesPresenter.showArtPic();
         MessagesPresenter.showAwaitingMessage();
-        _helperMethods.waitForUser();
+        CommonMethods.waitForUser();
         _userStatus = UserStatus.NotLoggedIn;
     }
 
     public void handleLoginScreen()
     {
-        _userStatus = _helperMethods.processLoginMenu();
+        _userStatus = CommonMethods.processLoginMenu(_administratorHandler, _clientHandler);
     }
 
     public void handleUser()
@@ -35,22 +26,22 @@ public class MainProgram
         {
             if (_userStatus == UserStatus.Exiting)
             {
-                //Show Goodbye message
+                //Show Goodbye message - TODO Group up to one cast
                 MessagesPresenter.showGoodbyeMessage();
                 MessagesPresenter.showArtPic();
                 MessagesPresenter.showAwaitingMessage();
-                _helperMethods.waitForUser();
+                CommonMethods.waitForUser();
 
                 //Exit Program
                 Environment.Exit(0);
             }
             else if (_userStatus == UserStatus.Client)
             {
-                _userStatus = _helperMethods.processLoggedClient();
+                _userStatus = _clientHandler.processLoggedClient();
             }
             else if (_userStatus == UserStatus.Administrator)
             {
-                _userStatus = _helperMethods.processLoggedAdministrator();
+                _userStatus = _administratorHandler.processLoggedAdministrator();
             }
             else if (_userStatus == UserStatus.NotLoggedIn)
             {

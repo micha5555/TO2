@@ -1,3 +1,5 @@
+using Shared;
+
 namespace Frontend;
 
 public static class Messages{
@@ -120,6 +122,67 @@ public static class Messages{
         message += "5. Przeglądanie zamówień\n";
         message += "9. Wylogowanie\n";
         message += "0. Wyjście z programu\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getAdministratorRegistrationMessage(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                    Rejestracja Administratora                    \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getAdministratorSuccesfulRegistrationMessage(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                 Rejestracja przebiegła pomyślnie                 \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getAdministratorUnsuccesfulRegistrationMessage(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "               Rejestracja nie przebiegła pomyślnie               \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getProductCategorySelectHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                    Wybierz kategorię produktu                    \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getAddingNewProductHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                     Dodawanie nowego produktu                    \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getProductParametersAreNotValid(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                 Podane parametry są nieprawidłowe                \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getProductSummaryMessage((string? name, string? price, string? descrition, Category category) parameters){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                        Parametry Produktu                        \n";
+        message += "------------------------------------------------------------------\n";
+        message += $"    Nazwa: {parameters.name}\n";
+        message += $"    Cena: {parameters.price}\n";
+        message += $"    Opis: {parameters.descrition}\n";
+        message += $"    Categoria: {parameters.category}\n";
         message += "------------------------------------------------------------------\n";
         return message;
     }
