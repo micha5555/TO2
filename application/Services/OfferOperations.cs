@@ -17,6 +17,11 @@ public class OfferOperations : IOfferOperations
         return repository.AddProductToOffer(product);
         
     }
+    public bool AddToOffer(string name, double price, Category categoryClass, string description)
+    {
+        Product product = new Product(name, price, categoryClass, description);
+        return repository.AddProductToOffer(product);
+    }
 
     public bool AddToOffer(List<Product> pList)
     {
@@ -64,4 +69,10 @@ public class OfferOperations : IOfferOperations
         return repository.GetAllOfferProducts();
     }
 
+    public void ActivateProduct(Product product){
+        product.Active();
+    }
+    public void DeactivateProduct(Product product){
+        product.Deactive();
+    }
 }
