@@ -124,7 +124,6 @@ public static class MessagesPresenter
         showAwaitingMessage();
         CommonMethods.waitForUser();
     }
-
     public static void showProductForClient(Product product)
     {
         (string, string, string, Category) prod = (product.Name, product.Price.ToString("G", CultureInfo.InvariantCulture), 
@@ -136,5 +135,11 @@ public static class MessagesPresenter
     public static void showAskQuantity()
     {
         Console.WriteLine(Messages.getAskAboutQuantityHeader());
+
+    }
+    public static void showNameForFilteringProductsHeader(){
+        Console.Clear();
+        Console.WriteLine(Messages.getNameForFilteringProductsHeader());
+
     }
 }

@@ -66,11 +66,14 @@ public static class CommonMethods
         return validOptions.Contains(option);
     }
 
-    public static char getValidUserOptionInput(List<char> validOptions){
-        while(true){
+    public static char getValidUserOptionInput(List<char> validOptions)
+    {
+        while (true)
+        {
             char option = getUserOptionInput();
             Console.WriteLine();
-            if (isOptionValid(validOptions, option)){
+            if (isOptionValid(validOptions, option))
+            {
                 return option;
             }
         }
@@ -130,7 +133,8 @@ public static class CommonMethods
 
     public static Boolean canConvert(String value, Type type)
     {
-        if (type == typeof(double)){
+        if (type == typeof(double))
+        {
             double temp;
             return Double.TryParse(value, System.Globalization.NumberStyles.AllowDecimalPoint, null, out temp);
         }
@@ -141,7 +145,8 @@ public static class CommonMethods
 
     public static T? choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
     {
-        if (list.Count == 0){
+        if (list.Count == 0)
+        {
             Console.Clear();
             Console.WriteLine(headMessage);
             MessagesPresenter.showEmptyListMessage();
@@ -169,33 +174,32 @@ public static class CommonMethods
                 isValid = isOptionValid(validPagingOptions<T>(partition, maxListQuantity), option);
             }
             //Process given option
-            if(option == 'q')
-            {   
+            if (option == 'q')
+            {
                 return null;
             }
-            else if(option != '0'){
+            else if (option != '0')
+            {
                 chosen = partition.ElementAt(option - '0' - 1);
                 
                 Product chosenProduct = (Product)Convert.ChangeType(chosen, typeof(Product));
                 handleProductPage(chosenProduct);
 
             }
-            
-        }
 
-        if (chosen == null)
-        {
-            throw new Exception();
         }
 
         return chosen;
     }
-    public static void showPagedList<T>(List<T> list,int maxListQuantity) where T : class
+    public static void showPagedList<T>(List<T> list, int maxListQuantity) where T : class
     {
         string message = "";
         for (int i = 0; i < list.Count; i++)
         {
-            message += $"{i + 1}. {list.ElementAt(i)}\n";
+            //message += $"{i + 1}. {list.ElementAt(i)}\n";
+            message += $"{i + 1} ";
+            message += ProductTabelarization(list.ElementAt(i));
+            message += "\n";
         }
         message += "------------------------------------------------------------------\n";
         if (list.Count == maxListQuantity)
@@ -208,6 +212,61 @@ public static class CommonMethods
         Console.WriteLine(message);
     }
 
+    public static string ProductTabelarization<T>(T p)
+    {
+        int quantityWidth = 5;
+        int nameColumnWidth = 28;
+        int categoryColumnWidth = 18;
+        int priceColumnWidth = 16;
+        string row = "";
+        Product product;
+        
+        if (p is Product)
+        {
+            product = (Product)(object)p;
+        }
+        else if (p is CartProduct)
+        {
+            CartProduct cp = (CartProduct)(object)p;
+            product = cp.Product;
+            row += ParseString(cp.Quantity.ToString() + " x", quantityWidth);
+        } else 
+        {
+            return "";
+        }
+        row += ParseString(product.Name, nameColumnWidth);
+        row += ParseString(product.CategoryClass.ToString(), categoryColumnWidth);
+        row += ParseString(product.Price.ToString() + " PLN", priceColumnWidth);
+        return row;
+    }/*
+    public static string ProductTabelarization(Shared.CartProduct cp)
+    {
+        int quantityWidth = 5;
+        int nameColumnWidth = 25;
+        int categoryColumnWidth = 18;
+        int priceColumnWidth = 16;
+        string row = "";
+
+        row += ParseString(cp.Quantity.ToString() + " x", quantityWidth);
+        row += ParseString(cp.Product.Name, nameColumnWidth);
+        row += ParseString(cp.Product.CategoryClass.ToString(), categoryColumnWidth);
+        row += ParseString(cp.Product.Price.ToString() + " PLN", priceColumnWidth);
+        return row;
+    }*/
+
+    private static string ParseString(string s, int l)
+    {
+        string parsed;
+        if (s.Length >= l)
+        {
+            parsed = s.Substring(0, l - 4);
+            parsed += "... ";
+            return parsed;
+        }
+        parsed = s.PadRight(l);
+
+        return parsed;
+    }
 
     public static List<char> validPagingOptions<T>(List<T> list, int maxListQuantity) where T : class
     {
@@ -225,7 +284,8 @@ public static class CommonMethods
         return validOptions;
     }
 
-    public static List<char> validConfirmationOptions(){
+    public static List<char> validConfirmationOptions()
+    {
         List<char> list = new List<char>{
             '1','2'
         };
