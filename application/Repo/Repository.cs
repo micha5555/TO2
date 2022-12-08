@@ -10,6 +10,8 @@ namespace Repo
         private Repository()
         {
             this.dataAccess = DataAccess.Instance;
+            // Administrator admin = new Administrator("test", "test");
+            // dataAccess.AdminList.Add(admin);
         }
         public static Repository Instance
         {
@@ -22,14 +24,14 @@ namespace Repo
                 return instance;
             }
         }
-        public int AddAdministrator(Administrator admin)
+        public bool AddAdministrator(Administrator admin)
         {
             if (dataAccess.AdminList.Contains(admin))
             {
-                return -1;
+                return false;
             }
             dataAccess.AdminList.Add(admin);
-            return 0;
+            return true;
         }
 
         public bool CheckCredentialsAdmin(string login, string password)
@@ -156,6 +158,24 @@ namespace Repo
         public void SaveDataOnExit()
         {
             dataAccess.SerializeAll();
+        }
+
+        public bool AddClient(Client client)
+        {
+            dataAccess.ClientList.Add(client);
+            return true;
+        }
+
+        public Client GetClientById(Guid id)
+        {
+            foreach (Client c in dataAccess.ClientList)
+            {
+                if (c.Id.Equals(id))
+                {
+                    return c;
+                }
+            }
+            return null;
         }
     }
 

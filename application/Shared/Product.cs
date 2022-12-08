@@ -8,7 +8,7 @@ namespace Shared
         public Category CategoryClass { get; set; }
         string Description { get; set; }
 
-        bool isActive {get; set; }
+        public bool isActive {get; set; }
         
         public Product()
         {
@@ -22,6 +22,20 @@ namespace Shared
             this.CategoryClass = CategoryClass;
             this.Description = Description;
             this.isActive = true;
+            this.Price = Price;
+        }
+
+        public void Activate(){
+            this.isActive = true;
+        }
+        public void Deactivate(){
+            this.isActive = false;
+        }
+        public override string ToString()
+        {
+            string message = "";
+            message += $"{Name}\t\t{CategoryClass}\t\t{Price}";
+            return message;
         }
 
         public override bool Equals(Object obj)
@@ -41,5 +55,7 @@ namespace Shared
         {
             return this.Name.GetHashCode()*17 + this.Price.GetHashCode()*17 + this.CategoryClass.GetHashCode()*17;
         }
+
+
     }
 }
