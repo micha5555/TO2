@@ -1,26 +1,42 @@
+using Repo;
+using Shared;
+
 namespace Services;
 
 public class ClientOperations : IClientOperations
 {
+    IRepository repository;
+    public ClientOperations()
+    {
+        IRepository repository = Repository.Instance;
+    }
     public bool checkClientCredentials(string login, string password)
     {
-        return true;
-        // TODO IMPLEMENT!
+        return repository.CheckCredentialsClient(login, password);
     }
 
-    public void DoSomething2()
+    public void registerNewClient(string name, string surname, string address, string postalCode, string login, string password)
     {
-        throw new NotImplementedException();
+        Client client = new Client(name, surname, address, postalCode, login, password);
+        //repository.AddClient(client);
+    }
+    public void updateClientAddress(Guid clientID, string address, string postalCode)
+    {
+        /*Client client = repository.GetClient(clientID);
+        client.Address = address;
+        client.PostalCode = postalCode;
+        repository.UpdateClient(client)*/
     }
 
-    public void DoSomething3()
+    public void AddClientOrder(Order order)
     {
-        throw new NotImplementedException();
+        repository.AddClientOrder(order);
     }
 
-    public void registerNewClient(string login, string password)
+    public List<Order> GetClientOrders(Guid clientID)
     {
-        return;
-        // TODO IMPELEMENT
+        return repository.GetClientOrders(clientID);
     }
+
+
 }

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Shared
 {
-    public class Offer : IOfferOperations
+    public class Offer
     {
         public Guid Id { get; set; }
         public List<Product> ProductList { get; set; }

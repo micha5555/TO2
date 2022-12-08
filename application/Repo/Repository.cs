@@ -22,14 +22,14 @@ namespace Repo
                 return instance;
             }
         }
-        public int AddAdministrator(Administrator admin)
+        public bool AddAdministrator(Administrator admin)
         {
             if (dataAccess.AdminList.Contains(admin))
             {
-                return -1;
+                return false;
             }
             dataAccess.AdminList.Add(admin);
-            return 0;
+            return true;
         }
 
         public bool CheckCredentialsAdmin(string login, string password)

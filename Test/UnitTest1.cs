@@ -121,4 +121,25 @@ public class Tests
         }
         Console.WriteLine();
     }
+
+    [Test]
+    public void Test3()
+    {
+        Product p1 = new Product("p1", 1, Category.AGD, "desc jakis");
+        Product p2 = new Product("p2", 2, Category.AGD, "desc jakis");
+        Product p3 = new Product("p3", 4, Category.AGD, "desc jakis");
+        Product p4 = new Product("p4", 5, Category.AGD, "desc jakis");
+        Product p5 = new Product("p5", 6, Category.AGD, "desc jakis");
+        List<Product> newProducts = new List<Product>{p1, p2, p3, p4, p5};
+        IOfferOperations oo = new OfferOperations();
+        oo.AddToOffer(newProducts);
+        List<Product> products = oo.GetProductList();
+        foreach (Product p in products)
+        {
+            Console.Write(p.Name + " ");
+        }
+
+
+        Console.WriteLine();
+    }
 }
