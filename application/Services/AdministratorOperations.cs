@@ -21,11 +21,8 @@ public class AdministratorOperations : IAdministratorOperations
     public RegistrationStatus registerNewAdministrator(string login, string password)
     {
         Administrator admin = new Administrator(login, password);
-        bool response = repository.AddAdministrator(admin);
-        if (response)
-        {
-            return RegistrationStatus.Registered;    
-        }
-        return RegistrationStatus.NotRegistered;
+        bool status = repository.AddAdministrator(admin);
+
+        return status? RegistrationStatus.Registered : RegistrationStatus.NotRegistered;
     }
 }
