@@ -4,7 +4,7 @@ namespace Shared
     {
         private double ActualPrice;
         public List<CartProduct> CartProductList;
-
+        
         public Cart()
         {
             this.CartProductList = new List<CartProduct>();
@@ -27,7 +27,8 @@ namespace Shared
             this.ActualPrice = 0;
         }
 
-        public Cart(double price, List<Product> pl){
+        public Cart(double price, List<Product> pl)
+        {
             this.ActualPrice = price;
             this.CartProductList = new List<CartProduct>();
             foreach (Product p in pl)
@@ -40,7 +41,7 @@ namespace Shared
         {
             this.CartProductList.Add(p);
         }
-        
+
         public void RemoveFromCart(CartProduct p)
         {
             this.CartProductList.Remove(p);
@@ -55,7 +56,7 @@ namespace Shared
             }
             foreach (CartProduct cp in CartProductList)
             {
-                cartPrice += cp.Product.Price*cp.Quantity;
+                cartPrice += cp.Product.Price * cp.Quantity;
             }
             if (cartPrice < 0)
             {

@@ -2,7 +2,7 @@ using Shared;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Repo.DataAccess
+namespace Repo.DataAccessClass
 {
 
     public class DataAccess : IDataAccess
@@ -41,27 +41,6 @@ namespace Repo.DataAccess
                 return instance;
             }
         }
-
-        object IDataAccess.DeleteRecord(int id, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        object IDataAccess.GetRecord(int id, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IDataAccess.SaveRecord(object o)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IDataAccess.UpdateRecord(object o)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SerializeAll()
         {
             SerializeObject(this.CartList, cartPath);
@@ -72,11 +51,46 @@ namespace Repo.DataAccess
         }
         public void DeserializeAll()
         {
-            this.CartList = DeserializeCarts(cartPath);
-            this.OfferList = DeserializeOffers(offerPath);
-            this.ClientList = DeserializeClients(clientPath);
-            this.AdminList = DeserializeAdmins(adminPath);
-            this.OrderList = DeserializeOrders(orderPath);
+            if (File.Exists(cartPath))
+            {
+                this.CartList = DeserializeCarts(cartPath);
+            }
+            else
+            {
+                this.CartList = new List<Cart>();
+            }
+            if (File.Exists(offerPath))
+            {
+                this.OfferList = DeserializeOffers(offerPath);
+            }
+            else
+            {
+                this.OfferList = new List<Offer> { new Offer() };
+            }
+            if (File.Exists(clientPath))
+            {
+                this.ClientList = DeserializeClients(clientPath);
+            }
+            else
+            {
+                this.ClientList = new List<Client>();
+            }
+            if (File.Exists(adminPath))
+            {
+                this.AdminList = DeserializeAdmins(adminPath);
+            }
+            else
+            {
+                this.AdminList = new List<Administrator>();
+            }
+            if (File.Exists(orderPath))
+            {
+                this.OrderList = DeserializeOrders(orderPath);
+            }
+            else
+            {
+                this.OrderList = new List<Order>();
+            }
         }
 
         private bool SerializeObject<T>(List<T> list, string path)

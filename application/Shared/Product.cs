@@ -7,6 +7,8 @@ namespace Shared
         public double Price { get; set; }
         public Category CategoryClass { get; set; }
         string Description { get; set; }
+
+        bool isActive {get; set; }
         
         public Product()
         {
@@ -19,6 +21,7 @@ namespace Shared
             this.Name = Name;
             this.CategoryClass = CategoryClass;
             this.Description = Description;
+            this.isActive = true;
         }
 
         public override bool Equals(Object obj)
