@@ -1,6 +1,9 @@
 using Repo;
 using Shared;
 
+using Frontend;
+
+
 namespace Services;
 
 public class AdministratorOperations : IAdministratorOperations
@@ -15,9 +18,14 @@ public class AdministratorOperations : IAdministratorOperations
         return repository.CheckCredentialsAdmin(login, password);
     }
 
-    public void createNewAdministrator(string login, string password)
+    public RegistrationStatus registerNewAdministrator(string login, string password)
     {
         Administrator admin = new Administrator(login, password);
-        repository.AddAdministrator(admin);
+        bool response = repository.AddAdministrator(admin);
+        if (response)
+        {
+            return RegistrationStatus.Registered;    
+        }
+        return RegistrationStatus.NotRegistered;
     }
 }
