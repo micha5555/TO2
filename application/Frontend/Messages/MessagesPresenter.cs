@@ -81,25 +81,23 @@ public static class MessagesPresenter
         CommonMethods.waitForUser();
     }
 
-    public static Confirmation showProductParametersSummary((string? name, string? price, string? descrition, Category category) parameters)
+    public static Confirmation showProductParametersSummary((string? name, string? price, string? descrition, Category category) parameters,bool isActive)
     {
-        showProductParameters(parameters);
+        showProductParameters(parameters, isActive);
         Confirmation answer = showConfirmationMessage();
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
         return answer;
     }
 
-    public static void showProductParameters((string? name, string? price, string? descrition, Category category) parameters){
+    public static void showProductParameters((string? name, string? price, string? descrition, Category category) parameters, bool isActive){
         Console.Clear();
-        Console.WriteLine(Messages.getProductSummaryMessage(parameters));
+        Console.Write(Messages.getProductSummaryMessage(parameters, isActive));
     }
 
-    public static void showProductParametersAdministratorManagingMessage((string? name, string? price, string? descrition, Category category) parameters){
-        showProductParameters(parameters);
-        //options
-        showAwaitingMessage();
-        CommonMethods.waitForUser();
+    public static void showProductParametersAdministratorManagingMessage((string? name, string? price, string? descrition, Category category) parameters, bool isActive){
+        showProductParameters(parameters, isActive);
+        Console.WriteLine(Messages.getPossibleProductActionsAdministratorMessage());
     }
 
     public static Confirmation showConfirmationMessage()
@@ -135,5 +133,14 @@ public static class MessagesPresenter
     public static void showNameForFilteringProductsHeader(){
         Console.Clear();
         Console.WriteLine(Messages.getNameForFilteringProductsHeader());
+    }
+
+    // public static void showPossibleProductActionsAdministatorMessage(){
+    //     Console.WriteLine(Messages.)
+    // }
+
+    public static void showNewPriceHeader(){
+        Console.Clear();
+        Console.WriteLine(Messages.getNewPriceHeader());
     }
 }

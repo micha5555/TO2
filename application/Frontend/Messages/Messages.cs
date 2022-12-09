@@ -152,8 +152,10 @@ public static class Messages
         return message;
     }
 
-    public static string getProductSummaryMessage((string? name, string? price, string? descrition, Category category) parameters)
+    public static string getProductSummaryMessage((string? name, string? price, string? descrition, Category category) parameters, bool isActive)
     {
+        string stan = isActive ? "Tak":"Nie";
+
         string message = "";
         message += "------------------------------------------------------------------\n";
         message += "                        Parametry Produktu                        \n";
@@ -162,6 +164,7 @@ public static class Messages
         message += $"    Cena: {parameters.price}\n";
         message += $"    Opis: {parameters.descrition}\n";
         message += $"    Kategoria: {parameters.category}\n";
+        message += $"    Wprowadzony: {stan}\n";
         message += "------------------------------------------------------------------\n";
         return message;
     }
@@ -225,6 +228,23 @@ public static class Messages
         string message = "";
         message += "------------------------------------------------------------------\n";
         message += "                    Lista wszystkich zamówień                     \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getPossibleProductActionsAdministratorMessage(){
+        string message = "";
+        message += "1. Wycofaj/Wprowadź\n";
+        message += "2. Zmień cenę\n";
+        message += "q. Wyjdź\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static string getNewPriceHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                      Ustalanie nowej ceny                        \n";
         message += "------------------------------------------------------------------\n";
         return message;
     }

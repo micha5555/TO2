@@ -12,4 +12,6 @@ public interface IOfferOperations
     public List<Product> FilterProductsByCategory(Category category);
     public List<Product> SearchForAllProductsByName(string name);
     public List<Product> SearchForActiveProductsByName(string name);
+    public void ActivateProduct(Product product);
+    public void DeactivateProduct(Product product);
 }
