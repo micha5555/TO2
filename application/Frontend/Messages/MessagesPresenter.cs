@@ -92,6 +92,25 @@ public static class MessagesPresenter
         return answer;
     }
 
+    public static void showProductParameters((string? name, string? price, string? descrition, Category category) parameters){
+        Console.Clear();
+        Console.WriteLine(Messages.getProductSummaryMessage(parameters));
+    }
+
+    public static void showProductParametersAdministratorManagingMessage((string? name, string? price, string? descrition, Category category) parameters){
+        showProductParameters(parameters);
+        //options
+        showAwaitingMessage();
+        CommonMethods.waitForUser();
+    }
+
+    public static void showProductForClient((string? name, string? price, string? descrition, Category category) parameters)
+    {
+        showProductParameters(parameters);
+        Console.WriteLine("1. Dodaj produkt do koszyka\nq. Wróc do menu");
+        //options
+    }
+
     public static Confirmation showConfirmationMessage()
     {
         Console.WriteLine(Messages.getConfirmationMessage());
@@ -124,18 +143,18 @@ public static class MessagesPresenter
         showAwaitingMessage();
         CommonMethods.waitForUser();
     }
-    public static void showProductForClient(Product product)
-    {
-        (string, string, string, Category) prod = (product.Name, product.Price.ToString("G", CultureInfo.InvariantCulture), 
-                                                product.Description, product.CategoryClass);
-        Console.WriteLine(Messages.getProductSummaryMessage(prod));
-        Console.WriteLine("1. Dodaj produkt do koszyka\nq. Wróc do listy");
-    }
+    // public static void showProductForClient(Product product)
+    // {
+    //     (string, string, string, Category) prod = (product.Name, product.Price.ToString("G", CultureInfo.InvariantCulture), 
+    //                                             product.Description, product.CategoryClass);
+    //     Console.WriteLine(Messages.getProductSummaryMessage(prod));
+    //     Console.WriteLine("1. Dodaj produkt do koszyka\nq. Wróc do listy");
+    // }
 
     public static void showAskQuantity()
     {
+        Console.Clear();
         Console.WriteLine(Messages.getAskAboutQuantityHeader());
-
     }
     public static void showNameForFilteringProductsHeader(){
         Console.Clear();

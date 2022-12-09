@@ -7,6 +7,8 @@ public class ClientHandler
     private IClientOperations _clientOperations = new ClientOperations();
 
     private IOfferOperations _offerOperations = new OfferOperations();
+
+    public Client LoggedClient = null;
     public UserStatus processLoggedClient()
     {
         UserStatus userStatus = UserStatus.Client;
@@ -82,7 +84,12 @@ public class ClientHandler
 
     public bool checkClientLogin(string login, string password)
     {
-        return _clientOperations.checkClientCredentials(login, password);
+        bool logged = _clientOperations.checkClientCredentials(login, password);
+        if(logged)
+        {
+            LoggedClient = _clientOperations.GetClientByLogin(login);
+        }
+        return logged;
     }
 
     public void createClient(string login, string password)
@@ -93,7 +100,47 @@ public class ClientHandler
     private void showAllProducts()
     {
         List<Product> list = _offerOperations.GetAllProductList();
-        if (CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage()) == null) return;
+        Product? chosenProduct = CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage());
+        //Product chosenProduct = (Product)Convert.ChangeType(chosen, typeof(Product));
+        if (chosenProduct == null) return;
+        //handleProductPage(chosenProduct, client);
+        productManagingClient(chosenProduct);
+    }
+
+    private void productManagingClient(Product product)
+    {
+        //TODO: użyć metody z ProductMethod getProductParametersFromProduct
+        MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass));
+        
+        bool exit = false;
+        while (!exit)
+        {
+            MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass));
+            char chosen = CommonMethods.getUserOptionInput();
+            if (chosen == '1')
+            {
+                bool exitQuantity = false;
+                //ask abount quantity
+                while(!exitQuantity)
+                {
+                    MessagesPresenter.showAskQuantity();
+                    string quantity = Console.ReadLine();
+                    try
+                    {
+                        int parsed = int.Parse(quantity);
+                        LoggedClient.Cart.AddToCart(new CartProduct(product, parsed));
+                        exitQuantity = true;
+                    }
+                    catch{}
+                }
+                
+            }
+            else if (chosen == 'q')
+            {
+                exit = true;
+            }
+        }
+        
     }
 
 }

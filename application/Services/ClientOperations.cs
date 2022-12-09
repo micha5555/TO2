@@ -40,5 +40,8 @@ public class ClientOperations : IClientOperations
         return repository.GetClientOrders(clientID);
     }
 
-
+    public Client GetClientByLogin(string login)
+    {
+        return repository.GetClientByLogin(login);
+    }
 }
