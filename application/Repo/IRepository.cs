@@ -22,6 +22,7 @@ namespace Repo
         public void SaveDataOnExit();
         public Client GetClientById(Guid id);
         public bool AddClient(Client client);
+        public Client GetClientByLogin(string login);
     }
 
 }
