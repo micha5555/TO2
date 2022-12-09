@@ -110,12 +110,12 @@ public class ClientHandler
     private void productManagingClient(Product product)
     {
         //TODO: użyć metody z ProductMethod getProductParametersFromProduct
-        MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass));
+        MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass), product.isActive);
         
         bool exit = false;
         while (!exit)
         {
-            MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass));
+            MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass), product.isActive);
             char chosen = CommonMethods.getUserOptionInput();
             if (chosen == '1')
             {
