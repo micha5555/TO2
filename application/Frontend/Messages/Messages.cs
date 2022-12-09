@@ -13,7 +13,7 @@ public static class Messages
 
     public static string getAwaitingMessage()
     {
-        string awaitingMessage = "";
+        string awaitingMessage = "\n";
         awaitingMessage += "Wciśnij dowolny klawisz, aby kontynuować...";
         return awaitingMessage;
     }
@@ -90,8 +90,7 @@ public static class Messages
         message += "1. Przeglądanie produktów w ofercie\n";
         message += "2. Wyszukiwanie produktów po nazwie\n";
         message += "3. Wyświetlenie koszyka\n";
-        message += "4. Ustawienie danych wysyłki\n";
-        message += "5. Przeglądanie zamówień\n";
+        message += "4. Przeglądanie zamówień\n";
         message += "9. Wylogowanie\n";
         message += "0. Wyjście z programu\n";
         message += "------------------------------------------------------------------\n";
@@ -154,7 +153,7 @@ public static class Messages
 
     public static string getProductSummaryMessage((string? name, string? price, string? descrition, Category category) parameters, bool isActive)
     {
-        string stan = isActive ? "Tak":"Nie";
+        string stan = isActive ? "Tak" : "Nie";
 
         string message = "";
         message += "------------------------------------------------------------------\n";
@@ -208,9 +207,20 @@ public static class Messages
         return message;
     }
 
-    public static string getListIsEmptyMessage(){
+    public static string getListIsEmptyMessage()
+    {
         string message = "";
         message += "\nLista jest pusta!\n";
+        return message;
+    }
+
+
+    public static string getAskAboutQuantityHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                Ile sztuk chcesz dodać do koszyka?                \n";
+        message += "------------------------------------------------------------------\n";
         return message;
     }
 
@@ -232,7 +242,8 @@ public static class Messages
         return message;
     }
 
-    public static string getPossibleProductActionsAdministratorMessage(){
+    public static string getPossibleProductActionsAdministratorMessage()
+    {
         string message = "";
         message += "1. Wycofaj/Wprowadź\n";
         message += "2. Zmień cenę\n";
@@ -241,10 +252,105 @@ public static class Messages
         return message;
     }
 
-    public static string getNewPriceHeader(){
+    public static string getNewPriceHeader()
+    {
         string message = "";
         message += "------------------------------------------------------------------\n";
         message += "                      Ustalanie nowej ceny                        \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderAdministratorHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                            Zamówienie                            \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderContentAdministratorMessage(Order order)
+    {
+        string message = "";
+        message += $"ID zamówienia: {order.Id}\n";
+        message += $"ID klienta: {order.ClientId}\n";
+        message += $"Wartość zamówienia: {order.Price}\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderAdministratorPossibleActionsMessage()
+    {
+        string message = "";
+        // message += "1. Zmień Status\n";
+        message += "1. Sprawdź zawartość zamówienia\n";
+        message += "q. Wyjdź\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getCartProductHeaderAndSummary(CartProduct cartProduct)
+    {
+        string message = "";
+        message += $"Nazwa: {cartProduct.Product.Name}\n";
+        message += $"Kategoria: {cartProduct.Product.CategoryClass}\n";
+        message += $"Opis: {cartProduct.Product.Description}\n";
+        message += $"Ilość: {cartProduct.Quantity}\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getCartHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                           Twój Koszyk                            \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getCartContent(Cart cart)
+    {
+        string message = "";
+        message += $"Wartość: {cart.CalculateCartPrice()}\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getCartPossibleActions()
+    {
+        string message = "";
+        message += "1. Sprawdź zawartość koszyka\n";
+        message += "2. Złóż zamówienie\n";
+        message += "3. Sprawdź proponowane produkty\n";
+        message += "q. Wyjdź\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getProposedItemsHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                       Proponowane Produkty                       \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getClientOrders()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                          Twoje Zlecenia                          \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderProductsHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                        Produkty zlecenia                         \n";
         message += "------------------------------------------------------------------\n";
         return message;
     }

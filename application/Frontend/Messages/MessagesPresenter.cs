@@ -1,3 +1,4 @@
+using System.Globalization;
 using Shared;
 
 namespace Frontend;
@@ -81,13 +82,32 @@ public static class MessagesPresenter
         CommonMethods.waitForUser();
     }
 
-    public static Confirmation showProductParametersSummary((string? name, string? price, string? descrition, Category category) parameters,bool isActive)
+    public static Confirmation showProductParametersSummary((string? name, string? price, string? descrition, Category category) parameters, bool isActive)
     {
         showProductParameters(parameters, isActive);
         Confirmation answer = showConfirmationMessage();
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
         return answer;
+    }
+
+    // public static void showProductParameters((string? name, string? price, string? descrition, Category category) parameters, bool isActive){
+    //     Console.Clear();
+    //     Console.WriteLine(Messages.getProductSummaryMessage(parameters, isActive));
+    // }
+
+    // public static void showProductParametersAdministratorManagingMessage((string? name, string? price, string? descrition, Category category) parameters){
+    //     showProductParameters(parameters);
+    //     //options
+    //     showAwaitingMessage();
+    //     CommonMethods.waitForUser();
+    // }
+
+    public static void showProductForClient((string? name, string? price, string? descrition, Category category) parameters, bool isActive)
+    {
+        showProductParameters(parameters, isActive);
+        Console.WriteLine("1. Dodaj produkt do koszyka\nq. Wróc do menu");
+        //options
     }
 
     public static void showProductParameters((string? name, string? price, string? descrition, Category category) parameters, bool isActive){
@@ -98,6 +118,7 @@ public static class MessagesPresenter
     public static void showProductParametersAdministratorManagingMessage((string? name, string? price, string? descrition, Category category) parameters, bool isActive){
         showProductParameters(parameters, isActive);
         Console.WriteLine(Messages.getPossibleProductActionsAdministratorMessage());
+
     }
 
     public static Confirmation showConfirmationMessage()
@@ -110,29 +131,45 @@ public static class MessagesPresenter
         return Confirmation.Rejected;
     }
 
-    public static void showProductNotAdded(){
+    public static void showProductNotAdded()
+    {
         Console.Clear();
         Console.WriteLine(Messages.getNewProductNotAdded());
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
     }
 
-    public static void showProductAddedCorrectly(){
+    public static void showProductAddedCorrectly()
+    {
         Console.Clear();
         Console.WriteLine(Messages.getNewProductAddedCorrectly());
         Console.WriteLine(Messages.getAwaitingMessage());
         CommonMethods.waitForUser();
     }
 
-    public static void showEmptyListMessage(){
+    public static void showEmptyListMessage()
+    {
         Console.WriteLine(Messages.getListIsEmptyMessage());
         showAwaitingMessage();
         CommonMethods.waitForUser();
     }
+    // public static void showProductForClient(Product product)
+    // {
+    //     (string, string, string, Category) prod = (product.Name, product.Price.ToString("G", CultureInfo.InvariantCulture), 
+    //                                             product.Description, product.CategoryClass);
+    //     Console.WriteLine(Messages.getProductSummaryMessage(prod));
+    //     Console.WriteLine("1. Dodaj produkt do koszyka\nq. Wróc do listy");
+    // }
 
+    public static void showAskQuantity()
+    {
+        Console.Clear();
+        Console.WriteLine(Messages.getAskAboutQuantityHeader());
+    }
     public static void showNameForFilteringProductsHeader(){
         Console.Clear();
         Console.WriteLine(Messages.getNameForFilteringProductsHeader());
+
     }
 
     // public static void showPossibleProductActionsAdministatorMessage(){
@@ -142,5 +179,27 @@ public static class MessagesPresenter
     public static void showNewPriceHeader(){
         Console.Clear();
         Console.WriteLine(Messages.getNewPriceHeader());
+    }
+
+    public static void showOrderAdministrator(Order order){
+        Console.Clear();
+        Console.Write(Messages.getOrderAdministratorHeader());
+        Console.Write(Messages.getOrderContentAdministratorMessage(order));
+        Console.Write(Messages.getOrderAdministratorPossibleActionsMessage());
+    }
+
+    public static void showCartProductSummaryAndHeader(CartProduct cartProduct)
+    {
+        Console.Clear();
+        Console.Write(Messages.getCartProductHeaderAndSummary(cartProduct));
+        showAwaitingMessage();
+        CommonMethods.waitForUser();
+    }
+
+    public static void showCartClientMessage(Cart cart){
+        Console.Clear();
+        Console.Write(Messages.getCartHeader());
+        Console.Write(Messages.getCartContent(cart));
+        Console.Write(Messages.getCartPossibleActions());
     }
 }

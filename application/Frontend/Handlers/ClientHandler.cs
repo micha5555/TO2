@@ -2,11 +2,33 @@ namespace Frontend;
 
 using Shared;
 using Services;
+using System;
+
 public class ClientHandler
 {
     private IClientOperations _clientOperations = new ClientOperations();
 
     private IOfferOperations _offerOperations = new OfferOperations();
+    private ICartOperations _cartOperations;
+    private IOrderOperations _orderOperations = new OrderOperations();
+    private IGeneralOperations _generalOpearions = new GeneralOperations();
+
+    public Client LoggedClient = null;
+
+    // public ClientHandler(string login){
+    //     LoggedClient = _clientOperations.GetClientByLogin(login);
+    // }
+    public void setLoggedClient(string? login)
+    {
+        if (login is not null)
+        {
+            LoggedClient = _clientOperations.GetClientByLogin(login);
+            _cartOperations = new CartOperations(LoggedClient.Id);
+        }
+            
+    }
+
+
     public UserStatus processLoggedClient()
     {
         UserStatus userStatus = UserStatus.Client;
@@ -38,37 +60,113 @@ public class ClientHandler
         }
         if (chosenOption == '9')
         {
-            // Show logout message 
             return UserStatus.NotLoggedIn;
         }
         if (chosenOption == '1')
         {
-            //Show products in offer
             showAllProducts();
         }
         else if (chosenOption == '2')
         {
-            //TODO Show products by name
+            showAllProductsWithGivenName();
         }
         else if (chosenOption == '3')
         {
-            //TODO Show cart
+            showClientCart();
         }
         else if (chosenOption == '4')
         {
-            //TODO Set Delivery address
-        }
-        else if (chosenOption == '5')
-        {
-            //TODO Show all client orders
+            showAllClientOrders();
         }
 
         return UserStatus.Client;
     }
 
+    private void showAllClientOrders()
+    {
+        Order? order = CommonMethods.choseOptionFromPagedList(_clientOperations.GetClientOrders(LoggedClient.Id), Messages.getClientOrders());
+        if (order is not null){
+            orderManagingClient(order);
+        }
+    }
+
+    private void orderManagingClient(Order order)
+    {
+        MessagesPresenter.showOrderAdministrator(order);
+        MessagesPresenter.showAwaitingMessage();
+        CommonMethods.waitForUser();
+        CartProduct? cartProduct = CommonMethods.choseOptionFromPagedList(order.GetProducts(), Messages.getOrderProductsHeader());
+        MessagesPresenter.showAwaitingMessage();
+        CommonMethods.waitForUser();
+    }
+
+    private void showClientCart()
+    {
+        //Show Client Cart Message with header 1. value, and show options, check cart check proposed items
+        MessagesPresenter.showCartClientMessage(LoggedClient.Cart);
+        char chosenOption = CommonMethods.getUserOptionInput();
+        bool isValid = CommonMethods.isOptionValid(cartValidOptions(), chosenOption);
+
+        while (!isValid)
+        {
+            MessagesPresenter.showCartClientMessage(LoggedClient.Cart);
+            chosenOption = CommonMethods.getUserOptionInput();
+            isValid = CommonMethods.isOptionValid(cartValidOptions(), chosenOption);
+        }
+
+        if(chosenOption == 'q')
+        {
+            return;
+        }
+        if(chosenOption == '1')
+        {
+            CartProduct? cartProduct = CommonMethods.choseOptionFromPagedList(LoggedClient.Cart.GetCartProducts(), Messages.getCartHeader());
+
+            showClientCart();
+            return;
+        }
+        if(chosenOption == '2')
+        {
+            Order order = new Order(LoggedClient);
+            _clientOperations.AddClientOrder(order);
+            LoggedClient.Cart.ClearCart();
+
+            showClientCart();
+            return;
+        }
+        if(chosenOption == '3')
+        {
+            List<Product> list = _generalOpearions.ProposeProductsBasedOnCart(LoggedClient.Cart, 3);
+
+            Product? product = CommonMethods.choseOptionFromPagedList(list, Messages.getProposedItemsHeader());
+            if (product is not null){
+                productManagingClient(product);
+            }
+
+            showClientCart();
+            return;
+        }
+    }
+
+    private List<char> cartValidOptions()
+    {
+        return new List<char>(){'1', '2', '3', 'q'};
+    }
+
+    private void showAllProductsWithGivenName()
+    {
+        String name = ProductMethods.getNameForFilteringProducts();
+        List<Product> list = _offerOperations.SearchForActiveProductsByName(name);
+        Product? chosenProduct = CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage());
+        //Product chosenProduct = (Product)Convert.ChangeType(chosen, typeof(Product));
+        if (chosenProduct == null) return;
+        //handleProductPage(chosenProduct, client);
+        productManagingClient(chosenProduct);
+    }
+
     public bool validateChosenOption(char chosenOption)
     {
-        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '9' };
 
         if (!CommonMethods.isOptionValid(validOptions, chosenOption))
         {
@@ -82,7 +180,12 @@ public class ClientHandler
 
     public bool checkClientLogin(string login, string password)
     {
-        return _clientOperations.checkClientCredentials(login, password);
+        bool logged = _clientOperations.checkClientCredentials(login, password);
+        if (logged)
+        {
+            LoggedClient = _clientOperations.GetClientByLogin(login);
+        }
+        return logged;
     }
 
     public void createClient(string login, string password)
@@ -92,8 +195,48 @@ public class ClientHandler
 
     private void showAllProducts()
     {
-        List<Product> list = _offerOperations.GetAllProductList();
-        if (CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage()) == null) return;
+        List<Product> list = _offerOperations.GetActiveProductList();
+        Product? chosenProduct = CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage());
+        //Product chosenProduct = (Product)Convert.ChangeType(chosen, typeof(Product));
+        if (chosenProduct == null) return;
+        //handleProductPage(chosenProduct, client);
+        productManagingClient(chosenProduct);
+    }
+
+    private void productManagingClient(Product product)
+    {
+        //TODO: użyć metody z ProductMethod getProductParametersFromProduct
+        MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass), product.isActive);
+
+        bool exit = false;
+        while (!exit)
+        {
+            MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass), product.isActive);
+            char chosen = CommonMethods.getUserOptionInput();
+            if (chosen == '1')
+            {
+                bool exitQuantity = false;
+                //ask abount quantity
+                while (!exitQuantity)
+                {
+                    MessagesPresenter.showAskQuantity();
+                    string quantity = Console.ReadLine();
+                    try
+                    {
+                        int parsed = int.Parse(quantity);
+                        LoggedClient.Cart.AddToCart(new CartProduct(product, parsed));
+                        exitQuantity = true;
+                    }
+                    catch { }
+                }
+
+            }
+            else if (chosen == 'q')
+            {
+                exit = true;
+            }
+        }
+
     }
 
 }

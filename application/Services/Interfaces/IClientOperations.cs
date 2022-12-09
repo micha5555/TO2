@@ -10,6 +10,7 @@ public interface IClientOperations
     public void updateClientAddress(Guid clientID, string address, string postalCode);
     public void AddClientOrder(Order order);
     public List<Order> GetClientOrders(Guid clientID);
+    public Client GetClientByLogin(string login);
     
 }
 
