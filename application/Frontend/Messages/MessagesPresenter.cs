@@ -180,4 +180,19 @@ public static class MessagesPresenter
         Console.Clear();
         Console.WriteLine(Messages.getNewPriceHeader());
     }
+
+    public static void showOrderAdministrator(Order order){
+        Console.Clear();
+        Console.Write(Messages.getOrderAdministratorHeader());
+        Console.Write(Messages.getOrderContentAdministratorMessage(order));
+        Console.Write(Messages.getOrderAdministratorPossibleActionsMessage());
+    }
+
+    public static void showCartProductSummaryAndHeader(CartProduct cartProduct)
+    {
+        Console.Clear();
+        Console.Write(Messages.getCartProductHeaderAndSummary(cartProduct));
+        showAwaitingMessage();
+        CommonMethods.waitForUser();
+    }
 }

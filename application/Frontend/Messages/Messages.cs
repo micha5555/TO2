@@ -154,7 +154,7 @@ public static class Messages
 
     public static string getProductSummaryMessage((string? name, string? price, string? descrition, Category category) parameters, bool isActive)
     {
-        string stan = isActive ? "Tak":"Nie";
+        string stan = isActive ? "Tak" : "Nie";
 
         string message = "";
         message += "------------------------------------------------------------------\n";
@@ -208,7 +208,8 @@ public static class Messages
         return message;
     }
 
-    public static string getListIsEmptyMessage(){
+    public static string getListIsEmptyMessage()
+    {
         string message = "";
         message += "\nLista jest pusta!\n";
         return message;
@@ -242,7 +243,8 @@ public static class Messages
         return message;
     }
 
-    public static string getPossibleProductActionsAdministratorMessage(){
+    public static string getPossibleProductActionsAdministratorMessage()
+    {
         string message = "";
         message += "1. Wycofaj/Wprowadź\n";
         message += "2. Zmień cenę\n";
@@ -251,10 +253,51 @@ public static class Messages
         return message;
     }
 
-    public static string getNewPriceHeader(){
+    public static string getNewPriceHeader()
+    {
         string message = "";
         message += "------------------------------------------------------------------\n";
         message += "                      Ustalanie nowej ceny                        \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderAdministratorHeader()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                            Zamówienie                            \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderContentAdministratorMessage(Order order)
+    {
+        string message = "";
+        message += $"ID zamówienia: {order.Id}\n";
+        message += $"ID klienta: {order.ClientId}\n";
+        message += $"Wartość zamówienia: {order.Price}\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderAdministratorPossibleActionsMessage()
+    {
+        string message = "";
+        // message += "1. Zmień Status\n";
+        message += "1. Sprawdź zawartość zamówienia\n";
+        message += "q. Wyjdź\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getCartProductHeaderAndSummary(CartProduct cartProduct)
+    {
+        string message = "";
+        message += $"Nazwa: {cartProduct.Product.Name}\n";
+        message += $"Kategoria: {cartProduct.Product.CategoryClass}\n";
+        message += $"Opis: {cartProduct.Product.Description}\n";
+        message += $"Ilość: {cartProduct.Quantity}\n";
         message += "------------------------------------------------------------------\n";
         return message;
     }

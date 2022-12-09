@@ -74,6 +74,56 @@ public class AdministratorHandler
         {
             return;
         }
+        orderManagingAdministrator(chosenOrder);
+    }
+
+    private void orderManagingAdministrator(Order order)
+    {
+        MessagesPresenter.showOrderAdministrator(order);
+        char option = CommonMethods.getUserOptionInput();
+        bool isValid = CommonMethods.isOptionValid(getValidOrderManageOptions(), option);
+
+        while (!isValid)
+        {
+            MessagesPresenter.showOrderAdministrator(order);
+            char chosenOption = CommonMethods.getUserOptionInput();
+
+            isValid = CommonMethods.isOptionValid(getValidOrderManageOptions(), chosenOption);
+            if (isValid)
+                option = chosenOption;
+        }
+
+        if(option == 'q')
+        {
+            _orderOperations.UpdateOrder(order);
+            return;
+        }
+        // if(option == '1')
+        // {
+        //     // SOME ACTIONS
+        //     orderManagingAdministrator(order);
+        //     return;
+        // }
+        if(option == '1')
+        {
+            CartProduct? cartProduct = CommonMethods.choseOptionFromPagedList(order.GetProducts(), "TESTTESTTEST\n");
+            // CartProduct page handling
+
+            orderManagingAdministrator(order);
+            return;
+        }
+    }
+
+    private void cartProductManagingAdministrator(CartProduct cartProduct){
+        //Show message with cartProduct
+
+        //show awaiting message
+        //wait for response
+    }
+
+    private List<char> getValidOrderManageOptions()
+    {
+        return new List<char>(){'1','q'};
     }
 
     private void getAllProductsWithGivenName()
