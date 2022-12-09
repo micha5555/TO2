@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.18.3" />
 	<PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.*" />
     <PackageReference Include="SpecFlow.NUnit" Version="3.9.74" />
     <PackageReference Include="nunit" Version="3.13.1" />
@@ -15,6 +16,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\application\TO2.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Steps\" />
   </ItemGroup>
 
 </Project>

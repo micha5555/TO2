@@ -1,4 +1,8 @@
 ﻿using Frontend;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("BDDTests.StepDefinitions")]
+
 
 MainProgram mainProgram = new MainProgram();
 
