@@ -41,6 +41,18 @@ namespace Shared
             }
 
         }
+        public bool UpdateProductInOffer(Guid id, Product product) 
+        { 
+            foreach(Product p in this.ProductList) 
+            {
+                if (p.Id.Equals(id)) {
+                    this.ProductList.Remove(p);
+                    this.ProductList.Add(product);
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public void AddToOffer(List<Product> pList)
         {
