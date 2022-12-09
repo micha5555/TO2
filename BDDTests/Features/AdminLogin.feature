@@ -11,3 +11,10 @@ Scenario: Admin login to the app
         And Press enter
         Then "Menu Administratora" is visible
         And Option "Wylogowanie" is visible
+
+
+
+
+
+
+

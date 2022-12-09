@@ -9,7 +9,7 @@ namespace BDDTests.StepDefinitions
 {
     [Binding]
     public class AdminLoginStepDefinitions
-    {
+    {/*
         StringBuilder _ConsoleOutput;
         Mock<TextReader> _ConsoleInput;
 
@@ -82,6 +82,6 @@ namespace BDDTests.StepDefinitions
         public void ThenOptionIsVisible(string wylogowanie)
         {
             throw new PendingStepException();
-        }
+        }*/
     }
 }
