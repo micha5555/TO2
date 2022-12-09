@@ -2,6 +2,8 @@ namespace Frontend;
 
 using Shared;
 using Services;
+using System;
+
 public class ClientHandler
 {
     private IClientOperations _clientOperations = new ClientOperations();
@@ -40,17 +42,15 @@ public class ClientHandler
         }
         if (chosenOption == '9')
         {
-            // Show logout message 
             return UserStatus.NotLoggedIn;
         }
         if (chosenOption == '1')
         {
-            //Show products in offer
             showAllProducts();
         }
         else if (chosenOption == '2')
         {
-            //TODO Show products by name
+            showAllProductsWithGivenName();
         }
         else if (chosenOption == '3')
         {
@@ -66,6 +66,17 @@ public class ClientHandler
         }
 
         return UserStatus.Client;
+    }
+
+    private void showAllProductsWithGivenName()
+    {
+        String name = ProductMethods.getNameForFilteringProducts();
+        List<Product> list = _offerOperations.SearchForActiveProductsByName(name);
+        Product? chosenProduct = CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage());
+        //Product chosenProduct = (Product)Convert.ChangeType(chosen, typeof(Product));
+        if (chosenProduct == null) return;
+        //handleProductPage(chosenProduct, client);
+        productManagingClient(chosenProduct);
     }
 
     public bool validateChosenOption(char chosenOption)
@@ -99,7 +110,7 @@ public class ClientHandler
 
     private void showAllProducts()
     {
-        List<Product> list = _offerOperations.GetAllProductList();
+        List<Product> list = _offerOperations.GetActiveProductList();
         Product? chosenProduct = CommonMethods.choseOptionFromPagedList(list, Messages.getAllProductsMessage());
         //Product chosenProduct = (Product)Convert.ChangeType(chosen, typeof(Product));
         if (chosenProduct == null) return;
