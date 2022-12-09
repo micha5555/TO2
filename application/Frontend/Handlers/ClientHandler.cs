@@ -76,14 +76,28 @@ public class ClientHandler
         }
         else if (chosenOption == '4')
         {
-            //TODO Set Delivery address
-        }
-        else if (chosenOption == '5')
-        {
-            //TODO Show all client orders
+            showAllClientOrders();
         }
 
         return UserStatus.Client;
+    }
+
+    private void showAllClientOrders()
+    {
+        Order? order = CommonMethods.choseOptionFromPagedList(_clientOperations.GetClientOrders(LoggedClient.Id), Messages.getClientOrders());
+        if (order is not null){
+            orderManagingClient(order);
+        }
+    }
+
+    private void orderManagingClient(Order order)
+    {
+        MessagesPresenter.showOrderAdministrator(order);
+        MessagesPresenter.showAwaitingMessage();
+        CommonMethods.waitForUser();
+        CartProduct? cartProduct = CommonMethods.choseOptionFromPagedList(order.GetProducts(), Messages.getOrderProductsHeader());
+        MessagesPresenter.showAwaitingMessage();
+        CommonMethods.waitForUser();
     }
 
     private void showClientCart()
@@ -152,7 +166,7 @@ public class ClientHandler
 
     public bool validateChosenOption(char chosenOption)
     {
-        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '5', '9' };
+        List<char> validOptions = new List<char> { '0', '1', '2', '3', '4', '9' };
 
         if (!CommonMethods.isOptionValid(validOptions, chosenOption))
         {

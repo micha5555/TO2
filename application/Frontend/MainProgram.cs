@@ -7,7 +7,7 @@ public class MainProgram
     private AdministratorHandler _administratorHandler = new AdministratorHandler();
     private ClientHandler _clientHandler = new ClientHandler();
     private UserStatus _userStatus;
-    private string _login;
+    private string? _login;
     private IGeneralOperations _generalOperations = new GeneralOperations();
 
     public void handleWelcomeScreen()
@@ -44,6 +44,7 @@ public class MainProgram
             }
             else if (_userStatus == UserStatus.Client)
             {
+                _clientHandler.setLoggedClient(_login); 
                 _userStatus = _clientHandler.processLoggedClient();
             }
             else if (_userStatus == UserStatus.Administrator)
@@ -52,6 +53,7 @@ public class MainProgram
             }
             else if (_userStatus == UserStatus.NotLoggedIn)
             {
+                _login = null;
                 handleLoginScreen();
             }
         }

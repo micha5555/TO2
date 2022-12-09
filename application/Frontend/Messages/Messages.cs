@@ -13,7 +13,7 @@ public static class Messages
 
     public static string getAwaitingMessage()
     {
-        string awaitingMessage = "";
+        string awaitingMessage = "\n";
         awaitingMessage += "Wciśnij dowolny klawisz, aby kontynuować...";
         return awaitingMessage;
     }
@@ -90,8 +90,7 @@ public static class Messages
         message += "1. Przeglądanie produktów w ofercie\n";
         message += "2. Wyszukiwanie produktów po nazwie\n";
         message += "3. Wyświetlenie koszyka\n";
-        message += "4. Ustawienie danych wysyłki\n";
-        message += "5. Przeglądanie zamówień\n";
+        message += "4. Przeglądanie zamówień\n";
         message += "9. Wylogowanie\n";
         message += "0. Wyjście z programu\n";
         message += "------------------------------------------------------------------\n";
@@ -302,7 +301,8 @@ public static class Messages
         return message;
     }
 
-    public static String getCartHeader(){
+    public static String getCartHeader()
+    {
         string message = "";
         message += "------------------------------------------------------------------\n";
         message += "                           Twój Koszyk                            \n";
@@ -310,14 +310,16 @@ public static class Messages
         return message;
     }
 
-    public static String getCartContent(Cart cart){
+    public static String getCartContent(Cart cart)
+    {
         string message = "";
         message += $"Wartość: {cart.CalculateCartPrice()}\n";
         message += "------------------------------------------------------------------\n";
         return message;
     }
 
-    public static String getCartPossibleActions(){
+    public static String getCartPossibleActions()
+    {
         string message = "";
         message += "1. Sprawdź zawartość koszyka\n";
         message += "2. Złóż zamówienie\n";
@@ -327,10 +329,28 @@ public static class Messages
         return message;
     }
 
-    public static String getProposedItemsHeader(){
+    public static String getProposedItemsHeader()
+    {
         string message = "";
         message += "------------------------------------------------------------------\n";
         message += "                       Proponowane Produkty                       \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getClientOrders()
+    {
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                          Twoje Zlecenia                          \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getOrderProductsHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                        Produkty zlecenia                         \n";
         message += "------------------------------------------------------------------\n";
         return message;
     }
