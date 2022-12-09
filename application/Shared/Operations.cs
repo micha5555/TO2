@@ -5,15 +5,16 @@ namespace Shared
     public class Operations
     {
         List<Order> orders = new List<Order>();
-
+        IRepository repository = null;
         public Operations()
         {
-            IRepository repository = Repository.Instance;
+            repository = Repository.Instance;
             this.orders = repository.GetOrders();
         }
 
         public List<Product> ProposeProductsBasedOnCart(Cart cart, int quantity)
         {
+            this.orders = repository.GetOrders();
             List<Product> basketProducts = new List<Product>();
             foreach (CartProduct prod in cart.GetCartProducts())
             {
