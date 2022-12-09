@@ -302,4 +302,37 @@ public static class Messages
         return message;
     }
 
+    public static String getCartHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                           Twój Koszyk                            \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getCartContent(Cart cart){
+        string message = "";
+        message += $"Wartość: {cart.CalculateCartPrice()}\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getCartPossibleActions(){
+        string message = "";
+        message += "1. Sprawdź zawartość koszyka\n";
+        message += "2. Złóż zamówienie\n";
+        message += "3. Sprawdź proponowane produkty\n";
+        message += "q. Wyjdź\n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getProposedItemsHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                       Proponowane Produkty                       \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
 }

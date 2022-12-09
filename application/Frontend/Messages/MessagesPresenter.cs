@@ -195,4 +195,11 @@ public static class MessagesPresenter
         showAwaitingMessage();
         CommonMethods.waitForUser();
     }
+
+    public static void showCartClientMessage(Cart cart){
+        Console.Clear();
+        Console.Write(Messages.getCartHeader());
+        Console.Write(Messages.getCartContent(cart));
+        Console.Write(Messages.getCartPossibleActions());
+    }
 }

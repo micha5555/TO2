@@ -7,7 +7,7 @@ using Shared;
 public static class CommonMethods
 {
     //TODO do przerobienia - nie podoba mi się
-    public static UserStatus processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
+    public static (UserStatus,string?) processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
     {
         MessagesPresenter.showLoginMessage();
         char optionChosen = getUserOptionInput();
@@ -23,18 +23,18 @@ public static class CommonMethods
 
         if (optionChosen == '0')
         {
-            return UserStatus.Exiting;
+            return (UserStatus.Exiting, null);
         }
         if (optionChosen == '1' || optionChosen == '2' || optionChosen == '3')
         {
             (string login, string password) credentials = getCredentials();
             if (optionChosen == '1' && clientHandler.checkClientLogin(credentials.login, credentials.password))
             {
-                return UserStatus.Client;
+                return (UserStatus.Client,credentials.login);
             }
             else if (optionChosen == '2' && administratorHandler.checkAdministratorLogin(credentials.login, credentials.password))
             {
-                return UserStatus.Administrator;
+                return (UserStatus.Administrator, credentials.login);
             }
             else if (optionChosen == '3')
             {
