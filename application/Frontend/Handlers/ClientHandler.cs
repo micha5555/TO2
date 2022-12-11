@@ -9,11 +9,11 @@ public class ClientHandler
     private IClientOperations _clientOperations = new ClientOperations();
 
     private IOfferOperations _offerOperations = new OfferOperations();
-    private ICartOperations _cartOperations;
+    private ICartOperations _cartOperations = null!;
     private IOrderOperations _orderOperations = new OrderOperations();
     private IGeneralOperations _generalOpearions = new GeneralOperations();
 
-    public Client LoggedClient = null;
+    public Client LoggedClient = null!;
 
     // public ClientHandler(string login){
     //     LoggedClient = _clientOperations.GetClientByLogin(login);
@@ -25,7 +25,7 @@ public class ClientHandler
             LoggedClient = _clientOperations.GetClientByLogin(login);
             _cartOperations = new CartOperations(LoggedClient.Id);
         }
-            
+
     }
 
 
@@ -85,7 +85,8 @@ public class ClientHandler
     private void showAllClientOrders()
     {
         Order? order = CommonMethods.choseOptionFromPagedList(_clientOperations.GetClientOrders(LoggedClient.Id), Messages.getClientOrders());
-        if (order is not null){
+        if (order is not null)
+        {
             orderManagingClient(order);
         }
     }
@@ -114,18 +115,18 @@ public class ClientHandler
             isValid = CommonMethods.isOptionValid(cartValidOptions(), chosenOption);
         }
 
-        if(chosenOption == 'q')
+        if (chosenOption == 'q')
         {
             return;
         }
-        if(chosenOption == '1')
+        if (chosenOption == '1')
         {
             CartProduct? cartProduct = CommonMethods.choseOptionFromPagedList(LoggedClient.Cart.GetCartProducts(), Messages.getCartHeader());
 
             showClientCart();
             return;
         }
-        if(chosenOption == '2')
+        if (chosenOption == '2')
         {
             Order order = new Order(LoggedClient);
             _clientOperations.AddClientOrder(order);
@@ -134,12 +135,13 @@ public class ClientHandler
             showClientCart();
             return;
         }
-        if(chosenOption == '3')
+        if (chosenOption == '3')
         {
             List<Product> list = _generalOpearions.ProposeProductsBasedOnCart(LoggedClient.Cart, 3);
 
             Product? product = CommonMethods.choseOptionFromPagedList(list, Messages.getProposedItemsHeader());
-            if (product is not null){
+            if (product is not null)
+            {
                 productManagingClient(product);
             }
 
@@ -150,7 +152,7 @@ public class ClientHandler
 
     private List<char> cartValidOptions()
     {
-        return new List<char>(){'1', '2', '3', 'q'};
+        return new List<char>() { '1', '2', '3', 'q' };
     }
 
     private void showAllProductsWithGivenName()
@@ -203,7 +205,7 @@ public class ClientHandler
         productManagingClient(chosenProduct);
     }
 
-    private void productManagingClient(Product product)
+    private void productManagingClient(Product product) //TODO -> paskudna zagnieżdżona konstrukcja
     {
         //TODO: użyć metody z ProductMethod getProductParametersFromProduct
         MessagesPresenter.showProductForClient((product.Name, product.Price.ToString(), product.Description, product.CategoryClass), product.isActive);
@@ -220,14 +222,19 @@ public class ClientHandler
                 while (!exitQuantity)
                 {
                     MessagesPresenter.showAskQuantity();
-                    string quantity = Console.ReadLine();
-                    try
+                    string? quantity = Console.ReadLine();
+                    int parsed;
+                    if (quantity is not null)
                     {
-                        int parsed = int.Parse(quantity);
-                        LoggedClient.Cart.AddToCart(new CartProduct(product, parsed));
-                        exitQuantity = true;
+                        try
+                        {
+                            parsed = int.Parse(quantity);
+                            LoggedClient.Cart.AddToCart(new CartProduct(product, parsed));
+                            exitQuantity = true;
+                        }
+                        catch { }
                     }
-                    catch { }
+
                 }
 
             }

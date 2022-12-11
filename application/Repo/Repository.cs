@@ -6,7 +6,7 @@ namespace Repo
     public class Repository : IRepository
     {
         private DataAccess dataAccess;
-        private static Repository instance = null;
+        private static Repository instance = null!;
         private Repository()
         {
             this.dataAccess = DataAccess.Instance;

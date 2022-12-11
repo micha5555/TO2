@@ -203,7 +203,7 @@ public class AdministratorHandler
     private void addNewProduct()
     {
         bool isValid;
-        (string? name, string? price, string? descrition, Category category) parameters;
+        (string name, string price, string descrition, Category category) parameters;
 
         MessagesPresenter.showAddNewProduct();
         parameters = ProductMethods.getProductParametersFromUser();

@@ -17,7 +17,7 @@ public static class ProductMethods
         return (product.Name, product.Price.ToString(), product.Description, product.CategoryClass);
     }
 
-    public static (string?, string?, string?, Category) getProductParametersFromUser()
+    public static (string, string, string, Category) getProductParametersFromUser()
     {
         string? name;
         string? price;
@@ -32,8 +32,15 @@ public static class ProductMethods
 
         List<string> namesOfCategories = getCategoryEnumsList();
 
-        string categoryName = CommonMethods.choseOptionFromPagedList<string>(namesOfCategories, Messages.getProductCategorySelectHeader());
-        category = Enum.Parse<Category>(categoryName);
+        string? categoryName = CommonMethods.choseOptionFromPagedList<string>(namesOfCategories, Messages.getProductCategorySelectHeader());
+        
+        if (categoryName is not null)
+            category = Enum.Parse<Category>(categoryName);
+        else
+            throw new NullReferenceException();
+
+        if (name is null || price is null || description is null)
+            throw new NullReferenceException();
 
         return (name, price, description, category);
     }
@@ -62,7 +69,7 @@ public static class ProductMethods
         {
             MessagesPresenter.showNameForFilteringProductsHeader();
             String? answer = getNameProduct();
-            if (validateProductName(answer))
+            if (answer is not null && validateProductName(answer))
             {
                 return answer;
             }
@@ -77,7 +84,7 @@ public static class ProductMethods
 
             string? value = askForNewPrice();
 
-            if(value is not null && CommonMethods.canConvert(value,typeof(double)))
+            if (value is not null && CommonMethods.canConvert(value, typeof(double)))
                 return Double.Parse(value);
 
             MessagesPresenter.showErrorInputMessage();
@@ -86,7 +93,8 @@ public static class ProductMethods
         }
     }
 
-    private static string? askForNewPrice(){
+    private static string? askForNewPrice()
+    {
         Console.Write("Podaj nową cenę: ");
         return Console.ReadLine();
     }

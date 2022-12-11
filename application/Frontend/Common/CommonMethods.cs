@@ -227,16 +227,17 @@ public static class CommonMethods
         return list;
     }
 
-    public static void askAbountQuantity()
+    public static void askAbountQuantity() //Co to za metoda?
     {
         while (true)
         {
             MessagesPresenter.showAskQuantity();
-            string quantity = Console.ReadLine();
+            string? quantity = Console.ReadLine();
+            int parsed;
             try
             {
-                int parsed = int.Parse(quantity);
-
+                if(quantity is not null)
+                parsed = int.Parse(quantity);
                 return;
             }
             catch

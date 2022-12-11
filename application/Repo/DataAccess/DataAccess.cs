@@ -20,7 +20,7 @@ namespace Repo.DataAccessClass
         private JsonSerializerOptions options = new JsonSerializerOptions() { IncludeFields = true };
 
 
-        private static DataAccess instance = null;
+        private static DataAccess instance = null!;
         private DataAccess()
         {
             this.CartList = new List<Cart>();
@@ -100,7 +100,7 @@ namespace Repo.DataAccessClass
             {
                 File.Delete(path);
             }
-            using (FileStream fs = File.Create(path));
+            using (FileStream fs = File.Create(path)); //Co to robi?
             Console.WriteLine("list");
             string json = JsonSerializer.Serialize(list, options);
             File.WriteAllText(path, json);
