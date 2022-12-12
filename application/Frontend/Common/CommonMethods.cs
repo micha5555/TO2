@@ -7,7 +7,7 @@ using Shared;
 public static class CommonMethods
 {
     //TODO do przerobienia - nie podoba mi się
-    public static (UserStatus,string?) processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
+    public static (UserStatus, string?) processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
     {
         MessagesPresenter.showLoginMessage();
         char optionChosen = getUserOptionInput();
@@ -19,7 +19,6 @@ public static class CommonMethods
             return processLoginMenu(administratorHandler, clientHandler);
         }
 
-        Console.Clear();
 
         if (optionChosen == '0')
         {
@@ -27,10 +26,26 @@ public static class CommonMethods
         }
         if (optionChosen == '1' || optionChosen == '2' || optionChosen == '3')
         {
+            if (optionChosen == '1')
+                MessagesPresenter.showClientLoginHeader();
+            else if (optionChosen == '2')
+                MessagesPresenter.showAdministratorLoginHeader();
+            else if (optionChosen == '3')
+                MessagesPresenter.showClientRegistrationHeader();
+
             (string login, string password) credentials = getCredentials();
-            if (optionChosen == '1' && clientHandler.checkClientLogin(credentials.login, credentials.password))
+            if (optionChosen == '1')
             {
-                return (UserStatus.Client,credentials.login);
+                if (clientHandler.checkClientLogin(credentials.login, credentials.password))
+                {
+                    //Message Logged In Succesfully
+                    return (UserStatus.Client, credentials.login);
+                }
+                else{
+                    //Message Not Logged In
+                }
+            
+                
             }
             else if (optionChosen == '2' && administratorHandler.checkAdministratorLogin(credentials.login, credentials.password))
             {
@@ -66,11 +81,14 @@ public static class CommonMethods
         return validOptions.Contains(option);
     }
 
-    public static char getValidUserOptionInput(List<char> validOptions){
-        while(true){
+    public static char getValidUserOptionInput(List<char> validOptions)
+    {
+        while (true)
+        {
             char option = getUserOptionInput();
             Console.WriteLine();
-            if (isOptionValid(validOptions, option)){
+            if (isOptionValid(validOptions, option))
+            {
                 return option;
             }
         }
@@ -130,7 +148,8 @@ public static class CommonMethods
 
     public static Boolean canConvert(String value, Type type)
     {
-        if (type == typeof(double)){
+        if (type == typeof(double))
+        {
             double temp;
             return Double.TryParse(value, System.Globalization.NumberStyles.AllowDecimalPoint, null, out temp);
         }
@@ -141,7 +160,8 @@ public static class CommonMethods
 
     public static T? choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
     {
-        if (list.Count == 0){
+        if (list.Count == 0)
+        {
             Console.Clear();
             Console.WriteLine(headMessage);
             MessagesPresenter.showEmptyListMessage();
@@ -178,11 +198,11 @@ public static class CommonMethods
                 chosen = partition.ElementAt(option - '0' - 1);
                 return chosen;
             }
-            
+
         }
         return chosen;
     }
-    public static void showPagedList<T>(List<T> list,int maxListQuantity) where T : class
+    public static void showPagedList<T>(List<T> list, int maxListQuantity) where T : class
     {
         string message = "";
         for (int i = 0; i < list.Count; i++)
@@ -220,7 +240,8 @@ public static class CommonMethods
         return validOptions;
     }
 
-    public static List<char> validConfirmationOptions(){
+    public static List<char> validConfirmationOptions()
+    {
         List<char> list = new List<char>{
             '1','2'
         };
@@ -236,12 +257,12 @@ public static class CommonMethods
             int parsed;
             try
             {
-                if(quantity is not null)
-                parsed = int.Parse(quantity);
+                if (quantity is not null)
+                    parsed = int.Parse(quantity);
                 return;
             }
             catch
-            {}
+            { }
         }
     }
     public static string ProductTabelarization<T>(T p)
@@ -252,7 +273,7 @@ public static class CommonMethods
         int priceColumnWidth = 16;
         string row = "";
         Product product;
-        
+
         if (p is Product)
         {
             product = (Product)(object)p;
@@ -262,7 +283,8 @@ public static class CommonMethods
             CartProduct cp = (CartProduct)(object)p;
             product = cp.Product;
             row += ParseString(cp.Quantity.ToString() + " x", quantityWidth);
-        } else 
+        }
+        else
         {
             return "";
         }
@@ -272,7 +294,7 @@ public static class CommonMethods
         return row;
     }
 
-     private static string ParseString(string s, int l)
+    private static string ParseString(string s, int l)
     {
         string parsed;
         if (s.Length >= l)

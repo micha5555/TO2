@@ -202,4 +202,22 @@ public static class MessagesPresenter
         Console.Write(Messages.getCartContent(cart));
         Console.Write(Messages.getCartPossibleActions());
     }
+
+    internal static void showClientLoginHeader()
+    {
+        Console.Clear();
+        Console.Write(Messages.getClientLoginHeader());
+    }
+
+    internal static void showAdministratorLoginHeader()
+    {
+        Console.Clear();
+        Console.Write(Messages.getAdministratorLoginHeader());
+    }
+
+    internal static void showClientRegistrationHeader()
+    {
+        Console.Clear();
+        Console.Write(Messages.getClientRegisterHeader());
+    }
 }

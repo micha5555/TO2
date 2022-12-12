@@ -355,4 +355,28 @@ public static class Messages
         return message;
     }
 
+    public static String getClientLoginHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                        Logowanie Klienta                         \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getClientRegisterHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                       Rejestracja Klienta                        \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
+    public static String getAdministratorLoginHeader(){
+        string message = "";
+        message += "------------------------------------------------------------------\n";
+        message += "                    Logowanie Administratora                      \n";
+        message += "------------------------------------------------------------------\n";
+        return message;
+    }
+
 }
