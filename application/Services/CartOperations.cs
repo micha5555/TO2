@@ -24,7 +24,7 @@ public class CartOperations : ICartOperations
  
     public double CalculateCartPrice()
     { 
-        return cart.CalculateCartPrice();;
+        return cart.CalculateCartPrice();
     }
   
     public List<CartProduct> GetProducts()

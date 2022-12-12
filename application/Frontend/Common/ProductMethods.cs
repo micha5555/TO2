@@ -12,6 +12,11 @@ public static class ProductMethods
         return Enum.GetNames(typeof(Category)).ToList();
     }
 
+    public static (string, string, string, Category) getProductParametersFromProduct(Product product)
+    {
+        return (product.Name, product.Price.ToString(), product.Description, product.CategoryClass);
+    }
+
     public static (string?, string?, string?, Category) getProductParametersFromUser()
     {
         string? name;
@@ -57,15 +62,39 @@ public static class ProductMethods
         {
             MessagesPresenter.showNameForFilteringProductsHeader();
             String? answer = getNameProduct();
-            if(validateProductName(answer)){
+            if (validateProductName(answer))
+            {
                 return answer;
             }
         }
     }
 
+    public static double getNewPriceFromUser()
+    {
+        while (true)
+        {
+            MessagesPresenter.showNewPriceHeader();
+
+            string? value = askForNewPrice();
+
+            if(value is not null && CommonMethods.canConvert(value,typeof(double)))
+                return Double.Parse(value);
+
+            MessagesPresenter.showErrorInputMessage();
+            MessagesPresenter.showAwaitingMessage();
+            CommonMethods.waitForUser();
+        }
+    }
+
+    private static string? askForNewPrice(){
+        Console.Write("Podaj nową cenę: ");
+        return Console.ReadLine();
+    }
+
     private static bool validateProductName(string? answer)
     {
-        if(answer is null){
+        if (answer is null)
+        {
             return false;
         }
         return true;

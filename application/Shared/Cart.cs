@@ -69,5 +69,9 @@ namespace Shared
         {
             return this.CartProductList;
         }
+
+        public void ClearCart(){
+            CartProductList = new List<CartProduct>();
+        }
     }
 }

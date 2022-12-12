@@ -9,6 +9,7 @@ public class AdministratorHandler
 {
     private IAdministratorOperations _administratorOperations = new AdministratorOperations();
     private IOfferOperations _offerOperations = new OfferOperations();
+    private IOrderOperations _orderOperations = new OrderOperations();
 
     public UserStatus processLoggedAdministrator()
     {
@@ -58,10 +59,71 @@ public class AdministratorHandler
         }
         else if (chosenOption == '5')
         {
-            //TODO Przegladanie zamowien klientow
+            checkClientsOrders();
         }
 
         return UserStatus.Administrator;
+    }
+
+    private void checkClientsOrders()
+    {
+        List<Order> list = _orderOperations.GetOrders();
+        Order? chosenOrder = CommonMethods.choseOptionFromPagedList<Order>(list, Messages.getAllOrdersHeader());
+
+        if (chosenOrder == null)
+        {
+            return;
+        }
+        orderManagingAdministrator(chosenOrder);
+    }
+
+    private void orderManagingAdministrator(Order order)
+    {
+        MessagesPresenter.showOrderAdministrator(order);
+        char option = CommonMethods.getUserOptionInput();
+        bool isValid = CommonMethods.isOptionValid(getValidOrderManageOptions(), option);
+
+        while (!isValid)
+        {
+            MessagesPresenter.showOrderAdministrator(order);
+            char chosenOption = CommonMethods.getUserOptionInput();
+
+            isValid = CommonMethods.isOptionValid(getValidOrderManageOptions(), chosenOption);
+            if (isValid)
+                option = chosenOption;
+        }
+
+        if(option == 'q')
+        {
+            _orderOperations.UpdateOrder(order);
+            return;
+        }
+        // if(option == '1')
+        // {
+        //     // SOME ACTIONS
+        //     orderManagingAdministrator(order);
+        //     return;
+        // }
+        if(option == '1')
+        {
+            CartProduct? cartProduct = CommonMethods.choseOptionFromPagedList(order.GetProducts(), "TESTTESTTEST\n");
+            // CartProduct page handling
+
+            orderManagingAdministrator(order);
+            return;
+        }
+    }
+
+    private void cartProductManagingAdministrator(CartProduct cartProduct){
+        //Show message with cartProduct
+
+        //show awaiting message
+        //wait for response
+    }
+
+    private List<char> getValidOrderManageOptions()
+    {
+        return new List<char>(){'1','q'};
     }
 
     private void getAllProductsWithGivenName()
@@ -69,9 +131,11 @@ public class AdministratorHandler
         String name = ProductMethods.getNameForFilteringProducts();
         List<Product> list = _offerOperations.SearchForAllProductsByName(name);
         Product? chosenProduct = CommonMethods.choseOptionFromPagedList<Product>(list, Messages.getAllProductsMessage()); //TODO Create header message
-        if (chosenProduct == null){
+        if (chosenProduct == null)
+        {
             return;
         }
+        productManagingAdministrator(chosenProduct);
     }
 
     private void getAllProducts()
@@ -79,9 +143,61 @@ public class AdministratorHandler
         // get list of all products
         List<Product> list = _offerOperations.GetAllProductList();
         Product? chosenProduct = CommonMethods.choseOptionFromPagedList<Product>(list, Messages.getAllProductsMessage()); //TODO Create header message
-        if (chosenProduct == null){
+        if (chosenProduct == null)
+        {
             return;
         }
+        productManagingAdministrator(chosenProduct);
+    }
+
+    private void productManagingAdministrator(Product product)
+    {
+        MessagesPresenter.showProductParametersAdministratorManagingMessage(ProductMethods.getProductParametersFromProduct(product), product.isActive);
+        char option = CommonMethods.getUserOptionInput();
+        bool isValid = CommonMethods.isOptionValid(getValidProductManageOptions(), option);
+
+        while (!isValid)
+        {
+            MessagesPresenter.showProductParametersAdministratorManagingMessage(ProductMethods.getProductParametersFromProduct(product), product.isActive);
+            char chosenOption = CommonMethods.getUserOptionInput();
+
+            isValid = CommonMethods.isOptionValid(getValidProductManageOptions(), chosenOption);
+            if (isValid)
+                option = chosenOption;
+        }
+
+        if (option == 'q')
+        {
+            _offerOperations.AddToOffer(product);
+            return;
+        }
+        if (option == '1')
+        {
+            if (product.isActive)
+            {
+                _offerOperations.DeactivateProduct(product);
+            }
+            else
+            {
+                _offerOperations.ActivateProduct(product);
+            }
+
+            productManagingAdministrator(product);
+            return;
+        }
+        if (option == '2')
+        {
+            product.Price = ProductMethods.getNewPriceFromUser();
+            productManagingAdministrator(product);
+            return;
+        }
+
+
+    }
+
+    private List<char> getValidProductManageOptions()
+    {
+        return new List<char>() { '1', '2', 'q' };
     }
 
     private void addNewProduct()
@@ -108,7 +224,7 @@ public class AdministratorHandler
             }
         }
 
-        Confirmation confirmation = MessagesPresenter.showProductParametersSummary(parameters);
+        Confirmation confirmation = MessagesPresenter.showProductParametersSummary(parameters, true);
 
 
         if (confirmation == Confirmation.Rejected)
@@ -129,7 +245,6 @@ public class AdministratorHandler
                 MessagesPresenter.showProductNotAdded();
             }
         }
-
     }
 
     private void registerNewAdministrator()

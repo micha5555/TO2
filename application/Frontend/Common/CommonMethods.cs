@@ -7,7 +7,7 @@ using Shared;
 public static class CommonMethods
 {
     //TODO do przerobienia - nie podoba mi się
-    public static UserStatus processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
+    public static (UserStatus,string?) processLoginMenu(AdministratorHandler administratorHandler, ClientHandler clientHandler)
     {
         MessagesPresenter.showLoginMessage();
         char optionChosen = getUserOptionInput();
@@ -23,18 +23,18 @@ public static class CommonMethods
 
         if (optionChosen == '0')
         {
-            return UserStatus.Exiting;
+            return (UserStatus.Exiting, null);
         }
         if (optionChosen == '1' || optionChosen == '2' || optionChosen == '3')
         {
             (string login, string password) credentials = getCredentials();
             if (optionChosen == '1' && clientHandler.checkClientLogin(credentials.login, credentials.password))
             {
-                return UserStatus.Client;
+                return (UserStatus.Client,credentials.login);
             }
             else if (optionChosen == '2' && administratorHandler.checkAdministratorLogin(credentials.login, credentials.password))
             {
-                return UserStatus.Administrator;
+                return (UserStatus.Administrator, credentials.login);
             }
             else if (optionChosen == '3')
             {
@@ -66,14 +66,11 @@ public static class CommonMethods
         return validOptions.Contains(option);
     }
 
-    public static char getValidUserOptionInput(List<char> validOptions)
-    {
-        while (true)
-        {
+    public static char getValidUserOptionInput(List<char> validOptions){
+        while(true){
             char option = getUserOptionInput();
             Console.WriteLine();
-            if (isOptionValid(validOptions, option))
-            {
+            if (isOptionValid(validOptions, option)){
                 return option;
             }
         }
@@ -133,8 +130,7 @@ public static class CommonMethods
 
     public static Boolean canConvert(String value, Type type)
     {
-        if (type == typeof(double))
-        {
+        if (type == typeof(double)){
             double temp;
             return Double.TryParse(value, System.Globalization.NumberStyles.AllowDecimalPoint, null, out temp);
         }
@@ -145,8 +141,7 @@ public static class CommonMethods
 
     public static T? choseOptionFromPagedList<T>(List<T> list, string headMessage) where T : class
     {
-        if (list.Count == 0)
-        {
+        if (list.Count == 0){
             Console.Clear();
             Console.WriteLine(headMessage);
             MessagesPresenter.showEmptyListMessage();
@@ -181,18 +176,18 @@ public static class CommonMethods
             else if (option != '0')
             {
                 chosen = partition.ElementAt(option - '0' - 1);
+                return chosen;
             }
-
+            
         }
-
         return chosen;
     }
-    public static void showPagedList<T>(List<T> list, int maxListQuantity) where T : class
+    public static void showPagedList<T>(List<T> list,int maxListQuantity) where T : class
     {
         string message = "";
         for (int i = 0; i < list.Count; i++)
         {
-            //message += $"{i + 1}. {list.ElementAt(i)}\n";
+            // message += $"{i + 1}. {list.ElementAt(i)}\n";
             message += $"{i + 1} ";
             message += ProductTabelarization(list.ElementAt(i));
             message += "\n";
@@ -202,11 +197,52 @@ public static class CommonMethods
         {
             message += "0. Następna strona\n";
         }
+        message += "1-9. Pokaż stronę produktu\n";
         message += "q. Wyjście z listy\n";
         message += "------------------------------------------------------------------\n";
         Console.WriteLine(message);
     }
 
+
+    public static List<char> validPagingOptions<T>(List<T> list, int maxListQuantity) where T : class
+    {
+        List<char> validOptions = new List<char>();
+        if (list.Count == maxListQuantity)
+        {
+            validOptions.Add('0');
+        }
+        validOptions.Add('q');
+        int quantintyOfItemsInList = list.Count;
+        for (int i = 1; i < quantintyOfItemsInList + 1; i++)
+        {
+            validOptions.Add((char)(i + '0'));
+        }
+        return validOptions;
+    }
+
+    public static List<char> validConfirmationOptions(){
+        List<char> list = new List<char>{
+            '1','2'
+        };
+        return list;
+    }
+
+    public static void askAbountQuantity()
+    {
+        while (true)
+        {
+            MessagesPresenter.showAskQuantity();
+            string quantity = Console.ReadLine();
+            try
+            {
+                int parsed = int.Parse(quantity);
+
+                return;
+            }
+            catch
+            {}
+        }
+    }
     public static string ProductTabelarization<T>(T p)
     {
         int quantityWidth = 5;
@@ -233,23 +269,9 @@ public static class CommonMethods
         row += ParseString(product.CategoryClass.ToString(), categoryColumnWidth);
         row += ParseString(product.Price.ToString() + " PLN", priceColumnWidth);
         return row;
-    }/*
-    public static string ProductTabelarization(Shared.CartProduct cp)
-    {
-        int quantityWidth = 5;
-        int nameColumnWidth = 25;
-        int categoryColumnWidth = 18;
-        int priceColumnWidth = 16;
-        string row = "";
+    }
 
-        row += ParseString(cp.Quantity.ToString() + " x", quantityWidth);
-        row += ParseString(cp.Product.Name, nameColumnWidth);
-        row += ParseString(cp.Product.CategoryClass.ToString(), categoryColumnWidth);
-        row += ParseString(cp.Product.Price.ToString() + " PLN", priceColumnWidth);
-        return row;
-    }*/
-
-    private static string ParseString(string s, int l)
+     private static string ParseString(string s, int l)
     {
         string parsed;
         if (s.Length >= l)
@@ -261,29 +283,5 @@ public static class CommonMethods
         parsed = s.PadRight(l);
 
         return parsed;
-    }
-
-    public static List<char> validPagingOptions<T>(List<T> list, int maxListQuantity) where T : class
-    {
-        List<char> validOptions = new List<char>();
-        if (list.Count == maxListQuantity)
-        {
-            validOptions.Add('0');
-        }
-        validOptions.Add('q');
-        int quantintyOfItemsInList = list.Count;
-        for (int i = 1; i < quantintyOfItemsInList + 1; i++)
-        {
-            validOptions.Add((char)(i + '0'));
-        }
-        return validOptions;
-    }
-
-    public static List<char> validConfirmationOptions()
-    {
-        List<char> list = new List<char>{
-            '1','2'
-        };
-        return list;
     }
 }
