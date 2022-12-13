@@ -47,5 +47,26 @@ namespace BDDTests.StepDefinitions
 
             Assert.IsTrue(_isLogged);
         }
+
+        [When(@"Admin enters incorrect login")]
+        public void WhenAdminEntersIncorrectLogin()
+        {
+            _providedLogin = "abc";
+        }
+
+        [When(@"Admin enters incorrect password")]
+        public void WhenAdminEntersIncorrectPassword()
+        {
+            _providedPassword= "abc";
+        }
+
+        [Then(@"The login data are not correct")]
+        public void ThenTheLoginDataAreNotCorrect()
+        {
+            _isLogged = _administratorOperations.checkAdministratorCredentials(_registrationLogin, _registrationPassword);
+
+            Assert.IsFalse(_isLogged);
+        }
+
     }
 }
