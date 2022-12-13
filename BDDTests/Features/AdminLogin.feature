@@ -1,20 +1,19 @@
-﻿Feature: Admin login
+﻿Feature: Logging in
 Admin can sign in to the applicaiton
 
 @Admin @Login
-Scenario: Admin login to the app
-        Given Being on the application login page
-        Given Enter the option number "Logowanie Administratora"
-        When Enter the following details
-             | login | password |
-             | test  | test     |
-        And Press enter
-        Then "Menu Administratora" is visible
-        And Option "Wylogowanie" is visible
+Scenario: The administrator can login to the system
+    Given Admin in not logged in
+    And Admin has registered before using <login> and <password>
+        | login | password |
+        | test1 | test2    |
+    When Admin enters correct login
+    And Admin enters correct password
+    Then The login data are correct
 
 
 
 
-
+   
 
 
