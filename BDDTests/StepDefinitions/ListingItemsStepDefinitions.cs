@@ -46,7 +46,7 @@ namespace BDDTests.StepDefinitions
         public void GivenOfferListIsNotEmpty()
         {
             guida = Guid.NewGuid();
-            Product prod = new Product("Wiertarkaaa", 121.0, Category.Narzêdzia, "Wierciaaa");
+            Product prod = new Product("Wiertarkaaa", 121.0, Category.NarzÄ™dzia, "Wierciaaa");
             _offerOperations.AddToOffer(prod);
         }
 
@@ -68,7 +68,7 @@ namespace BDDTests.StepDefinitions
         public void GivenOfferListIsEmpty()
         {
             _offerOperations.RemoveFromOffer(product);
-            _offerOperations.RemoveFromOffer(new Product("Wiertarkaaa", 121.0, Category.Narzêdzia, "Wierciaaa"));
+            _offerOperations.RemoveFromOffer(new Product("Wiertarkaaa", 121.0, Category.NarzÄ™dzia, "Wierciaaa"));
         }
 
         [Then(@"Offer list display is empty")]
@@ -82,7 +82,7 @@ namespace BDDTests.StepDefinitions
         [Given(@"Cart list is not empty")]
         public void GivenCartListIsNotEmpty()
         {
-            Product heh = new Product("Wiertarkaaa", 121.0, Category.Narzêdzia, "Wierciaaa");
+            Product heh = new Product("Wiertarkaaa", 121.0, Category.NarzÄ™dzia, "Wierciaaa");
             _offerOperations.AddToOffer(heh);
             cp = new CartProduct(heh, 1);
             _cartOperations.AddToCart(cp);
