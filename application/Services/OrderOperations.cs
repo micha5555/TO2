@@ -21,4 +21,7 @@ public class OrderOperations : IOrderOperations
     {
         return repository.GetOrders();
     }
+    public void AddOrderToOrderList(Order o) {
+        repository.AddOrder(o);
+    }
 }

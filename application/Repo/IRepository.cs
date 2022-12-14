@@ -23,6 +23,8 @@ namespace Repo
         public Client GetClientById(Guid id);
         public bool AddClient(Client client);
         public Client GetClientByLogin(string login);
+        public bool AddOffer(Offer offer);
+        public bool AddOrder(Order o);
     }
 
 }

@@ -14,6 +14,13 @@ namespace Shared
             this.ProductList = new List<Product>();
         }
 
+        public Offer(Product product)
+        {
+            this.Id = Guid.NewGuid();
+            this.ProductList = new List<Product>();
+            this.ProductList.Add(product);
+        }
+
         public Offer(List<Product> products)
         {
             this.Id = Guid.NewGuid();
@@ -23,6 +30,12 @@ namespace Shared
         public bool AddToOffer(Product product)
         {
             bool isHere = false;
+            Console.WriteLine(product.Name);
+            if(this.ProductList.Count == 0) 
+            {
+                this.ProductList.Add(product);
+                return true;
+            }
             foreach (Product p in this.ProductList)
             {
                 if (p.Equals(product))

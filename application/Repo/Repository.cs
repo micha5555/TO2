@@ -193,6 +193,18 @@ namespace Repo
             dataAccess.OfferList[0].UpdateProductInOffer(id, product);
             return true;
         }
+
+        public bool AddOffer(Offer offer) 
+        {
+            dataAccess.OfferList.Add(offer);
+            return true;
+        }
+
+        public bool AddOrder(Order o) 
+        {
+            dataAccess.OrderList.Add(o);
+            return true;
+        }
     }
 
 }
