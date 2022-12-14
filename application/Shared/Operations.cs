@@ -16,6 +16,11 @@ namespace Shared
         {
             this.orders = repository.GetOrders();
             List<Product> basketProducts = new List<Product>();
+            if(cart == null || cart.GetCartProducts().Count == 0 || quantity == 0)
+            {
+                return new List<Product>();
+            }
+            
             foreach (CartProduct prod in cart.GetCartProducts())
             {
                 if (!basketProducts.Contains(prod.Product))
