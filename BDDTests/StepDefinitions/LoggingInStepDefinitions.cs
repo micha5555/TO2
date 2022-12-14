@@ -43,7 +43,7 @@ namespace BDDTests.StepDefinitions
         [Then(@"The login data are correct")]
         public void ThenTheLoginDataAreCorrect()
         {
-            _isLogged = _administratorOperations.checkAdministratorCredentials(_registrationLogin, _registrationPassword);
+            _isLogged = _administratorOperations.checkAdministratorCredentials(_providedLogin, _providedPassword);
 
             Assert.IsTrue(_isLogged);
         }
@@ -63,7 +63,7 @@ namespace BDDTests.StepDefinitions
         [Then(@"The login data are not correct")]
         public void ThenTheLoginDataAreNotCorrect()
         {
-            _isLogged = _administratorOperations.checkAdministratorCredentials(_registrationLogin, _registrationPassword);
+            _isLogged = _administratorOperations.checkAdministratorCredentials(_providedLogin, _providedPassword);
 
             Assert.IsFalse(_isLogged);
         }
