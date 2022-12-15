@@ -16,6 +16,9 @@ namespace BDDTests.StepDefinitions
         public void GivenAdminIsNotRegistered()
         {
             _administratorOperations = Helper.BaseServices.AdministratorOperations;
+            Helper.BaseServices.GeneralOperations = new GeneralOperations();
+            Helper.BaseServices.GeneralOperations.ReadDataOnLaunch();
+            Helper.ClearMethods.ClearAllAdministrators();
         }
 
         [When(@"Admin provides correct login and password when registering")]
@@ -26,7 +29,6 @@ namespace BDDTests.StepDefinitions
             _administratorOperations.registerNewAdministrator(_registrationLogin, _registrationPassword);
 
             _repository = Repository.Instance;
-
             _doesAdminExistsInDB = _repository.CheckIfAdminExists(_registrationLogin);
 
         }
@@ -36,5 +38,19 @@ namespace BDDTests.StepDefinitions
         {
             Assert.IsTrue(_doesAdminExistsInDB);
         }
+
+        [When(@"Admin provides invalid (.*) and (.*) while registering")]
+        public void WhenAdminEntersProvidesInvalidLoginAndPasswordWhileRegistering(string login, string password)
+        {
+            _administratorOperations.registerNewAdministrator(login, password);
+            //_doesAdminExistsInDB = _repository.AddAdministrator(new Shared.Administrator(login, password));
+        }
+
+        [Then(@"The administrator account is not created in the database")]
+        public void ThenTheAdministratorAccountIsNotCreatedInTheDatabase()
+        {
+            Assert.IsFalse(_doesAdminExistsInDB);
+        }
+
     }
 }
