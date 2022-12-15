@@ -20,6 +20,11 @@ public class AdministratorOperations : IAdministratorOperations
 
     public RegistrationStatus registerNewAdministrator(string login, string password)
     {
+        if (repository.CheckIfAdminExists(login))
+        {
+            return RegistrationStatus.NotRegistered;
+        }
+
         Administrator admin = new Administrator(login, password);
         bool status = repository.AddAdministrator(admin);
 
