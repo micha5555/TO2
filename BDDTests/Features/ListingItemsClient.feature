@@ -4,44 +4,58 @@ Admin can sign in to the applicaiton
 @Client @List @FullOffer
 Scenario: Client can list offer items
     Given Client is logged in
-    And Offer list is not empty
-    When Client lists offer 
-    Then Offer list display is not empty
+    And Offer is not empty
+    When Client lists active products from offer 
+    Then List of active products is not empty
 
 @Client @List @EmptyOffer
 Scenario: Client can list offer items when list empty
     Given Client is logged in
-    And Offer list is empty
-    When Client lists offer
-    Then Offer list display is empty
+    And Offer is empty
+    When Client lists active products from offer
+    Then List of offer products is empty
 
 @Client @List @FullCart
 Scenario: Client can list cart items
     Given Client is logged in
-    And Cart list is not empty
+    And Cart is not empty
     When Client lists cart items
-    Then Cart list display is not empty
+    Then List of cart items is not empty
 
 @Client @List @EmptyCart
 Scenario: Client can list cart items when cart empty
     Given Client is logged in
-    And Cart list is empty
+    And Cart is empty
     When Client lists cart items
-    Then Cart list display is empty
+    Then List of cart items is empty
+
+@Client @List @FullOrder
+Scenario: Client can list items from his order
+    Given Client is logged in
+    And Order is not empty
+    When Client lists order items
+    Then List of ordered items is not empty
+
+@Client @List @EmptyOrder
+Scenario: Client can get empty list of his order when order is empty
+    Given Client is logged in
+    And Order is empty
+    When Client lists order items
+    Then List of ordered items is empty
 
 @Client @List @FullOrders
 Scenario: Client can list his orders
     Given Client is logged in
-    And Order list is not empty
-    When Client lists orders
-    Then Order list display is not empty
+    And Client orders are not empty
+    When Client lists his orders
+    Then List of orders is not empty
 
-@Client @List @EmptyOrders
-Scenario: Client can list his orders when orders empty
+@Client @List @FullOrders
+Scenario: Client can get empty list of his orders when orders are empty
     Given Client is logged in
-    And Order list is empty
-    When Client lists orders
-    Then Order list display is empty
+    And Client orders are empty
+    When Client lists his orders
+    Then List of orders is empty 
 
    
 
