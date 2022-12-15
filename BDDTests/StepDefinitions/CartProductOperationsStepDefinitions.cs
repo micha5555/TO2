@@ -7,7 +7,7 @@ using TechTalk.SpecFlow;
 namespace BDDTests.StepDefinitions;
 
 [Binding]
-public class StepDefinitions
+public class CartProductOperationsStepDefinition
 {
     private int customProductQuantity = 31;
 
