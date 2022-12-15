@@ -1,4 +1,4 @@
-﻿Feature: Logging in as client
+﻿Feature: Logging in as a client
 Admin can sign in to the applicaiton
 
 @Client @Login @CorrectData

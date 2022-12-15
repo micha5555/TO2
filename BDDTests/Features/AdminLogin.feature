@@ -1,4 +1,4 @@
-﻿Feature: Logging in as admin
+﻿Feature: Logging in as an admin
 Admin can sign in to the applicaiton
 
 @Admin @Login @CorrectData
