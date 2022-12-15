@@ -216,6 +216,11 @@ namespace Repo
             dataAccess.AdminList.Remove(admin);
             return true;
         }
+
+        public bool CheckIfAdminExists(string adminLogin)
+        {
+            return dataAccess.AdminList.ToList().Any(item => item.Login == adminLogin);
+        }
     }
 
 }

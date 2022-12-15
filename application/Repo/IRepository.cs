@@ -7,6 +7,7 @@ namespace Repo
         public bool AddAdministrator(Administrator admin);
         public List<Administrator> GetAllAdministrators();
         public bool RemoveAdministrator(Administrator admin);
+        public bool CheckIfAdminExists(String adminLogin);
         public bool CheckCredentialsAdmin(string login, string password);
         public bool CheckCredentialsClient(string login, string password);
         public List<Product> GetAllOfferProducts();
