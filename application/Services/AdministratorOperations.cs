@@ -23,6 +23,14 @@ public class AdministratorOperations : IAdministratorOperations
         Administrator admin = new Administrator(login, password);
         bool status = repository.AddAdministrator(admin);
 
-        return status? RegistrationStatus.Registered : RegistrationStatus.NotRegistered;
+        return status ? RegistrationStatus.Registered : RegistrationStatus.NotRegistered;
+    }
+
+    public List<Administrator> getAllAdministrators(){
+        return repository.GetAllAdministrators();
+    }
+
+    public void removeAdministrator(Administrator administrator){
+        repository.RemoveAdministrator(administrator);   
     }
 }

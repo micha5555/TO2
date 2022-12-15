@@ -9,9 +9,15 @@ public class BaseStepDefinitions
     [Given(@"Client is logged in")]
     public void GivenClientIsLoggedIn()
     {
+        //TODO Metoda do czyszczenia wszelkich zserializowanych danych do json'a - do przemyslenie bo chyba jednak niepotrzebna
+
+        Helper.BaseServices.GeneralOperations = new GeneralOperations();
+        Helper.BaseServices.GeneralOperations.ReadDataOnLaunch();
+
+
         Helper.BaseServices.OrderOperations = new OrderOperations();
         Helper.BaseServices.OfferOperations = new OfferOperations();
-        
+
         Offer offer = new Offer();
         Helper.BaseServices.OfferOperations.AddOfferToOfferList(offer);
 

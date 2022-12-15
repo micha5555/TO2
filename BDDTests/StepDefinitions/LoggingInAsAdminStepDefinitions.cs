@@ -6,16 +6,18 @@ namespace BDDTests.StepDefinitions
     [Binding]
     public class LoggingInAsAdminStepDefinitions
     {
-        private AdministratorOperations _administratorOperations;
         private string _registrationLogin, _registrationPassword;
         private string _providedLogin, _providedPassword;
         private Table _invalidLoginData;
         private bool _isLogged;
 
-        [Given(@"Admin in not logged in")]
-        public void GivenAdminInNotLoggedIn()
+        [Given(@"Admin is not logged in")]
+        public void GivenAdminIsNotLoggedIn()
         {
-            _administratorOperations= new AdministratorOperations();    
+            Helper.BaseServices.AdministratorOperations = new AdministratorOperations();
+            Helper.BaseServices.GeneralOperations = new GeneralOperations();
+
+            Helper.BaseServices.GeneralOperations.ReadDataOnLaunch();
         }
 
         [Given(@"Admin has registered before using login and password")]
@@ -24,7 +26,9 @@ namespace BDDTests.StepDefinitions
             _registrationLogin = table.Rows[0]["login"];
             _registrationPassword= table.Rows[0]["password"];
 
-            _administratorOperations.registerNewAdministrator(_registrationLogin, _registrationPassword);
+            Helper.ClearMethods.ClearAllAdministrators();
+            Helper.BaseServices.AdministratorOperations.registerNewAdministrator(_registrationLogin, _registrationPassword);
+            
         }
 
         [When(@"Admin enters correct login")]
@@ -42,7 +46,7 @@ namespace BDDTests.StepDefinitions
         [Then(@"The admin's login data are correct")]
         public void ThenTheLoginDataAreCorrect()
         {
-            _isLogged = _administratorOperations.checkAdministratorCredentials(_providedLogin, _providedPassword);
+            _isLogged = Helper.BaseServices.AdministratorOperations.checkAdministratorCredentials(_providedLogin, _providedPassword);
 
             Assert.IsTrue(_isLogged);
         }
@@ -50,6 +54,7 @@ namespace BDDTests.StepDefinitions
         [When(@"Admin enters incorrect login and password")]
         public void WhenAdminEntersIncorrectLoginAndPassword(Table table)
         {
+            Helper.ClearMethods.ClearAllAdministrators(); //Removes Default Administrator
             _invalidLoginData = table;
         }
 
@@ -60,7 +65,7 @@ namespace BDDTests.StepDefinitions
             {
                 _providedLogin = row[0];
                 _providedPassword = row[1];
-                _isLogged = _administratorOperations.checkAdministratorCredentials(_providedLogin, _providedPassword);
+                _isLogged = Helper.BaseServices.AdministratorOperations.checkAdministratorCredentials(_providedLogin, _providedPassword);
                 Assert.IsFalse(_isLogged);
             }
         }

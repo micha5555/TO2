@@ -19,7 +19,7 @@ public class ListingItemsStepDefinitions : BaseStepDefinitions
     [Given(@"Offer list is not empty")]
     public void GivenOfferListIsNotEmpty()
     {
-        Helper.ClearMethods.ClearOffer();
+        // Helper.ClearMethods.ClearOffer();
         Helper.BaseProducts.NarzedziaProduct = Helper.CommonMethods.CreateNewCorrectNarzedziaProduct();
         Helper.BaseServices.OfferOperations.AddToOffer(Helper.BaseProducts.NarzedziaProduct);
     }
@@ -77,7 +77,7 @@ public class ListingItemsStepDefinitions : BaseStepDefinitions
     [Given(@"Cart list is empty")]
     public void GivenCartListIsEmpty()
     {
-        Helper.ClearMethods.ClearCart(); //TODO EDIT
+        // Helper.ClearMethods.ClearCart(); 
         Helper.BaseLists.CartList = Helper.BaseServices.CartOperations.GetProducts();
     }
 
@@ -112,7 +112,7 @@ public class ListingItemsStepDefinitions : BaseStepDefinitions
     [Given(@"Order list is empty")] // DO ZMIANY - Lista przedmitow w zamowieniu nie moze byc pusta
     public void GivenOrderListIsEmpty()
     {
-        Helper.ClearMethods.ClearCart();
+        // Helper.ClearMethods.ClearCart();
 
         order = new Order(Helper.BaseClient.Client);
         Helper.BaseLists.OrderList = order.GetProducts();

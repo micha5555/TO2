@@ -62,7 +62,7 @@ namespace Repo
 
         public List<Product> GetAllOfferProducts()
         {
-            return dataAccess.OfferList[0].GetProductList();
+            return dataAccess.OfferList[0].GetProductList().ToList();
         }
 
         public List<Order> GetClientOrders(Guid clientID)
@@ -76,7 +76,7 @@ namespace Repo
         }
         public List<Order> GetOrders()
         {
-            return dataAccess.OrderList;
+            return dataAccess.OrderList.ToList();
         }
         public void AddClientOrder(Order order)
         {
@@ -115,7 +115,7 @@ namespace Repo
                     filteredList.Add(p);
                 }
             }
-            return filteredList;
+            return filteredList.ToList();
         }
 
         public List<Product> SearchForProductsByName(string name)
@@ -129,7 +129,7 @@ namespace Repo
                     filteredList.Add(p);
                 }
             }
-            return filteredList;
+            return filteredList.ToList();
         }
 
         public bool AddProductToOffer(Product product)
@@ -203,6 +203,17 @@ namespace Repo
         public bool AddOrder(Order o) 
         {
             dataAccess.OrderList.Add(o);
+            return true;
+        }
+
+        public List<Administrator> GetAllAdministrators()
+        {
+            return dataAccess.AdminList.ToList();
+        }
+
+        public bool RemoveAdministrator(Administrator admin)
+        {
+            dataAccess.AdminList.Remove(admin);
             return true;
         }
     }
