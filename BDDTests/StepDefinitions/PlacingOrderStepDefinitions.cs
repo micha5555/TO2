@@ -11,8 +11,16 @@ public class PlacingOrderStepDefinition
 {
     List<Order> orderList;
 
-    [Given(@"Cart is not empty")]
-    public void GivenCartisnotempty()
+    [Given(@"Client did not add product to cart")]
+    public void GivenClientdidnotaddproducttocart()
+    {
+        Helper.ClearMethods.ClearCart();
+    }
+
+
+
+    [Given(@"Client added product to cart")]
+    public void GivenClientaddedproducttocart()
     {
         Helper.ClearMethods.ClearCart();
         Helper.BaseProducts.CartProduct = Helper.CommonMethods.CreateNewCorrectCartProduct();
@@ -31,12 +39,6 @@ public class PlacingOrderStepDefinition
         orderList = Helper.BaseServices.OrderOperations.GetOrders();
         bool actual = orderList.Exists(o => o.ClientId == Helper.BaseClient.Client.Id);
         Assert.IsTrue(actual);
-    }
-
-    [Given(@"Cart is empty")]
-    public void GivenCartisempty()
-    {
-        Helper.ClearMethods.ClearCart();
     }
 
     [Then(@"Order is not added to order list")]
