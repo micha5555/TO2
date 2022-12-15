@@ -17,7 +17,6 @@ Scenario: Client cannot remove product from cart when product is not in cart
 @Client @AddProductToCart @NegativeProductQuantity
 Scenario: Client cannnot add product with negative quantity to cart
     Given Client is logged in
-    And Product is not cart
     And Product quantity is negative
     When Client adds product to cart
     Then Cart does not contain product
