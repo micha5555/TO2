@@ -33,7 +33,6 @@ public class EditingOfferStepDefinitions
         Assert.True(Helper.BaseOffer.Offer.ProductList.Contains(addedProduct));
     }
 
-	
 }
 
 
