@@ -77,6 +77,5 @@ namespace BDDTests.StepDefinitions
         {
             Assert.AreEqual(RegistrationStatus.NotRegistered, _registrationStatus);
         }
-
     }
 }
