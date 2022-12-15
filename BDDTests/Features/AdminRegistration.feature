@@ -9,7 +9,6 @@ Scenario: The administrator can register to the system
             | test1 | test2    |
     Then The administrator account is created in the database
 
-# TODO Rozbić na mniejsze warunki (prawidlowy login, nieprawidlowe haslo; puste znaki; itd)
 @Admin @Registration @NotCorrectData   
 Scenario Outline: The administrator can't register to the system when data are not correct
     Given Admin is not registered
