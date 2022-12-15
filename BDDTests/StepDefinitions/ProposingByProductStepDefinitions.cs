@@ -3,6 +3,7 @@ using Shared;
 using Services;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System;
 
 namespace BDDTests.StepDefinitions;
 
@@ -30,8 +31,10 @@ public class ProposingByProductStepDefinitions
     public void ThenClientgetlistofProposedProductsBasedOnProduct()
     {
         generalOperations = new GeneralOperations();
-        List<Product> proposed = generalOperations.ProposeProductsBasedOnProduct(CommonMethods.CreateNewCorrectProduct(), 3);
-        Assert.True(proposed.Count == 3);
+        List<Product> proposed = generalOperations.ProposeProductsBasedOnProduct(CommonMethods.CreateNewCorrectAGDProduct(), 2);
+        Assert.True(proposed.Count == 2);
+        Assert.True(proposed.Contains(CommonMethods.CreateNewCorrectProduct()));
+        Assert.True(proposed.Contains(CommonMethods.CreateNewCorrectNarzedziaProduct()));
     }
 
 }
