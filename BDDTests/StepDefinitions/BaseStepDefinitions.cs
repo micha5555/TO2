@@ -3,6 +3,7 @@ using Shared;
 
 namespace BDDTests.StepDefinitions;
 
+[Binding]
 public class BaseStepDefinitions
 {
 
