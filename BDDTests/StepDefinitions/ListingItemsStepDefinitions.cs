@@ -59,6 +59,9 @@ public class ListingItemsStepDefinitions
         Helper.BaseServices.OfferOperations.AddToOffer(Helper.BaseProducts.Product);
         Helper.BaseProducts.CartProduct = new CartProduct(Helper.BaseProducts.Product, 1);
         Helper.BaseServices.CartOperations.AddToCart(Helper.BaseProducts.CartProduct);
+
+        Product product = Helper.CommonMethods.CreateNewCorrectElektrotechnikaProduct();
+        Helper.BaseServices.CartOperations.AddToCart(new CartProduct(product,1));
     }
 
     [When(@"Client lists cart items")]
@@ -70,7 +73,7 @@ public class ListingItemsStepDefinitions
     [Then(@"List of cart items is not empty")]
     public void ThenCartListDisplayIsNotEmpty()
     {
-        Assert.AreEqual(1, Helper.BaseLists.CartList.Count);
+        Assert.AreEqual(2, Helper.BaseLists.CartList.Count);
     }
 
     [Given(@"Cart is empty")]
