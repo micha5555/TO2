@@ -13,8 +13,6 @@ namespace Repo
         private Repository()
         {
             this.dataAccess = DataAccess.Instance;
-            // Administrator admin = new Administrator("test", "test");
-            // dataAccess.AdminList.Add(admin);
         }
         public static Repository Instance
         {
@@ -178,6 +176,20 @@ namespace Repo
 
         public bool AddClient(Client client)
         {
+            if (dataAccess.ClientList.Contains(client))
+            {
+                return false;
+            }
+            else if (String.IsNullOrEmpty(client.Login)
+                || String.IsNullOrEmpty(client.Password))
+            {
+                return false;
+            }
+            else if (!Regex.IsMatch(client.Login, loginAndPasswordRegex)
+                || !Regex.IsMatch(client.Password, loginAndPasswordRegex))
+            {
+                return false;
+            }
             dataAccess.ClientList.Add(client);
             return true;
         }
@@ -242,6 +254,18 @@ namespace Repo
             else
             {
                 return dataAccess.AdminList.ToList().Any(item => item.Login == adminLogin);
+            }
+        }
+
+        public bool CheckIfClientExists(string clientLogin)
+        {
+            if (String.IsNullOrEmpty(clientLogin))
+            {
+                return false;
+            }
+            else
+            {
+                return dataAccess.ClientList.ToList().Any(item => item.Login == clientLogin);
             }
         }
     }

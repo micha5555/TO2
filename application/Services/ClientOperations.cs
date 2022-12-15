@@ -18,6 +18,11 @@ public class ClientOperations : IClientOperations
 
     public RegistrationStatus registerNewClient(string name, string surname, string address, string postalCode, string login, string password)
     {
+        if (repository.CheckIfClientExists(login))
+        {
+            return RegistrationStatus.NotRegistered;
+        }
+
         Client client = new Client(name, surname, address, postalCode, login, password);
         bool status = repository.AddClient(client);
         return status? RegistrationStatus.Registered : RegistrationStatus.NotRegistered;

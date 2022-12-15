@@ -19,9 +19,8 @@ Scenario Outline: The client can't login to the system when data are not correct
     
     Examples:
         | invalid_login | invalid_password |
-        | test          | test             |
-        | marian        | test             |
-        | test          | haslo123         |
+        | _test         | test             |
+        | marian        | _test            |
         | marian        |                  |
         |               | haslo123         |
         |               |                  |
