@@ -25,9 +25,17 @@ public class CartOperations : ICartOperations
         return cart.AddToCart(p);
     }
 
-     public void AddToCart(CartProduct p, Client client)
+     public bool AddToCart(CartProduct p, Client client)
     {
-        client.Cart.AddToCart(p);
+        if (p == null)
+        {
+            return false;
+        }
+        if (p.Quantity < 1)
+        {
+            return false;
+        }
+        return client.Cart.AddToCart(p);
     }
   
     public bool RemoveFromCart(CartProduct p)
