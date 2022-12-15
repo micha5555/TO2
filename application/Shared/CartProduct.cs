@@ -11,5 +11,18 @@ namespace Shared
             this.Product = Product;
             this.Quantity = Quantity;
         }
+
+        public override bool Equals(Object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                CartProduct p = (CartProduct)obj;
+                return (this.Product.Equals(p.Product));
+            }
+        }
     }
 }

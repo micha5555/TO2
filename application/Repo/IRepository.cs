@@ -5,6 +5,9 @@ namespace Repo
     public interface IRepository
     {
         public bool AddAdministrator(Administrator admin);
+        public List<Administrator> GetAllAdministrators();
+        public bool RemoveAdministrator(Administrator admin);
+        public bool CheckIfAdminExists(String adminLogin);
         public bool CheckCredentialsAdmin(string login, string password);
         public bool CheckCredentialsClient(string login, string password);
         public List<Product> GetAllOfferProducts();
@@ -23,6 +26,9 @@ namespace Repo
         public Client GetClientById(Guid id);
         public bool AddClient(Client client);
         public Client GetClientByLogin(string login);
+        public bool CheckIfClientExists(String adminLogin);
+        public bool AddOffer(Offer offer);
+        public bool AddOrder(Order o);
     }
 
 }

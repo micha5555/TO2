@@ -20,9 +20,22 @@ public class AdministratorOperations : IAdministratorOperations
 
     public RegistrationStatus registerNewAdministrator(string login, string password)
     {
+        if (repository.CheckIfAdminExists(login))
+        {
+            return RegistrationStatus.NotRegistered;
+        }
+
         Administrator admin = new Administrator(login, password);
         bool status = repository.AddAdministrator(admin);
 
-        return status? RegistrationStatus.Registered : RegistrationStatus.NotRegistered;
+        return status ? RegistrationStatus.Registered : RegistrationStatus.NotRegistered;
+    }
+
+    public List<Administrator> getAllAdministrators(){
+        return repository.GetAllAdministrators();
+    }
+
+    public void removeAdministrator(Administrator administrator){
+        repository.RemoveAdministrator(administrator);   
     }
 }

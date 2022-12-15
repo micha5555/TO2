@@ -1,5 +1,7 @@
 using Shared;
 using Repo.DataAccessClass;
+using System.Text.RegularExpressions;
+
 namespace Repo
 {
 
@@ -7,11 +9,10 @@ namespace Repo
     {
         private DataAccess dataAccess;
         private static Repository instance = null;
+        private string loginAndPasswordRegex = "^[a-zA-Z0-9]+$";
         private Repository()
         {
             this.dataAccess = DataAccess.Instance;
-            // Administrator admin = new Administrator("test", "test");
-            // dataAccess.AdminList.Add(admin);
         }
         public static Repository Instance
         {
@@ -30,8 +31,21 @@ namespace Repo
             {
                 return false;
             }
-            dataAccess.AdminList.Add(admin);
-            return true;
+            else if (String.IsNullOrEmpty(admin.Login)
+                || String.IsNullOrEmpty(admin.Password))
+            {
+                return false;
+            }
+            else if (!Regex.IsMatch(admin.Login, loginAndPasswordRegex) 
+                || !Regex.IsMatch(admin.Password, loginAndPasswordRegex))
+            {
+                return false;
+            }
+            else 
+            {
+                dataAccess.AdminList.Add(admin);
+                return true;
+            }
         }
 
         public bool CheckCredentialsAdmin(string login, string password)
@@ -62,7 +76,7 @@ namespace Repo
 
         public List<Product> GetAllOfferProducts()
         {
-            return dataAccess.OfferList[0].GetProductList();
+            return dataAccess.OfferList[0].GetProductList().ToList();
         }
 
         public List<Order> GetClientOrders(Guid clientID)
@@ -76,7 +90,7 @@ namespace Repo
         }
         public List<Order> GetOrders()
         {
-            return dataAccess.OrderList;
+            return dataAccess.OrderList.ToList();
         }
         public void AddClientOrder(Order order)
         {
@@ -115,7 +129,7 @@ namespace Repo
                     filteredList.Add(p);
                 }
             }
-            return filteredList;
+            return filteredList.ToList();
         }
 
         public List<Product> SearchForProductsByName(string name)
@@ -129,7 +143,7 @@ namespace Repo
                     filteredList.Add(p);
                 }
             }
-            return filteredList;
+            return filteredList.ToList();
         }
 
         public bool AddProductToOffer(Product product)
@@ -162,6 +176,20 @@ namespace Repo
 
         public bool AddClient(Client client)
         {
+            if (dataAccess.ClientList.Contains(client))
+            {
+                return false;
+            }
+            else if (String.IsNullOrEmpty(client.Login)
+                || String.IsNullOrEmpty(client.Password))
+            {
+                return false;
+            }
+            else if (!Regex.IsMatch(client.Login, loginAndPasswordRegex)
+                || !Regex.IsMatch(client.Password, loginAndPasswordRegex))
+            {
+                return false;
+            }
             dataAccess.ClientList.Add(client);
             return true;
         }
@@ -193,6 +221,52 @@ namespace Repo
             dataAccess.OfferList[0].UpdateProductInOffer(id, product);
             return true;
         }
-    }
 
+        public bool AddOffer(Offer offer) 
+        {
+            dataAccess.OfferList.Add(offer);
+            return true;
+        }
+
+        public bool AddOrder(Order o) 
+        {
+            dataAccess.OrderList.Add(o);
+            return true;
+        }
+
+        public List<Administrator> GetAllAdministrators()
+        {
+            return dataAccess.AdminList.ToList();
+        }
+
+        public bool RemoveAdministrator(Administrator admin)
+        {
+            dataAccess.AdminList.Remove(admin);
+            return true;
+        }
+
+        public bool CheckIfAdminExists(string adminLogin)
+        {
+            if (String.IsNullOrEmpty(adminLogin))
+            {
+                return false;
+            }
+            else
+            {
+                return dataAccess.AdminList.ToList().Any(item => item.Login == adminLogin);
+            }
+        }
+
+        public bool CheckIfClientExists(string clientLogin)
+        {
+            if (String.IsNullOrEmpty(clientLogin))
+            {
+                return false;
+            }
+            else
+            {
+                return dataAccess.ClientList.ToList().Any(item => item.Login == clientLogin);
+            }
+        }
+    }
 }
