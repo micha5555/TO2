@@ -1,159 +1,127 @@
 using NUnit.Framework;
-using Repo;
 using Services;
 using Shared;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Printing;
-using TechTalk.SpecFlow;
 
-namespace BDDTests.StepDefinitions
+namespace BDDTests.StepDefinitions;
+
+[Binding]
+public class ListingItemsStepDefinitions : BaseStepDefinitions
 {
-    [Binding]
-    public class ListingItemsStepDefinitions
+    
+    private Product product;
+
+    private Order order;
+
+
+
+    [Given(@"Offer list is not empty")]
+    public void GivenOfferListIsNotEmpty()
     {
-        private ClientOperations _clientOperations;
-        private CartOperations _cartOperations;
-        private OrderOperations _orderOperations;
-        private bool _clientIsLoggedIn;
-        private OfferOperations _offerOperations;
-        private List<Product> offerList;
-        private List<CartProduct> cartList;
-        private List<CartProduct> orderList;
-        private Guid guida;
-        private Product product;
-        private CartProduct cp;
-        private Order order;
-        private Client client;
+        Helper.ClearMethods.ClearOffer();
+        Helper.BaseProducts.NarzedziaProduct = Helper.CommonMethods.CreateNewCorrectNarzedziaProduct();
+        Helper.BaseServices.OfferOperations.AddToOffer(Helper.BaseProducts.NarzedziaProduct);
+    }
 
-        [Given(@"Client is logged in")]
-        public void GivenClientIsLoggedIn()
-        {
-            _orderOperations = new OrderOperations();
-            _offerOperations = new OfferOperations();
-            Offer offer = new Offer();
-            _offerOperations.AddOfferToOfferList(offer);
+    [When(@"Client lists offer")]
+    public void WhenClientListsOffer()
+    {
+        Helper.BaseLists.OfferList = Helper.BaseServices.OfferOperations.GetAllProductList();
+    }
 
-            _clientOperations = new ClientOperations();
-            _clientOperations.registerNewClient("Maciej", "Maciejowski", "Bazantarnia", "04-550", "login", "password");
+    [Then(@"Offer list display is not empty")]
+    public void ThenOfferListDisplayIsNotEmpty()
+    {
+        int expected = 1;
+        int actual = Helper.BaseLists.OfferList.Count;
+        
+        Assert.AreEqual(expected, actual);
+    }
 
-            client = _clientOperations.GetClientByLogin("login");
-            _cartOperations = new CartOperations(client.Id);
-            _clientIsLoggedIn = _clientOperations.checkClientCredentials("login", "password");
-        }
+    [Given(@"Offer list is empty")]
+    public void GivenOfferListIsEmpty()
+    {
+        Helper.ClearMethods.ClearOffer();
+    }
 
-        [Given(@"Offer list is not empty")]
-        public void GivenOfferListIsNotEmpty()
-        {
-            guida = Guid.NewGuid();
-            Product prod = new Product("Wiertarkaaa", 121.0, Category.Narzędzia, "Wierciaaa");
-            _offerOperations.AddToOffer(prod);
-        }
+    [Then(@"Offer list display is empty")]
+    public void ThenOfferListDisplayIsEmpty()
+    {
+        int expected = 0;
+        int actual = Helper.BaseLists.OfferList.Count;
+        Assert.AreEqual(expected, actual);
+    }
 
-        [When(@"Client lists offer")]
-        public void WhenClientListsOffer()
-        {
-            offerList = _offerOperations.GetAllProductList();
-        }
+    [Given(@"Cart list is not empty")]
+    public void GivenCartListIsNotEmpty()
+    {
+        Helper.BaseProducts.Product = Helper.CommonMethods.CreateNewCorrectProduct();
+        Helper.BaseServices.OfferOperations.AddToOffer(Helper.BaseProducts.Product);
+        Helper.BaseProducts.CartProduct = new CartProduct(Helper.BaseProducts.Product, 1);
+        Helper.BaseServices.CartOperations.AddToCart(Helper.BaseProducts.CartProduct);
+    }
 
-        [Then(@"Offer list display is not empty")]
-        public void ThenOfferListDisplayIsNotEmpty()
-        {
-            int expected = 1;
-            int actual = offerList.Count;
-            Assert.AreEqual(expected, actual);
-        }
+    [When(@"Client lists cart items")]
+    public void WhenClientListsCartItems()
+    {
+        Helper.BaseLists.CartList = Helper.BaseServices.CartOperations.GetProducts();
+    }
 
-        [Given(@"Offer list is empty")]
-        public void GivenOfferListIsEmpty()
-        {
-            _offerOperations.RemoveFromOffer(product);
-            _offerOperations.RemoveFromOffer(new Product("Wiertarkaaa", 121.0, Category.Narzędzia, "Wierciaaa"));
-        }
+    [Then(@"Cart list display is not empty")]
+    public void ThenCartListDisplayIsNotEmpty()
+    {
+        Assert.AreEqual(1, Helper.BaseLists.CartList.Count);
+    }
 
-        [Then(@"Offer list display is empty")]
-        public void ThenOfferListDisplayIsEmpty()
-        {
-            int expected = 0;
-            int actual = offerList.Count;
-            Assert.AreEqual(expected, actual);
-        }
+    [Given(@"Cart list is empty")]
+    public void GivenCartListIsEmpty()
+    {
+        Helper.ClearMethods.ClearCart(); //TODO EDIT
+        Helper.BaseLists.CartList = Helper.BaseServices.CartOperations.GetProducts();
+    }
 
-        [Given(@"Cart list is not empty")]
-        public void GivenCartListIsNotEmpty()
-        {
-            Product heh = new Product("Wiertarkaaa", 121.0, Category.Narzędzia, "Wierciaaa");
-            _offerOperations.AddToOffer(heh);
-            cp = new CartProduct(heh, 1);
-            _cartOperations.AddToCart(cp);
-        }
+    [Then(@"Cart list display is empty")]
+    public void ThenCartListDisplayIsEmpty()
+    {
+        Assert.AreEqual(0, Helper.BaseLists.CartList.Count);
+    }
 
-        [When(@"Client lists cart items")]
-        public void WhenClientListsCartItems()
-        {
-            cartList = _cartOperations.GetProducts();
-        }
+    [Given(@"Order list is not empty")]
+    public void GivenOrderListIsNotEmpty()
+    {
+        product = Helper.CommonMethods.CreateNewCorrectProduct();
+        Helper.BaseProducts.CartProduct = new CartProduct(product, 1);
+        Helper.BaseServices.CartOperations.AddToCart(Helper.BaseProducts.CartProduct);
+        Helper.BaseClient.Client.Cart = new Cart(new List<CartProduct> { Helper.BaseProducts.CartProduct });
+        order = new Order(Helper.BaseClient.Client);
+    }
 
-        [Then(@"Cart list display is not empty")]
-        public void ThenCartListDisplayIsNotEmpty()
-        {
-            Assert.AreEqual(1, cartList.Count);
-        }
+    [When(@"Client lists orders")]
+    public void WhenClientListsOrders()
+    {
+        Helper.BaseLists.OrderList = order.GetProducts();
+    }
 
-        [Given(@"Cart list is empty")]
-        public void GivenCartListIsEmpty()
-        {
-            _cartOperations.cart.ClearCart();
-            cartList = _cartOperations.GetProducts();
-        }
+    [Then(@"Order list display is not empty")]
+    public void ThenOrderListDisplayIsNotEmpty()
+    {
+        Assert.AreEqual(1, Helper.BaseLists.OrderList.Count);
+    }
 
-        [Then(@"Cart list display is empty")]
-        public void ThenCartListDisplayIsEmpty()
-        {
-            Assert.AreEqual(0, cartList.Count);
-        }
+    [Given(@"Order list is empty")] // DO ZMIANY - Lista przedmitow w zamowieniu nie moze byc pusta
+    public void GivenOrderListIsEmpty()
+    {
+        Helper.ClearMethods.ClearCart();
 
-        [Given(@"Order list is not empty")]
-        public void GivenOrderListIsNotEmpty()
-        {
-            product = new Product {
-                CategoryClass = Category.AGD,
-                Description = "yes",
-                Id = guida,
-                isActive = true,
-                Name = "Yessir",
-                Price = 120.0
-            };
-            cp = new CartProduct(product, 1);
-            _cartOperations.AddToCart(cp);
-            client.Cart = new Cart(new List<CartProduct> { cp });
-            order = new Order(client);
-        }
+        order = new Order(Helper.BaseClient.Client);
+        Helper.BaseLists.OrderList = order.GetProducts();
+    }
 
-        [When(@"Client lists orders")]
-        public void WhenClientListsOrders()
-        {
-            orderList = order.GetProducts();
-        }
-
-        [Then(@"Order list display is not empty")]
-        public void ThenOrderListDisplayIsNotEmpty()
-        {
-            Assert.AreEqual(1, orderList.Count);
-        }
-
-        [Given(@"Order list is empty")]
-        public void GivenOrderListIsEmpty()
-        {
-            _cartOperations.cart.ClearCart();
-            order = new Order(client);
-            orderList = order.GetProducts();
-        }
-
-        [Then(@"Order list display is empty")]
-        public void ThenOrderListDisplayIsEmpty()
-        {
-            Assert.AreEqual(0, orderList.Count);
-        }
+    [Then(@"Order list display is empty")] // Analogicznie jak poprzednie
+    public void ThenOrderListDisplayIsEmpty()
+    {
+        Assert.AreEqual(0, Helper.BaseLists.OrderList.Count);
     }
 }
+
