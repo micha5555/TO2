@@ -126,31 +126,30 @@ public class ListingItemsStepDefinitions
     [Given(@"Client orders are empty")]
     public void GivenClientOrdersAreEmpty()
     {
-        // TODO: 
     }
 
-    [Given(@"Client orders are not empty")]
-    public void GivenClientOrdersAreNotEmpty()
+    [Given(@"Client have (.*) orders")]
+    public void GivenClientOrdersAreNotEmpty(int numberOfOrders)
     {   
-        // TODO: 
+        Helper.CommonMethods.CreateGivenNumberOfOrdersForGivenClient(Helper.BaseClient.Client, numberOfOrders);
     }
 
     [When(@"Client lists his orders")]
     public void WhenClientListsHisOrders()
     {
-        // TODO: 
+        Helper.BaseLists.Orders = Helper.BaseServices.ClientOperations.GetClientOrders(Helper.BaseClient.Client.Id); 
     }
 
-    [Then(@"List of orders is not empty")]
-    public void ThenListOfOrdersIsNotEmpty()
+    [Then(@"(.*) orders are in list of orders")]
+    public void ThenListOfOrdersIsNotEmpty(int expectedNumberOfOrders)
     {
-        // TODO:
+        Assert.AreEqual(expectedNumberOfOrders, Helper.BaseLists.Orders.Count);
     }
 
     [Then(@"List of orders is empty")]
     public void ThenListOfOrdersIsEmpty()
     {
-        // TODO:
+        Assert.AreEqual(0, Helper.BaseLists.Orders.Count);
     }
 
 }

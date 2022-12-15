@@ -44,11 +44,21 @@ Scenario: Client can get empty list of his order when order is empty
     Then List of ordered items is empty
 
 @Client @List @FullOrders
-Scenario: Client can list his orders
+Scenario Outline: Client can list his orders
     Given Client is logged in
-    And Client orders are not empty
+    And Client have <number> orders
     When Client lists his orders
-    Then List of orders is not empty
+    Then <number> orders are in list of orders
+
+    Examples:
+        | number |
+        | 1      | 
+        | 2      |
+        | 3      |
+        | 10     |
+        | 100    |
+        | 1000   | 
+
 
 @Client @List @FullOrders
 Scenario: Client can get empty list of his orders when orders are empty
