@@ -1,5 +1,7 @@
 using Shared;
 using Repo.DataAccessClass;
+using System.Text.RegularExpressions;
+
 namespace Repo
 {
 
@@ -7,6 +9,7 @@ namespace Repo
     {
         private DataAccess dataAccess;
         private static Repository instance = null;
+        private string loginAndPasswordRegex = "^[a-zA-Z0-9]+$";
         private Repository()
         {
             this.dataAccess = DataAccess.Instance;
@@ -30,8 +33,21 @@ namespace Repo
             {
                 return false;
             }
-            dataAccess.AdminList.Add(admin);
-            return true;
+            else if (String.IsNullOrEmpty(admin.Login)
+                || String.IsNullOrEmpty(admin.Password))
+            {
+                return false;
+            }
+            else if (!Regex.IsMatch(admin.Login, loginAndPasswordRegex) 
+                || !Regex.IsMatch(admin.Password, loginAndPasswordRegex))
+            {
+                return false;
+            }
+            else 
+            {
+                dataAccess.AdminList.Add(admin);
+                return true;
+            }
         }
 
         public bool CheckCredentialsAdmin(string login, string password)
@@ -216,6 +232,17 @@ namespace Repo
             dataAccess.AdminList.Remove(admin);
             return true;
         }
-    }
 
+        public bool CheckIfAdminExists(string adminLogin)
+        {
+            if (String.IsNullOrEmpty(adminLogin))
+            {
+                return false;
+            }
+            else
+            {
+                return dataAccess.AdminList.ToList().Any(item => item.Login == adminLogin);
+            }
+        }
+    }
 }

@@ -8,7 +8,6 @@ namespace BDDTests.StepDefinitions
     {
         private string _registrationLogin, _registrationPassword;
         private string _providedLogin, _providedPassword;
-        private Table _invalidLoginData;
         private bool _isLogged;
 
         [Given(@"Admin is not logged in")]
