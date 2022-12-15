@@ -15,7 +15,7 @@ public class StepDefinitions
     public void GivenProductisincart()
     {
         Helper.ClearMethods.ClearCart();
-        Helper.BaseProducts.CartProduct = new CartProduct(Helper.BaseProducts.Product, 1);
+        Helper.BaseProducts.CartProduct = Helper.CommonMethods.CreateNewCorrectCartProduct();
         Helper.BaseServices.CartOperations.AddToCart(Helper.BaseProducts.CartProduct);
     }
 
@@ -35,7 +35,7 @@ public class StepDefinitions
     [Given(@"Product is not in cart")]
     public void GivenProductisnotincart()
     {
-        Helper.BaseProducts.CartProduct = new CartProduct(Helper.BaseProducts.Product, 1);
+        Helper.ClearMethods.ClearCart();
     }
 
     [When(@"Client adds product to cart")]
@@ -48,15 +48,15 @@ public class StepDefinitions
     public void ThenProductquantityincartisincreased()
     {
         List<CartProduct> cartProducts = Helper.BaseServices.CartOperations.GetProducts();
-        int actualQuantity = cartProducts.Find(p => p.Product == Helper.BaseProducts.Product).Quantity;
-        int expectedQuantity = customProductQuantity + 1;
+        int actualQuantity = cartProducts.Find(p => p.Product == Helper.BaseProducts.CartProduct.Product).Quantity;
+        int expectedQuantity = customProductQuantity * 2;
         Assert.AreEqual(expectedQuantity, actualQuantity);   
     }
 
     [Given(@"Product quantity is one")]
     public void GivenProductquantityisone()
     {
-        Helper.BaseProducts.CartProduct = new CartProduct(Helper.BaseProducts.Product, 1);
+        Helper.BaseProducts.CartProduct = Helper.CommonMethods.CreateNewCorrectCartProduct();
     }
 
 
@@ -72,7 +72,7 @@ public class StepDefinitions
     [Given(@"Product quantity is bigger than one")]
     public void GivenProductquantityisbiggerthanone()
     {
-        Helper.BaseProducts.CartProduct = new CartProduct(Helper.BaseProducts.Product, customProductQuantity);
+        Helper.BaseProducts.CartProduct.Quantity = customProductQuantity;
     }
 
     [When(@"Client adds products to cart")]
