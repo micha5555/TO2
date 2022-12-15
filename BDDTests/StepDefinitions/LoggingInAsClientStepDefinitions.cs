@@ -8,17 +8,18 @@ namespace BDDTests.StepDefinitions
     [Binding]
     public class LoggingInAsClientStepDefinitions
     {
-        private ClientOperations _clientOperations;
         private string _registrationLogin, _registrationPassword;
         private string _providedLogin, _providedPassword;
         private string _name, _surname, _address, _postalCode;
-        private Table _invalidLoginData;
         private bool _isLogged;
 
-        [Given(@"Client in not logged in")]
-        public void GivenClientInNotLoggedIn()
+        [Given(@"Client is not logged in")]
+        public void GivenClientIsNotLoggedIn()
         {
-            _clientOperations= new ClientOperations();
+            Helper.BaseServices.ClientOperations = new ClientOperations();
+            Helper.BaseServices.GeneralOperations = new GeneralOperations();
+
+            Helper.BaseServices.GeneralOperations.ReadDataOnLaunch();
         }
 
         [Given(@"Client has registered before")]
@@ -26,13 +27,18 @@ namespace BDDTests.StepDefinitions
         {
             _name = table.Rows[0]["name"];
             _surname = table.Rows[0]["surname"];
-            _address= table.Rows[0]["address"];
+            _address = table.Rows[0]["address"];
             _postalCode = table.Rows[0]["postalCode"];
             _registrationLogin = table.Rows[0]["login"];
-            _registrationPassword= table.Rows[0]["password"];
+            _registrationPassword = table.Rows[0]["password"];
 
-            _clientOperations
-                .registerNewClient(_name, _surname, _address, _postalCode, _registrationLogin, _registrationPassword);
+            Helper.BaseServices.ClientOperations.registerNewClient(
+                _name,
+                _surname,
+                _address,
+                _postalCode,
+                _registrationLogin,
+                _registrationPassword);
         }
 
         [When(@"Client enters correct login")]
@@ -50,27 +56,53 @@ namespace BDDTests.StepDefinitions
         [Then(@"The clients' login data are correct")]
         public void ThenTheClientsLoginDataAreCorrect()
         {
-            _isLogged = _clientOperations.checkClientCredentials(_providedLogin, _providedPassword);
+            _isLogged = Helper.BaseServices
+                .ClientOperations.checkClientCredentials(
+                    _providedLogin,
+                    _providedPassword);
 
-            Assert.IsTrue( _isLogged );
+            Assert.IsTrue(_isLogged);
         }
 
-        [When(@"Client enters incorrect login and password")]
-        public void WhenClientEntersIncorrectLoginAndPassword(Table table)
+        [When(@"Client enters incorrect (.*) and (.*)")]
+        public void WhenClientEntersIncorrectLoginAndPassword(String invalid_login, String invalid_password)
         {
-            _invalidLoginData = table;
+            _providedLogin = invalid_login;
+            _providedPassword = invalid_password;
         }
 
         [Then(@"The client's login data are not correct")]
         public void ThenTheClientsLoginDataAreNotCorrect()
         {
-            foreach (var row in _invalidLoginData.Rows)
-            {
-                _providedLogin = row[0];
-                _providedPassword = row[1];
-                _isLogged = _clientOperations.checkClientCredentials(_providedLogin, _providedPassword);
-                Assert.IsFalse(_isLogged);
-            }
+            Assert.IsFalse(
+                Helper
+                    .BaseServices
+                    .ClientOperations
+                    .checkClientCredentials(_providedLogin,_providedPassword));
         }
+
+        
+// [Given(@"Client is not logged in")]
+// public void GivenClientisnotloggedin()
+// {
+// 	_scenarioContext.Pending();
+// }
+
+// [When(@"Client enters incorrect <invalid_login> and <invalid_password>")]
+// public void WhenCliententersincorrectinvalidloginandinvalidpassword()
+// {
+// 	_scenarioContext.Pending();
+// }
+
+// [Then(@"The client's login data are not correct")]
+// public void ThenTheclientslogindataarenotcorrect()
+// {
+// 	_scenarioContext.Pending();
+// }
+
     }
 }
+
+//Dobra muszę się na to zapisać
+//No 30 sekund
+//Dobra to nie

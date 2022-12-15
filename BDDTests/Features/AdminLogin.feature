@@ -11,10 +11,14 @@ Scenario: The administrator can login to the system
     And Admin enters correct password
     Then The admin's login data are correct
 
-@Admin @Login @NotCorrectData
+# TODO Rozbić na mniejsze warunki (prawidlowy login, nieprawidlowe haslo; puste znaki; itd)
+@Admin @Login @NotCorrectData   
 Scenario Outline: The administrator can't login to the system when data are not correct
     Given Admin is not logged in
-    When Admin enters incorrect login and password
+    When Admin enters incorrect <invalid_login> and <invalid_password>
+    Then The admin's login data are not correct
+
+    Examples:
         | invalid_login | invalid_password |
         | test          | test             |
         | test1         | test             |
@@ -22,4 +26,3 @@ Scenario Outline: The administrator can't login to the system when data are not 
         | test1         |                  |
         |               | test2            |
         |               |                  |
-    Then The admin's login data are not correct

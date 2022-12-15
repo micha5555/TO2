@@ -51,23 +51,21 @@ namespace BDDTests.StepDefinitions
             Assert.IsTrue(_isLogged);
         }
 
-        [When(@"Admin enters incorrect login and password")]
-        public void WhenAdminEntersIncorrectLoginAndPassword(Table table)
+        [When(@"Admin enters incorrect (.*) and (.*)")]
+        public void WhenAdminEntersIncorrectLoginAndPassword(string login, string password)
         {
             Helper.ClearMethods.ClearAllAdministrators(); //Removes Default Administrator
-            _invalidLoginData = table;
+            _providedLogin = login;
+            _providedPassword = password;
         }
 
         [Then(@"The admin's login data are not correct")]
         public void ThenTheLoginDataAreNotCorrect()
         {
-            foreach(var row in _invalidLoginData.Rows)
-            {
-                _providedLogin = row[0];
-                _providedPassword = row[1];
-                _isLogged = Helper.BaseServices.AdministratorOperations.checkAdministratorCredentials(_providedLogin, _providedPassword);
-                Assert.IsFalse(_isLogged);
-            }
+                Assert.IsFalse(
+                    Helper.BaseServices
+                    .AdministratorOperations
+                    .checkAdministratorCredentials(_providedLogin, _providedPassword));
         }
     }
 }

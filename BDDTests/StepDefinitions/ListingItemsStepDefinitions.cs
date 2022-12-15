@@ -11,9 +11,7 @@ public class ListingItemsStepDefinitions : BaseStepDefinitions
 {
     
     private Product product;
-
     private Order order;
-
 
 
     [Given(@"Offer list is not empty")]

@@ -3,7 +3,7 @@ Admin can sign in to the applicaiton
 
 @Client @Login @CorrectData
 Scenario: The client can login to the system
-    Given Client in not logged in
+    Given Client is not logged in
     And Client has registered before
         | name   | surname  | address | postalCode | login  | password |
         | Marian | Kowalski | XYZ     | 00-000     | marian | haslo123 |
@@ -13,8 +13,11 @@ Scenario: The client can login to the system
 
 @Client @Login @NotCorrectData
 Scenario Outline: The client can't login to the system when data are not correct
-    Given Client in not logged in
-    When Client enters incorrect login and password
+    Given Client is not logged in
+    When Client enters incorrect <invalid_login> and <invalid_password>
+    Then The client's login data are not correct
+    
+    Examples:
         | invalid_login | invalid_password |
         | test          | test             |
         | marian        | test             |
@@ -22,4 +25,3 @@ Scenario Outline: The client can't login to the system when data are not correct
         | marian        |                  |
         |               | haslo123         |
         |               |                  |
-    Then The client's login data are not correct
