@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace BDDTests.StepDefinitions;
 
 [Binding]
-public class ListingItemsStepDefinitions : BaseStepDefinitions
+public class ListingItemsStepDefinitions
 {
     
     private Product product;

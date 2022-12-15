@@ -8,8 +8,8 @@ namespace Shared
         public Category CategoryClass { get; set; }
         public string Description { get; set; }
 
-        public bool isActive {get; set; }
-        
+        public bool isActive { get; set; }
+
         public Product()
         {
             this.Description = "";
@@ -25,12 +25,19 @@ namespace Shared
             this.Price = Price;
         }
 
-        public void Activate(){
+        public void Activate()
+        {
             this.isActive = true;
         }
-        public void Deactivate(){
+        public void Deactivate()
+        {
             this.isActive = false;
         }
+        public void changePrice(double price)
+        {
+            this.Price = price;
+        }
+
         public override string ToString()
         {
             string message = "";
@@ -53,7 +60,7 @@ namespace Shared
 
         public override int GetHashCode()
         {
-            return this.Name.GetHashCode()*17 + this.Price.GetHashCode()*17 + this.CategoryClass.GetHashCode()*17;
+            return this.Name.GetHashCode() * 17 + this.Price.GetHashCode() * 17 + this.CategoryClass.GetHashCode() * 17;
         }
 
 

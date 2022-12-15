@@ -21,7 +21,21 @@ public class OrderOperations : IOrderOperations
     {
         return repository.GetOrders();
     }
-    public void AddOrderToOrderList(Order o) {
+    public void AddOrderToOrderList(Order o)
+    {
         repository.AddOrder(o);
+    }
+
+    public bool CreateOrder(Client client)
+    {
+        List<CartProduct> products = client.Cart.GetCartProducts();
+        if (products.Count == 0)
+        {
+            return false;
+        }
+        Order order = new Order(client);
+        repository.AddOrder(order);
+        client.Cart.ClearCart();
+        return true;
     }
 }
