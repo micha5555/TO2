@@ -11,10 +11,18 @@ public class CartOperations : ICartOperations
         repository = Repository.Instance;
         cart = repository.GetClientById(clientID).Cart;
     }
-   
-    public void AddToCart(CartProduct p)
+
+    public bool AddToCart(CartProduct p)
     {
-        cart.AddToCart(p);
+        if (p == null)
+        {
+            return false;
+        }
+        if (p.Quantity < 1)
+        {
+            return false;
+        }
+        return cart.AddToCart(p);
     }
 
      public void AddToCart(CartProduct p, Client client)
@@ -22,16 +30,20 @@ public class CartOperations : ICartOperations
         client.Cart.AddToCart(p);
     }
   
-    public void RemoveFromCart(CartProduct p)
+    public bool RemoveFromCart(CartProduct p)
     {
-        cart.RemoveFromCart(p);
+        if (p == null)
+        {
+            return false;
+        }
+        return cart.RemoveFromCart(p);
     }
- 
+
     public double CalculateCartPrice()
-    { 
+    {
         return cart.CalculateCartPrice();
     }
-  
+
     public List<CartProduct> GetProducts()
     {
         return cart.GetCartProducts();
