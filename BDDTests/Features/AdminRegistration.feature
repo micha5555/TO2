@@ -23,8 +23,9 @@ Scenario Outline: The administrator can't register to the system when data are n
         | admin  |          |
         |        |          |
 
-
-#case 1: admin juz zarejestrowany
-#case 2: pusty login
-#case 3: puste haslo
-#case 4: puste login i haslo
+Scenario: The administrator can't register to the system when he is already registered
+    Given Admin is registered using login and password
+            | login | password |
+            | test1 | test2    |
+    When Admin provides already registered <login> and <password> while registering again
+    Then The administrator can not register using existing login

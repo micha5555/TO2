@@ -1,3 +1,4 @@
+using Frontend;
 using NUnit.Framework;
 using Repo;
 using Services;
@@ -11,6 +12,7 @@ namespace BDDTests.StepDefinitions
         private string _registrationLogin, _registrationPassword;
         private IRepository _repository = Repository.Instance;
         private bool _doesAdminExistsInDB;
+        private RegistrationStatus _registrationStatus;
 
         [Given(@"Admin is not registered")]
         public void GivenAdminIsNotRegistered()
@@ -49,6 +51,31 @@ namespace BDDTests.StepDefinitions
         public void ThenTheAdministratorAccountIsNotCreatedInTheDatabase()
         {
             Assert.IsFalse(_doesAdminExistsInDB);
+        }
+
+        [Given(@"Admin is registered using login and password")]
+        public void GivenAdminIsRegisteredUsingLoginAndPassword(Table table)
+        {
+            Helper.BaseServices.GeneralOperations.ReadDataOnLaunch();
+            _administratorOperations = Helper.BaseServices.AdministratorOperations;
+
+            _registrationLogin = table.Rows[0]["login"];
+            _registrationPassword = table.Rows[0]["password"];
+
+            _administratorOperations.registerNewAdministrator(_registrationLogin, _registrationPassword);
+        }
+
+        [When(@"Admin provides already registered <login> and <password> while registering again")]
+        public void WhenAdminProvidesAlreadyRegisteredLoginAndPasswordWhileRegisteringAgain()
+        {
+            _registrationStatus = _administratorOperations
+                .registerNewAdministrator(_registrationLogin, _registrationPassword);
+        }
+
+        [Then(@"The administrator can not register using existing login")]
+        public void ThenTheAdministratorCanNotRegisterUsingExistingLogin()
+        {
+            Assert.AreEqual(RegistrationStatus.NotRegistered, _registrationStatus);
         }
 
     }
