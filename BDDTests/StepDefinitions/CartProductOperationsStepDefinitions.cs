@@ -88,4 +88,10 @@ public class CartProductOperationsStepDefinition
         Assert.True(cartProducts.Contains(Helper.BaseProducts.CartProduct));
     }
 
+    [Given(@"Product quantity is negative")]
+    public void GivenProductquantityisnegative()
+    {
+        Helper.BaseProducts.CartProduct.Quantity = -1;
+    }
 }
+

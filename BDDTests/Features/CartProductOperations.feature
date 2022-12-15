@@ -1,17 +1,25 @@
 Feature: Operations with Cart Products
 
 @Client @RemoveProductFromCart @ProductInCart
-Scenario: Client can remove product from cart
+Scenario: Client can remove product from cart when product is in cart
     Given Client is logged in
     And Product is in cart
     When Client removes product from cart
     Then Cart does not contain product 
 
 @Client @RemoveProductFromCart @ProductNotInCart
-Scenario: Client cannot remove product from cart
+Scenario: Client cannot remove product from cart when product is not in cart
     Given Client is logged in
     And Product is not in cart
     When Client removes product from cart
+    Then Cart does not contain product
+
+@Client @AddProductToCart @NegativeProductQuantity
+Scenario: Client cannnot add product with negative quantity to cart
+    Given Client is logged in
+    And Product is not cart
+    And Product quantity is negative
+    When Client adds product to cart
     Then Cart does not contain product
 
 @Client @AddProductToCart @ProductInCart

@@ -18,6 +18,10 @@ public class CartOperations : ICartOperations
         {
             return false;
         }
+        if (p.Quantity < 1)
+        {
+            return false;
+        }
         return cart.AddToCart(p);
     }
 
