@@ -4,7 +4,7 @@ namespace Shared
     {
         private double ActualPrice;
         public List<CartProduct> CartProductList;
-        
+
         public Cart()
         {
             this.CartProductList = new List<CartProduct>();
@@ -37,14 +37,31 @@ namespace Shared
             }
         }
 
-        public void AddToCart(CartProduct p)
+        public bool AddToCart(CartProduct p)
         {
-            this.CartProductList.Add(p);
+            if (this.CartProductList.Contains(p))
+            {
+                this.CartProductList.FirstOrDefault(p).Quantity += p.Quantity;
+            }
+            else
+            {
+                this.CartProductList.Add(p);
+            }
+            return true;
         }
 
-        public void RemoveFromCart(CartProduct p)
+        public bool RemoveFromCart(CartProduct p)
         {
-            this.CartProductList.Remove(p);
+            if (this.CartProductList.Contains(p))
+            {
+                this.CartProductList.FirstOrDefault(p).Quantity -= 1;
+                if (this.CartProductList.FirstOrDefault(p).Quantity < 1)
+                {
+                    this.CartProductList.Remove(p);
+                }
+                return true;
+            }
+            return false;
         }
 
         public double CalculateCartPrice()
@@ -70,7 +87,8 @@ namespace Shared
             return this.CartProductList;
         }
 
-        public void ClearCart(){
+        public void ClearCart()
+        {
             CartProductList = new List<CartProduct>();
         }
     }
