@@ -16,6 +16,11 @@ public class CartOperations : ICartOperations
     {
         cart.AddToCart(p);
     }
+
+     public void AddToCart(CartProduct p, Client client)
+    {
+        client.Cart.AddToCart(p);
+    }
   
     public void RemoveFromCart(CartProduct p)
     {

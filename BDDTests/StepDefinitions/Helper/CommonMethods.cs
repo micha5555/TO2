@@ -34,6 +34,16 @@ public static class CommonMethods
         );
     }
 
+    public static Product CreateNewCorrectAGDProduct()
+    {
+        return new Product(
+            "Suszarka",
+            200.0,
+            Category.AGD,
+            "Szybka, mocna, elegancka"
+        );
+    }
+
     public static CartProduct CreateNewCorrectCartProduct()
     {
         return new CartProduct(
@@ -49,23 +59,32 @@ public static class CommonMethods
         );
     }
 
-    public static void CreateGivenNumberOfOrdersForGivenClient(Client client, int quantity)
+    public static void CreateGivenNumberOfOrdersForGivenClient(Client client, int quantity, int shift = 0)
     {
         for (int i = 0; i < quantity; i++)
         {
-            int mode = i % 3 ;
+            int mode = (i + shift) % 4 ;
             if (mode == 0)
             {
-                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectProduct(), i + 1));
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectProduct(), i + 1), client);
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectElektrotechnikaProduct(), i + 1), client);
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectNarzedziaProduct(), i + 1), client);
             }
             else if (mode == 1)
             {
-                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectNarzedziaProduct(), i + 1));
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectNarzedziaProduct(), i + 1), client);
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectProduct(), i + 1), client);
 
             }
             else if (mode == 2)
             {
-                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectElektrotechnikaProduct(), i + 1));
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectElektrotechnikaProduct(), i + 1), client);
+            }
+            else if (mode == 3)
+            {
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectProduct(), i + 1), client);
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectAGDProduct(), i + 1), client);
+                BaseServices.CartOperations.AddToCart(new CartProduct(CreateNewCorrectNarzedziaProduct(), i + 1), client);
             }
             BaseServices.OrderOperations.CreateOrder(client);
         }
