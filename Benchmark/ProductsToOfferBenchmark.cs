@@ -1,7 +1,5 @@
-using System.Text.Json;
 using Benchmark;
 using BenchmarkDotNet.Attributes;
-using Bogus;
 using Services;
 using Shared;
 
@@ -26,6 +24,7 @@ public class ProductsToOfferBenchmark
         products = Common.GenerateProductsList(N);
     }
 
+    // [Test]
     [Benchmark]
     public void AddingProductsToOffer()
     {
