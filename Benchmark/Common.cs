@@ -25,4 +25,16 @@ public class Common{
         }
         return products;
     }
+
+    public static Client GenerateClient(){
+        var ClientFaker = new Faker<Client>()
+        .RuleFor(client => client.Name, x => x.Name.FirstName())
+        .RuleFor(client => client.Surname, x => x.Name.LastName())
+        .RuleFor(client => client.Address, x => x.Address.StreetAddress())
+        .RuleFor(client => client.PostalCode, x => x.Address.ZipCode())
+        .RuleFor(client => client.Login, x => "login")
+        .RuleFor(client => client.Password, x => "passwd");
+        
+        return ClientFaker.Generate();
+    }
 }
