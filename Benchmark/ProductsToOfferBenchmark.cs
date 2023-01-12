@@ -4,21 +4,27 @@ using Bogus;
 using Services;
 using Shared;
 
+[MemoryDiagnoser]
 public class ProductsToOfferBenchmark
 {
     private List<Product> products = new List<Product>();
     private IGeneralOperations _generalOperations = new GeneralOperations();
     private IOfferOperations _offerOperations = new OfferOperations();
 
-    [Params(10)]
+
+    [Params(100, 1000, 10000)]
     public int N;
 
-    [GlobalSetup]
+    [IterationSetup]
     public void setup()
     {
+        _offerOperations = new OfferOperations();
+        _generalOperations = new GeneralOperations();
         _generalOperations.ReadDataOnLaunch();
+        products = new List<Product>();
 
-        var ProductFaker = new Faker<Product>(locale: "pl")
+        Randomizer.Seed = new Random(543345);
+        var ProductFaker = new Faker<Product>()
         .RuleFor(product => product.Id, Guid.NewGuid())
         .RuleFor(product => product.Name, x => x.Commerce.ProductName())
         .RuleFor(product => product.Price, x => Math.Round(x.Random.Double(5, 3000), 2))
@@ -34,10 +40,6 @@ public class ProductsToOfferBenchmark
         {
             products.Add(ProductFaker.Generate());
         }
-        // foreach (Product p in products)
-        // {
-        //     Console.WriteLine(JsonSerializer.Serialize(p));
-        // }
     }
 
     [Benchmark]
