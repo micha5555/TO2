@@ -26,7 +26,8 @@ public class Common{
         return products;
     }
 
-    public static Client GenerateClient(){
+    public static List<Client> GenerateClients(int quantity){
+        List<Client> clients = new List<Client>();
         var ClientFaker = new Faker<Client>()
         .RuleFor(client => client.Name, x => x.Name.FirstName())
         .RuleFor(client => client.Surname, x => x.Name.LastName())
@@ -35,6 +36,9 @@ public class Common{
         .RuleFor(client => client.Login, x => "login")
         .RuleFor(client => client.Password, x => "passwd");
         
-        return ClientFaker.Generate();
+        for(int i = 0; i < quantity; i++){
+            clients.Add(ClientFaker.Generate());
+        }
+        return clients;
     }
 }
