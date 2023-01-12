@@ -1,4 +1,5 @@
 using Bogus;
+using Repo;
 using Services;
 using Shared;
 
@@ -41,11 +42,19 @@ public class Common
             .RuleFor(client => client.Address, x => x.Address.StreetAddress())
             .RuleFor(client => client.PostalCode, x => x.Address.ZipCode())
             .RuleFor(client => client.Login, x => "login")
-            .RuleFor(client => client.Password, x => "passwd");
-
+            .RuleFor(client => client.Password, x => "passwd")
+            .RuleFor(client => client.Cart, new Cart());
+        
+        
+        
         for (int i = 0; i < quantity; i++)
         {
             clients.Add(ClientFaker.Generate());
+        }
+
+        foreach (var client in clients)
+        {
+            Repository.Instance.AddClient(client);
         }
 
         return clients;
