@@ -1,4 +1,5 @@
 using Bogus;
+using Services;
 using Shared;
 
 namespace Benchmark;
@@ -48,4 +49,22 @@ public class Common
 
         return clients;
     }
+
+    public static void FillClientsCarts(List<Client> clients, List<Product> products, int chanceOfAddingToCart = 20)
+    {
+        var random = new Random();
+        foreach (var client in clients)
+        {
+            CartOperations cartOperations = new CartOperations(client.Id);
+            foreach (var product in products)
+            {
+                if (random.Next(100) < chanceOfAddingToCart)
+                {
+                    cartOperations.AddToCart(new CartProduct(product, random.Next(1, 10)));
+                }
+            }
+        }
+    }
+    
+    
 }
