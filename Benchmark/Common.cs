@@ -65,6 +65,13 @@ public class Common
             }
         }
     }
-    
-    
+
+    public static void GenerateOrders(List<Client> clients)
+    {
+        OrderOperations orderOperations = new OrderOperations();
+        foreach (var client in clients)
+        {
+            orderOperations.CreateOrder(client);
+        }
+    }
 }
