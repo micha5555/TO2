@@ -7,6 +7,7 @@ public class ddd
     {
         var summary = BenchmarkRunner.Run<ProductsToOfferBenchmark>();
         var summary2 = BenchmarkRunner.Run<OrderBenchmark>();
+        var summary3 = BenchmarkRunner.Run<ProductsToCartBenchmark>();
     }
 
 }
