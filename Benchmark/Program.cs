@@ -1,4 +1,4 @@
-﻿using benchamrk;
+﻿using Benchmark;
 using BenchmarkDotNet.Running;
 
 public class ddd
