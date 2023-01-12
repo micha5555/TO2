@@ -28,6 +28,7 @@ public class Common{
 
     public static List<Client> GenerateClients(int quantity){
         List<Client> clients = new List<Client>();
+        Randomizer.Seed = new Random(543345);
         var ClientFaker = new Faker<Client>()
         .RuleFor(client => client.Name, x => x.Name.FirstName())
         .RuleFor(client => client.Surname, x => x.Name.LastName())

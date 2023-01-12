@@ -21,5 +21,9 @@ namespace Shared
             this.Login = Login;
             this.Password = Password;
         }
+
+        public Client(){
+            
+        }
     }
 }
