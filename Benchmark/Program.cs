@@ -6,6 +6,7 @@ public class ddd
     public static void Main()
     {
         var summary = BenchmarkRunner.Run<ProductsToOfferBenchmark>();
+        var summary2 = BenchmarkRunner.Run<ProductsToCartBenchmark>();
     }
 
 }

@@ -48,4 +48,14 @@ public class Common
 
         return clients;
     }
+
+    public static List<CartProduct> GenerateCartProducts(int quantity){
+        List<Product> plist = GenerateProductsList(quantity);
+        List<CartProduct> cplist = new List<CartProduct>();
+        Random rnd = new Random();
+        foreach(Product p in plist){
+            cplist.Add(new CartProduct(p, rnd.Next(1, 10)));
+        }
+        return cplist;
+    }
 }

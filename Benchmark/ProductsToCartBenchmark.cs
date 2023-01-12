@@ -8,7 +8,8 @@ using Shared;
 [MemoryDiagnoser]
 public class ProductsToCartBenchmark
 {
-    private List<Product> products;
+    private List<CartProduct> cproducts;
+    private List<Client> clients;
     private IGeneralOperations _generalOperations;
     private ICartOperations _cartOperations;
     private IClientOperations _clientOperations;
@@ -21,18 +22,19 @@ public class ProductsToCartBenchmark
     public void setup()
     {
         _clientOperations = new ClientOperations();
-        
-
-        _offerOperations = new OfferOperations();
+        clients = Common.GenerateClients(1);
+        _cartOperations = new CartOperations(clients[0].Id);
         _generalOperations = new GeneralOperations();
         _generalOperations.ReadDataOnLaunch();
 
-        products = Common.GenerateProductsList(N);
+        cproducts = Common.GenerateCartProducts(N);
     }
 
     [Benchmark]
-    public void AddingProductsToOffer()
+    public void AddingProductsToCart()
     {
-        _offerOperations.AddToOffer(products);
+        foreach(CartProduct cp in cproducts){
+        _cartOperations.AddToCart(cp);
+        }
     }
 }
