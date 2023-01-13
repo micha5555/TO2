@@ -21,11 +21,12 @@ public class ProductsToCartBenchmark
     [IterationSetup]
     public void setup()
     {
+        _generalOperations = new GeneralOperations();
+        _generalOperations.ReadDataOnLaunch();
         _clientOperations = new ClientOperations();
         clients = Common.GenerateClients(1);
         _cartOperations = new CartOperations(clients[0].Id);
-        _generalOperations = new GeneralOperations();
-        _generalOperations.ReadDataOnLaunch();
+        
 
         cproducts = Common.GenerateCartProducts(N);
     }
