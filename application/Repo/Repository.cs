@@ -25,6 +25,17 @@ namespace Repo
                 return instance;
             }
         }
+
+        public static Repository DeInstantiate{
+            get
+            {
+                if (instance is not null)
+                {
+                    instance = null;
+                }
+                return instance;
+            }
+        }
         public bool AddAdministrator(Administrator admin)
         {
             if (dataAccess.AdminList.Contains(admin))
