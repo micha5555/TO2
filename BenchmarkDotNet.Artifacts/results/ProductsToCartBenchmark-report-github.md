@@ -1,21 +1,16 @@
 ``` ini
 
-BenchmarkDotNet=v0.13.3, OS=Windows 10 (10.0.19044.2364/21H2/November2021Update)
-11th Gen Intel Core i5-11600KF 3.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK=7.0.102
-  [Host]     : .NET 6.0.13 (6.0.1322.58009), X64 RyuJIT AVX2
-  Job-HBWIOJ : .NET 6.0.13 (6.0.1322.58009), X64 RyuJIT AVX2
+BenchmarkDotNet=v0.13.3, OS=ubuntu 22.04
+AMD Ryzen 5 5600H with Radeon Graphics, 1 CPU, 12 logical and 6 physical cores
+.NET SDK=6.0.113
+  [Host]     : .NET 6.0.13 (6.0.1322.60201), X64 RyuJIT AVX2
+  Job-MBPRDL : .NET 6.0.13 (6.0.1322.60201), X64 RyuJIT AVX2
 
 InvocationCount=1  UnrollFactor=1  
 
 ```
-|               Method |     N | Mean | Error |
-|--------------------- |------ |-----:|------:|
-| **AddingProductsToCart** |   **100** |   **NA** |    **NA** |
-| **AddingProductsToCart** |  **1000** |   **NA** |    **NA** |
-| **AddingProductsToCart** | **10000** |   **NA** |    **NA** |
-
-Benchmarks with issues:
-  ProductsToCartBenchmark.AddingProductsToCart: Job-HBWIOJ(InvocationCount=1, UnrollFactor=1) [N=100]
-  ProductsToCartBenchmark.AddingProductsToCart: Job-HBWIOJ(InvocationCount=1, UnrollFactor=1) [N=1000]
-  ProductsToCartBenchmark.AddingProductsToCart: Job-HBWIOJ(InvocationCount=1, UnrollFactor=1) [N=10000]
+|               Method |     N |         Mean |        Error |       StdDev | Allocated |
+|--------------------- |------ |-------------:|-------------:|-------------:|----------:|
+| **AddingProductsToCart** |   **100** |     **161.7 μs** |      **2.39 μs** |      **2.46 μs** |   **3.39 KB** |
+| **AddingProductsToCart** |  **1000** |   **9,173.3 μs** |    **182.37 μs** |    **261.55 μs** |  **17.46 KB** |
+| **AddingProductsToCart** | **10000** | **978,414.2 μs** | **18,903.71 μs** | **17,682.54 μs** |  **257.6 KB** |

@@ -12,12 +12,8 @@ public class Mainek
         GeneralOperations _generalOperations = new GeneralOperations();
         _generalOperations.ReadDataOnLaunch();
         List<Product> products = Common.GenerateProductsList(N);
-
-        for (int i = 0; i < N; i++)
-        {
-            _offerOperations.AddToOffer(products);
-        }
-        Repo.Repository.DeInstantiate;
+        
+        _offerOperations.AddToOffer(products);
     }
 
     public static void AddProductsToCartTest(int N)
@@ -34,14 +30,11 @@ public class Mainek
         _generalOperations.ReadDataOnLaunch();
 
         cproducts = Common.GenerateCartProducts(N);
-        for (int i = 0; i < N; i++)
-        {
+
             foreach (CartProduct cp in cproducts)
             {
                 _cartOperations.AddToCart(cp);
             }
-        }
-        Repo.Repository.DeInstantiate;
 
     }
 
@@ -70,7 +63,6 @@ public class Mainek
         {
             _generalOperations.ProposeProductsBasedOnCart(client.Cart, proposeProductsQuantity);
         }
-        Repo.Repository.DeInstantiate;
 
     }
 
@@ -99,7 +91,6 @@ public class Mainek
         {
             _generalOperations.ProposeProductsBasedOnProduct(product, proposeProductsQuantity);
         }
-        Repo.Repository.DeInstantiate;
 
     }
 }

@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>ProductsToCartBenchmark-20230113-001416</title>
+<title>ProductsToCartBenchmark-20230113-014205</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -13,21 +13,21 @@
 </head>
 <body>
 <pre><code>
-BenchmarkDotNet=v0.13.3, OS=Windows 10 (10.0.19044.2364/21H2/November2021Update)
-11th Gen Intel Core i5-11600KF 3.90GHz, 1 CPU, 12 logical and 6 physical cores
-.NET SDK=7.0.102
-  [Host]     : .NET 6.0.13 (6.0.1322.58009), X64 RyuJIT AVX2
-  Job-HBWIOJ : .NET 6.0.13 (6.0.1322.58009), X64 RyuJIT AVX2
+BenchmarkDotNet=v0.13.3, OS=ubuntu 22.04
+AMD Ryzen 5 5600H with Radeon Graphics, 1 CPU, 12 logical and 6 physical cores
+.NET SDK=6.0.113
+  [Host]     : .NET 6.0.13 (6.0.1322.60201), X64 RyuJIT AVX2
+  Job-MBPRDL : .NET 6.0.13 (6.0.1322.60201), X64 RyuJIT AVX2
 </code></pre>
 <pre><code>InvocationCount=1  UnrollFactor=1  
 </code></pre>
 
 <table>
-<thead><tr><th>        Method</th><th>N</th><th>Mean</th><th>Error</th>
+<thead><tr><th>        Method</th><th>N</th><th>  Mean</th><th> Error</th><th>StdDev</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>AddingProductsToCart</td><td>100</td><td>NA</td><td>NA</td>
-</tr><tr><td>AddingProductsToCart</td><td>1000</td><td>NA</td><td>NA</td>
-</tr><tr><td>AddingProductsToCart</td><td>10000</td><td>NA</td><td>NA</td>
+</thead><tbody><tr><td>AddingProductsToCart</td><td>100</td><td>161.7 &mu;s</td><td>2.39 &mu;s</td><td>2.46 &mu;s</td><td>3.39 KB</td>
+</tr><tr><td>AddingProductsToCart</td><td>1000</td><td>9,173.3 &mu;s</td><td>182.37 &mu;s</td><td>261.55 &mu;s</td><td>17.46 KB</td>
+</tr><tr><td>AddingProductsToCart</td><td>10000</td><td>978,414.2 &mu;s</td><td>18,903.71 &mu;s</td><td>17,682.54 &mu;s</td><td>257.6 KB</td>
 </tr></tbody></table>
 </body>
 </html>
