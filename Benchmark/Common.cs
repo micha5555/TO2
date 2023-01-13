@@ -91,7 +91,7 @@ public class Common
         Random rnd = new Random();
         foreach(Product p in plist){
             cplist.Add(new CartProduct(p, rnd.Next(1, 10)));
-        }
+        } 
         return cplist;
     }
 }
